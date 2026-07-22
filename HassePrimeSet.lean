@@ -1,5 +1,30 @@
-import Lean
-import Mathlib
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.NumberTheory.ArithmeticFunction
+import Mathlib.NumberTheory.LSeries.Basic
+import Mathlib.Tactic
+import Towers.BSD.BSD_Genesis762_CLOSED
+import Towers.BSD.BSD_Genesis763_CLOSED
+import Towers.BSD.BSD_Genesis764_CLOSED
+import Towers.BSD.BSD_Genesis765_CLOSED
+import Towers.BSD.BSD_Genesis766_CLOSED
+import Towers.BSD.BSD_Genesis767_CLOSED
+import Towers.BSD.BSD_Genesis768_CLOSED
+import Towers.BSD.BSD_Genesis769_CLOSED
+import Towers.BSD.BSD_Genesis770_CLOSED
+import Towers.BSD.BSD_Genesis771_CLOSED
+import Towers.BSD.BSD_Genesis772_CLOSED
+import Towers.BSD.BSD_Genesis773_CLOSED
+import Towers.BSD.BSD_Genesis774_CLOSED
+import Towers.BSD.BSD_Genesis775_CLOSED
+import Towers.BSD.BSD_Genesis776_CLOSED
+import Towers.BSD.BSD_Genesis777_CLOSED
+import Towers.BSD.BSD_Genesis778_CLOSED
+import Towers.BSD.BSD_Genesis779_CLOSED
+import Towers.BSD.BSD_Genesis780_CLOSED
+import Towers.BSD.BSD_Genesis781_CLOSED
+import Towers.BSD.BSD_Genesis782_CLOSED
 
 namespace HassePrimeSet
 
@@ -59,7 +84,6 @@ Axiom footprint: classical trio {propext, Classical.choice, Quot.sound}.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis762_CLOSED
 
 set_option maxRecDepth 10000
 
@@ -305,7 +329,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis763_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -539,7 +562,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis764_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -773,7 +795,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis765_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -1007,7 +1028,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis766_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -1241,7 +1261,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis767_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -1475,7 +1494,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis768_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -1709,7 +1727,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis769_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -1943,7 +1960,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis770_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -2177,7 +2193,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis771_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -2411,7 +2426,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis772_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -2640,7 +2654,6 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis773_CLOSED
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -2831,8 +2844,7 @@ NOT a brick.  BSD: OPEN (Clay).  No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis774_CLOSED
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+
 
 set_option maxRecDepth 10000
 
@@ -3065,7 +3077,6 @@ BSD: OPEN.  NOT a brick.  No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis775_CLOSED
 
 namespace Towers.BSD
 
@@ -3456,7 +3467,6 @@ BSD: OPEN.  NOT a Clay claim.  No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis776_CLOSED
 
 namespace Towers.BSD
 
@@ -3826,7 +3836,6 @@ BSD: OPEN.  No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis777_CLOSED
 
 namespace Towers.BSD
 
@@ -4207,8 +4216,7 @@ Two avenues closed this batch:
   BSD_aNBound_all_n_v2 replaces BSD_aNBound_all_n with htau_pos (0<m only).
 -/
 
-import Towers.BSD.BSD_Genesis778_CLOSED
-import Mathlib.NumberTheory.ArithmeticFunction
+
 
 open BigOperators Real Nat ArithmeticFunction
 
@@ -4507,9 +4515,8 @@ OPEN (genuine mathematical gaps, no timeline):
 BSD: OPEN.  No Clay claim.
 -/
 
-import Towers.BSD.BSD_Genesis779_CLOSED
-import Mathlib.NumberTheory.LSeries.Basic
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+
+
 
 open BigOperators Real Nat ArithmeticFunction
 
@@ -4700,8 +4707,7 @@ Clay gate count: 2 (unchanged). BSD: OPEN. No Clay claim.
 0 sorry. Classical trio + Gate 1 hypothesis where noted.
 -/
 
-import Towers.BSD.BSD_Genesis780_CLOSED
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
 
 open BigOperators Real Nat ArithmeticFunction
 
@@ -5010,8 +5016,7 @@ Clay gate count: 2 (unchanged). BSD: OPEN. No Clay claim.
 0 sorry. Classical trio. Gate 1 in §10 only.
 -/
 
-import Towers.BSD.BSD_Genesis781_CLOSED
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
 
 open BigOperators Real Nat ArithmeticFunction
 
@@ -5362,8 +5367,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -5567,8 +5571,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -5772,8 +5775,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -5977,8 +5979,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -6182,8 +6183,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -6387,8 +6387,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -6592,8 +6591,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -6797,8 +6795,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -7002,8 +6999,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -7207,8 +7203,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -7412,8 +7407,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -7617,8 +7611,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -7822,8 +7815,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -8027,8 +8019,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -8232,8 +8223,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -8437,8 +8427,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -8642,8 +8631,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -8847,8 +8835,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -9052,8 +9039,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -9257,8 +9243,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -9462,8 +9447,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -9667,8 +9651,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -9872,8 +9855,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -10077,8 +10059,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -10282,8 +10263,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -10487,8 +10467,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -10692,8 +10671,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -10897,8 +10875,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -11102,8 +11079,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -11307,8 +11283,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -11512,8 +11487,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -11717,8 +11691,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -11922,8 +11895,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -12127,8 +12099,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -12332,8 +12303,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -12537,8 +12507,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -12742,8 +12711,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -12947,8 +12915,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -13152,8 +13119,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -13357,8 +13323,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -13562,8 +13527,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -13767,8 +13731,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -13972,8 +13935,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -14177,8 +14139,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -14382,8 +14343,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -14587,8 +14547,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -14792,8 +14751,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -14997,8 +14955,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -15202,8 +15159,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -15407,8 +15363,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -15612,8 +15567,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -15817,8 +15771,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -16022,8 +15975,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -16227,8 +16179,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -16432,8 +16383,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -16637,8 +16587,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -16842,8 +16791,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -17047,8 +16995,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -17252,8 +17199,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -17457,8 +17403,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -17662,8 +17607,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -17867,8 +17811,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -18072,8 +18015,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -18277,8 +18219,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -18482,8 +18423,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -18687,8 +18627,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -18892,8 +18831,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -19097,8 +19035,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -19302,8 +19239,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -19507,8 +19443,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -19712,8 +19647,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -19917,8 +19851,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -20122,8 +20055,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -20327,8 +20259,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -20532,8 +20463,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -20737,8 +20667,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -20942,8 +20871,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -21147,8 +21075,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -21352,8 +21279,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -21557,8 +21483,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -21762,8 +21687,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -21967,8 +21891,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -22172,8 +22095,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -22377,8 +22299,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -22582,8 +22503,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -22787,8 +22707,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -22992,8 +22911,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -23197,8 +23115,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -23402,8 +23319,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -23607,8 +23523,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -23812,8 +23727,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -24017,8 +23931,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -24222,8 +24135,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -24427,8 +24339,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -24632,8 +24543,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -24837,8 +24747,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -25042,8 +24951,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -25247,8 +25155,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -25452,8 +25359,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -25657,8 +25563,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -25862,8 +25767,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -26067,8 +25971,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -26272,8 +26175,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -26477,8 +26379,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -26682,8 +26583,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -26887,8 +26787,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -27083,8 +26982,7 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import Towers.BSD.BSD_Genesis782_CLOSED
-import Mathlib.Tactic
+
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -27128,6 +27026,5 @@ theorem BSD_HasseBound_Disc_p9973 : (a_p 9973 : ℝ) ^ 2 ≤ 4 * (9973 : ℝ) :=
   BSD_disc_from_deg_889 BSD_DegreeNonneg_p9973
 
 end Towers.BSD
-
 
 end HassePrimeSet
