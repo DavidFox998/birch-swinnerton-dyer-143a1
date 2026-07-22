@@ -19,4 +19,4 @@ jobs:
         run: ~/.elan/bin/lake update
 
       - name: Lake build
-        run: ~/.elan/bin/lake build
+        run: ~/.elan/bin/lake build lean HassePrimeSet BostBound143
