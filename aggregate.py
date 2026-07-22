@@ -8,13 +8,10 @@ bodies = []
 
 for f in files:
     text = pathlib.Path(f).read_text()
-    # collect imports
     for m in re.finditer(r'^\s*import\s+.*$', text, re.MULTILINE):
         imports.add(m.group(0).strip())
-    # remove imports, namespace wrappers for clean concat
     body = re.sub(r'^\s*import\s+.*$', '', text, flags=re.MULTILINE)
-    body = body.replace("namespace HassePrimeSet", "")
-    body = body.replace("end HassePrimeSet", "")
+    body = body.replace("namespace HassePrimeSet", "").replace("end HassePrimeSet", "")
     if body.strip():
         bodies.append(body.strip())
 
@@ -25,5 +22,4 @@ with out_path.open("w") as out:
     for b in bodies:
         out.write(b + "\n\n")
     out.write("end HassePrimeSet\n")
-
-print(f"Aggregated {len(files)} files, {len(imports)} unique imports -> {out_path}")
+print(f"Aggregated {len(files)} -> {out_path}")
