@@ -2,7 +2,6 @@ name: Lean Build - 0 sorry verification
 
 on:
   push:
-    branches: [main]
   pull_request:
 
 jobs:
@@ -17,13 +16,7 @@ jobs:
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
       - name: Lake update
-        run: |
-          ~/.elan/bin/lean --version || true
-          ~/.elan/bin/lake update || true
+        run: ~/.elan/bin/lake update
 
       - name: Lake build
-        run: |
-          ~/.elan/bin/lake build 2>&1 | tee build.log
-          echo "=== Build done ==="
-          cat build.log
-          echo "✅ Build completed - check logs above"
+        run: ~/.elan/bin/lake build
