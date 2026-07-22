@@ -18,5 +18,7 @@ jobs:
       - name: Lake update
         run: ~/.elan/bin/lake update
 
-      - name: Lake build
-        run: ~/.elan/bin/lake build lean
+            - name: Lake build
+        run: |
+          ~/.elan/bin/lake build lean
+          ~/.elan/bin/lake env lean HassePrimeSet.lean
