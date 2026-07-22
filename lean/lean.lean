@@ -1,0 +1,2 @@
+-- placeholder root for lean/ library
+-- lake needs this file to exist
