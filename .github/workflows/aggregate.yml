@@ -2,14 +2,8 @@ name: Aggregate hasseprimset -> HassePrimeSet.lean
 
 on:
   push:
-    branches: [main]
-    paths:
-      - 'hasseprimset/**'
-      - 'aggregate.py'
-      - '.github/workflows/aggregate*.yml'
+    branches:
   workflow_dispatch:
-  # also run when HassePrimeSet.lean is missing
-  delete:
 
 jobs:
   aggregate:
@@ -18,25 +12,14 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
-      - name: Run aggregate.py
-        run: |
-          python aggregate.py
-          ls -lh HassePrimeSet.lean
-          wc -l HassePrimeSet.lean
-
-      - name: Commit HassePrimeSet.lean
-        run: |
+      - run: python aggregate.py
+      - run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add HassePrimeSet.lean
-          git diff --staged --quiet && echo "No changes" && exit 0
-          git commit -m "Auto-aggregate hasseprimset/ (${{ github.sha }}) -> HassePrimeSet.lean"
+          git diff --staged --quiet && exit 0
+          git commit -m "Auto-aggregate -> HassePrimeSet.lean"
           git push
