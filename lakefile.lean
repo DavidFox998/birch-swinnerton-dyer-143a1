@@ -13,6 +13,3 @@ lean_lib «lean» where
 lean_lib HassePrimeSet where
 
 lean_lib BostBound143 where
-
-lean_lib hasseprimset where
-  srcDir := "hasseprimset"
