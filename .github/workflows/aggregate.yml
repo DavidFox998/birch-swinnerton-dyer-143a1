@@ -1,25 +1,38 @@
 name: Aggregate hasseprimset -> HassePrimeSet.lean
-
 on:
   push:
-    branches:
-  workflow_dispatch:
+    paths:
+      - 'hasseprimset/**'
+      - 'aggregate.py'
+      - 'find_opens.py'
+      - '.github/workflows/aggregate.yml'
 
 jobs:
   aggregate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python aggregate.py
-      - run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add HassePrimeSet.lean
-          git diff --staged --quiet && exit 0
-          git commit -m "Auto-aggregate -> HassePrimeSet.lean"
-          git push
+      - name: Run aggregate.py
+        run: python aggregate.py
+      - name: Find genuinely open goals
+        run: |
+          echo "=== Running find_opens.py ==="
+          python find_opens.py | tee opens.txt
+          echo ""
+          echo "=== Summary by file ==="
+          tail -n 100 opens.txt
+      - name: Upload opens.txt
+        uses: actions/upload-artifact@v4
+        with:
+          name: opens-txt
+          path: opens.txt
+      - name: Commit changes if any
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add HassePrimeSet.lean hasseprimset/ ap_table.json opens.txt || true
+          git diff --staged --quiet || git commit -m "Aggregate + opens.txt"
+          git push || true
