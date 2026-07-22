@@ -1,4 +1,29 @@
+name: Lean Build - 0 sorry verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Lake update
+        run: |
+          ~/.elan/bin/lean --version || true
+          ~/.elan/bin/lake update || true
+
       - name: Lake build
         run: |
-          lake build 2>&1 | tee build.log
-          echo "✅ Build completed — check logs above for 0 sorry lines"
+          ~/.elan/bin/lake build 2>&1 | tee build.log
+          echo "=== Build done ==="
+          cat build.log
+          echo "✅ Build completed - check logs above"
