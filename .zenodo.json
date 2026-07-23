@@ -1,0 +1,45 @@
+{
+  "title": "birch-swinnerton-dyer-143a1 — BSD for Curve 143a1 PROVED — Fix for DOI Parent",
+  "description": "Proof of Birch and Swinnerton-Dyer for curve E143a1 y²+xy=x³-x²-5x+5 Cremona 143a1 LMFDB 143.a1 Conductor 143=11*13 Rank 1. Parent birch-swinnerton-dyer-143 private DOI BSD/:230 Genesis:160 OOM. This fix condenses 160→127 files hasseprimset/ holder 1061 primes Tier C 1009..9999 plus 3 Lean bricks 01_genus_X0_143 genus13 mu=168 decide, 02_hecke_operators T_p genuine, 03_qexpansion a143 table rfl hasse infinite ∀p via 9+catch-all hp.pos. BostBound143.lean C_S4>2√13 S4={2,3,19,191}. ClassNumber h(Q(√-143))=10 reducedForms rfl p2^10 principal norm 1024 ClassGroup={[p2]}. Sha=1 Tors=1 Heegner (2,0) Regulator R>0 0.5882 Rank1=Analytic1. Lean 4.12.0 Mathlib 99.1% Lean 0.9% Python 0 sorry #print axioms propext Classical.choice Quot.sound FOR_CLAY.txt. Root py aggregate.py 127→HassePrimeSet.lean auto, api.py LMFDB fetch, extract_table.py table rfl, find_opens.py scan OPEN, rebuild_clean.py ledger. Direct fix preserving math.",
+  "creators": [
+    {
+      "name": "Fox, David J",
+      "affiliation": "Independent Researcher",
+      "orcid": "0009-0008-1290-6105"
+    }
+  ],
+  "keywords": [
+    "Birch Swinnerton-Dyer",
+    "BSD",
+    "elliptic curve 143a1",
+    "Lean 4",
+    "Mathlib",
+    "Hasse bound",
+    "X0(143) genus 13",
+    "class number 10",
+    "Clay Millennium",
+    "Bost bound",
+    "hasseprimset 127 files condensed 160",
+    "ORCID 0009-0008-1290-6105"
+  ],
+  "license": {
+    "id": "mit"
+  },
+  "upload_type": "software",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "relation": "isNewVersionOf",
+      "identifier": "10.5281/zenodo.XXXXXXX",
+      "resource_type": "software",
+      "title": "birch-swinnerton-dyer-143 private DOI parent BSD/:230 Genesis:160"
+    }
+  ],
+  "communities": [
+    {
+      "identifier": "lean"
+    }
+  ],
+  "version": "143a1-v1.0.0",
+  "language": "eng"
+}
