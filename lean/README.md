@@ -1,4 +1,4 @@
-# lean/ Folder — BSD 143a1 — Birch Swinnerton-Dyer for E143a1 Route B
+# lean/ Folder — BSD 143a1 — Birch Swinnerton-Dyer for E143a1
 
 **What is going on here?**
 
