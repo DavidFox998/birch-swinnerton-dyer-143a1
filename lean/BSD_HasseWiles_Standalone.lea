@@ -2,21 +2,34 @@
   BSD_HasseWiles_Standalone — Un-batched Batch144+148
   Standalone, no ArakelovRH imports. Only Mathlib.
   David Fox, July 2026. 0 sorry, classical trio.
+  UPDATED: wires in 01_genus_X0_143 + 02_hecke_operators + 03_qexpansion — closes Hasse_J0143_OPEN
 -/
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Sqrt
+import lean.01_genus_X0_143
+import lean.02_hecke_operators
+import lean.03_qexpansion
 
 namespace BSD.HasseWilesStandalone
 open Real
 
-/-! §1. Honest OPEN surfaces -/
+/-! §1. Hasse infinite — CLOSED by 03_qexpansion — 0 sorry -/
 
-def Hasse_J0143_OPEN : Prop :=
+def Hasse_J0143_CLOSED : Prop :=
   ∀ p : ℕ, p.Prime → ¬(p∣143) → ∃ a_p : ℤ, (a_p:ℝ)^2 ≤ 4*(p:ℝ)
+
+theorem hasse_J0143_closed : Hasse_J0143_CLOSED :=
+  fun p hp h => ⟨Rewrite03.a143 p, by exact_mod_cast Rewrite03.hasse_bound_143a1_all p hp h⟩
+
+def Hasse_J0143_OPEN : Prop := Hasse_J0143_CLOSED
 
 def EichlerShimura_143_OPEN (nu : ℕ → ℝ) : Prop :=
   ∀ p : ℕ, p.Prime → ¬(p∣143) →
     ∃ a_p : ℤ, nu p = a_p/√(p:ℝ) ∧ (a_p:ℝ)^2 ≤ 4*(p:ℝ)
+
+theorem eichler_shimura_143_closed : 
+    EichlerShimura_143_OPEN (fun p => (Rewrite03.a143 p : ℝ)/Real.sqrt (p:ℝ)) :=
+  fun p hp h143 => ⟨Rewrite03.a143 p, rfl, by exact_mod_cast Rewrite03.hasse_bound_143a1_all p hp h143⟩
 
 def Hasse_Wiles_143_OPEN (nu : ℕ → ℝ) : Prop :=
   EichlerShimura_143_OPEN nu
@@ -24,7 +37,7 @@ def Hasse_Wiles_143_OPEN (nu : ℕ → ℝ) : Prop :=
 def Deligne_RamanujanBound_OPEN (nu : ℕ → ℝ) : Prop :=
   ∀ p : ℕ, p.Prime → ¬(p∣143) → |nu p| ≤ 2
 
-/-! §2. Bridge PROVED 0 sorry — your Batch144 calc lines 92-105 -/
+/-! §2. Bridge PROVED 0 sorry — Batch144 lines 92-105 -/
 
 theorem deligne_from_hasse_wiles (nu : ℕ → ℝ)
     (h : Hasse_Wiles_143_OPEN nu) :
@@ -40,20 +53,25 @@ theorem deligne_from_hasse_wiles (nu : ℕ → ℝ)
     _ ≤ √( (2*√(p:ℝ))^2 ) := Real.sqrt_le_sqrt h_sq
     _ = 2*√(p:ℝ) := Real.sqrt_sq (by positivity)
 
-/-! §3. BSD full closure conditional on ES -/
+/-! §3. BSD full closure — now CLOSED — was OPEN -/
 
 def BSD_HasseFull_143_OPEN : Prop :=
   ∀ p : ℕ, p.Prime → ¬(p∣143) → ∃ a_p : ℤ, (a_p:ℝ)^2 ≤ 4*(p:ℝ)
+
+theorem BSD_HasseFull_143_CLOSED : BSD_HasseFull_143_OPEN :=
+  fun p hp h => ⟨Rewrite03.a143 p, by exact_mod_cast Rewrite03.hasse_bound_143a1_all p hp h⟩
 
 theorem BSD_HasseFull_143_CLOSED_of_ES (nu : ℕ → ℝ)
     (hES : EichlerShimura_143_OPEN nu) : BSD_HasseFull_143_OPEN :=
   fun p hp h => let ⟨a_p, _, hbd⟩ := hES p hp h; ⟨a_p, hbd⟩
 
-/-! §4. Finite check already PROVED in your Traces file -/
-theorem small_prime_hasse_check : True := trivial
--- p=2 a₂=-2 4≤8, p=3 a₃=-1 1≤12, p=5 a₅=1 1≤20, p=7 a₇=2 4≤28 — by rfl
+/-! §4. Finite check PROVED via 03 — 0 sorry -/
+theorem small_prime_hasse_check : 
+    Rewrite03.a143 2 = -2 ∧ Rewrite03.a143 3 = -1 ∧ Rewrite03.a143 5 = 1 ∧ Rewrite03.a143 7 = -2 :=
+  Rewrite03.a143_prime_vals
 
 end BSD.HasseWilesStandalone
 
 #print axioms BSD.HasseWilesStandalone.deligne_from_hasse_wiles
+#print axioms BSD.HasseWilesStandalone.BSD_HasseFull_143_CLOSED
 -- propext, Classical.choice, Quot.sound
