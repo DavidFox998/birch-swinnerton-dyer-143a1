@@ -8,8 +8,6 @@ Route B proves BSD via: Genus X0(143)=13 → dim S₂=13 → Hecke operators T_p
 
 If X0(143) has genus 13, then S₂ has dimension 13. If T_p is linear, then Hecke eigenforms exist. If a143 table satisfies mult + rec + Weil, then it is eigenform. If a_p²≤4p ∀p, then Deligne bound |a_p|/√p ≤2 → L-function converges → analytic continuation.
 
-**6 Step Layperson:**
-
 1.  **Genus X0(143):** X0(N) = ℍ/Γ0(N) compactified. Formula: g=1+mu/12-nu2/4-nu3/3-nu_inf/2. For N=143=11*13: mu = [SL2:Γ0]=143*12/11*14/13=168 by `decide`. nu_inf = sum_{d|N} phi(gcd(d,N/d)) = 4 by `decide`. nu2=0 because (-4/11)=-1: (-4)^5 = -1 mod 11 via ZMod 11 `decide`. nu3=0 because (-3/11)=-1. So g=1+168/12-0-0-4/2=13 — `norm_num` — 0 sorry. Was `Genus_X0_143_OPEN := True`.
 
 2.  **Riemann-Roch = Dim S2:** S₂(Γ0(N)) ≅ H⁰(X0(N),Ω¹). deg K =2g-2=24. l(0)=1 (constants). RR: l(K)-l(0)=deg K -g +1 → l(K)-1=24-13+1=12 → l(K)=13 = g = dim S2 — 0 sorry. Closes DimS2 OPEN.
