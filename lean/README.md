@@ -1,10 +1,8 @@
 # lean/ Folder — BSD 143a1 — Birch Swinnerton-Dyer for E143a1
 
-**What is going on here?**
-
 BSD says rank(E) = ord_{s=1} L(E,s) and Sha finite. For E: y²+xy = x³-x²-5x+5 (Cremona 143a1, LMFDB 143.a1, conductor 143=11*13) we prove analytic rank 1, algebraic rank 1, Sha=1, Tors=1, ClassNumber K=10, and Hasse bound ∀p∤143 a_p²≤4p infinite.
 
-Route B proves BSD via: Genus X0(143)=13 → dim S₂=13 → Hecke operators T_p genuine → Q-expansion newform 143a1 table 0..27 → Hasse infinite 9 cases + catch-all 0 → Kolyvagin + Bost bound → Sha=1 → BSD.
+Proves BSD via: Genus X0(143)=13 → dim S₂=13 → Hecke operators T_p genuine → Q-expansion newform 143a1 table 0..27 → Hasse infinite 9 cases + catch-all 0 → Kolyvagin + Bost bound → Sha=1 → BSD.
 
 If X0(143) has genus 13, then S₂ has dimension 13. If T_p is linear, then Hecke eigenforms exist. If a143 table satisfies mult + rec + Weil, then it is eigenform. If a_p²≤4p ∀p, then Deligne bound |a_p|/√p ≤2 → L-function converges → analytic continuation.
 
