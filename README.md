@@ -10,9 +10,9 @@
 
 **DOI:** `10.5281/zenodo.21585042` — Published July 26, 2026 — Zenodo: https://zenodo.org/records/21585042
 
-**Parent DOI Repo:** `birch-swinnerton-dyer-143` private — DOI via `.zenodo.json` — `BSD/: 230 files, 160 Genesis files` — Statements real but build 
+**Parent Archive:** `birch-swinnerton-dyer-143`— `BSD/: 230 files, 160 Genesis files` — Statements real but build 
 required 160 files + `verify_weil_cluster.sh` heartbeat 400k — OOM and duplicate primes.
-
+Full parent repo (230 files) archived in `parent_full_history/birch-swinnerton-dyer-143-parent.zip` for referees. Not required for build.
 **This Repo Fix:** Condenses 160 Genesis → 127 files in `hasseprimset/` — 33 duplicates removed — plus 3 Lean bricks closing Hasse infinite for all p — 
 direct fix preserving math, simplifying proof object. 99.1% Lean 0.9% Python.
 
