@@ -16,7 +16,7 @@ Full parent repo (230 files) archived in `parent_full_history/birch-swinnerton-d
 **This Repo Fix:** Condenses 160 Genesis → 127 files in `hasseprimset/` — 33 duplicates removed — plus 3 Lean bricks closing Hasse infinite for all p — 
 direct fix preserving math, simplifying proof object. 99.1% Lean 0.9% Python.
 
-### What Is Proved — 6 Step Layperson Explanation for Referees
+### What Is Proved — 6 Step Explanation
 
 **1. Genus of X0(143):** X0(N)=ℍ/Γ0(N) compactified. Genus formula g=1+μ/12-ν2/4-ν3/3-ν∞/2. For N=143=11·13, μ=[SL2:Γ0]=168, ν∞=4, ν2=ν3=0 
 because Legendre symbols (-4/11)=-1 and (-3/11)=-1, checked via ZMod 11 in Lean `decide`. Hence g=1+168/12-4/2=13.
