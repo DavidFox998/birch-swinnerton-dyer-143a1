@@ -2,15 +2,20 @@ name: Zenodo DOI
 on:
   release:
     types: [published]
+  workflow_dispatch:
+
 jobs:
   deposit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: fnandor/zenodo-deposit@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Zenodo Draft and Publish
+        uses: zenodraft/action@0.13.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          zenodo_token: ${{ secrets.ZENODO_TOKEN }}
-          # set to true after your first successful DOI
+          token: ${{ secrets.ZENODO_TOKEN }}
+          concept: # leave empty for first DOI, then put your conceptrecid here after first success
           publish: true
           sandbox: false
+          verbose: true
