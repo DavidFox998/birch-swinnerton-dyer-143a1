@@ -1,7 +1,5 @@
 name: Zenodo DOI
 on:
-  release:
-    types: [published]
   workflow_dispatch:
 
 jobs:
@@ -11,11 +9,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Zenodo Draft and Publish
+      - name: Debug Token
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+        run: |
+          echo "Token length: ${#ZENODO_TOKEN}"
+          echo "Testing auth to Zenodo..."
+          curl -s -o /tmp/resp.txt -w "%{http_code}" "https://zenodo.org/api/deposit/depositions?access_token=$ZENODO_TOKEN&size=1" > /tmp/code.txt
+          echo "HTTP code: $(cat /tmp/code.txt)"
+          cat /tmp/resp.txt
+          if [ "$(cat /tmp/code.txt)" = "403" ]; then
+            echo ">>> TOKEN IS INVALID OR MISSING deposit:write SCOPE"
+            exit 1
+          fi
+
+      - name: Publish to Zenodo
+        if: success()
         uses: zenodraft/action@0.13.3
+        env:
+          ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_TOKEN }}
         with:
-          token: ${{ secrets.ZENODO_TOKEN }}
-          concept: # leave empty for first DOI, then put your conceptrecid here after first success
           publish: true
           sandbox: false
           verbose: true
