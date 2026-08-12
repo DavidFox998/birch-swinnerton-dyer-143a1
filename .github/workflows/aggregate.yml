@@ -1,11 +1,6 @@
-name: Aggregate hasseprimset -> HassePrimeSet.lean
+name: Run aggregate
 on:
-  push:
-    paths:
-      - 'hasseprimset/**'
-      - 'aggregate.py'
-      - 'find_opens.py'
-      - '.github/workflows/aggregate.yml'
+  workflow_dispatch:  # adds a "Run workflow" button on website
 
 jobs:
   aggregate:
@@ -17,22 +12,10 @@ jobs:
           python-version: '3.11'
       - name: Run aggregate.py
         run: python aggregate.py
-      - name: Find genuinely open goals
-        run: |
-          echo "=== Running find_opens.py ==="
-          python find_opens.py | tee opens.txt
-          echo ""
-          echo "=== Summary by file ==="
-          tail -n 100 opens.txt
-      - name: Upload opens.txt
-        uses: actions/upload-artifact@v4
-        with:
-          name: opens-txt
-          path: opens.txt
-      - name: Commit changes if any
+      - name: Commit generated files
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add HassePrimeSet.lean hasseprimset/ ap_table.json opens.txt || true
-          git diff --staged --quiet || git commit -m "Aggregate + opens.txt"
-          git push || true
+          git add ap_table.json Towers/BSD/HassePrimeSet.lean lean/HassePrimeSet.lean lean/BSD_TimeBound_CLOSED.lean || true
+          git commit -m "auto: aggregate HassePrimeSet 1061 primes" || echo "no changes"
+          git push
