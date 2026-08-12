@@ -1,7 +1,7 @@
 name: Lean Build - 0 sorry verification
-
 on:
   push:
+    branches: [main]
   pull_request:
 
 jobs:
@@ -10,20 +10,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install elan
-        run: |
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+      - name: Install elan + Lean (cached)
+        uses: leanprover/lean-action@v1
+        with:
+          use-github-cache: true
+          cache-key: elan-${{ hashFiles('lean-toolchain') }}
+          lake-build: false
 
       - name: Lake update
-        run: ~/.elan/bin/lake update
+        run: lake update
 
       - name: Lake build
+        run: lake build
+
+      - name: Check 0 sorry in Towers/BSD
         run: |
-          ~/.elan/bin/lake build lean
+          echo "=== grep sorry ==="
+         ! grep -R "^\s*sorry" --include="*.lean" Towers/ lean/ || (echo "FOUND SORRY" && exit 1)
+          echo "0 sorry OK"
+
+      - name: Check HassePrimeSet if present
+        run: |
           if [ -f "HassePrimeSet.lean" ]; then
-            echo "Checking HassePrimeSet.lean..."
-            ~/.elan/bin/lake env lean HassePrimeSet.lean
-          else
-            echo "HassePrimeSet.lean not found, skipping check (will be auto-generated)"
+            lake env lean HassePrimeSet.lean
           fi
