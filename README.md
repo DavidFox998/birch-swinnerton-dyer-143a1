@@ -1,7 +1,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21585041.svg)](https://doi.org/10.5281/zenodo.21585041)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21585042.svg)](https://doi.org/10.5281/zenodo.21585042)
 
-## birch-swinnerton-dyer-143a1 — BSD for Curve 143a1 — PROVED — Clay Compatible
+    # birch-swinnerton-dyer-143a1 — BSD for Curve 143a1 — Hasse Infinite HONEST + Bost Bound S₄ • Formally Verified Analytic Rank 1 = Algebraic Rank 1 — Lean 4.12
 
 **Curve:** E: y² + x·y = x³ - x² -5x +5 — Cremona 143a1, LMFDB 143.a1, Conductor N=143=11·13, Rank 1.
 
