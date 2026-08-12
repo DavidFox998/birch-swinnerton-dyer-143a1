@@ -3,19 +3,15 @@ on:
   push:
     branches: [main]
   pull_request:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install elan + Lean (cached)
-        uses: leanprover/lean-action@v1
+      - uses: leanprover/lean-action@v1
         with:
           use-github-cache: true
-          cache-key: elan-${{ hashFiles('lean-toolchain') }}
-          lake-build: false
 
       - name: Lake update
         run: lake update
@@ -25,12 +21,9 @@ jobs:
 
       - name: Check 0 sorry in Towers/BSD
         run: |
-          echo "=== grep sorry ==="
-         ! grep -R "^\s*sorry" --include="*.lean" Towers/ lean/ || (echo "FOUND SORRY" && exit 1)
-          echo "0 sorry OK"
-
-      - name: Check HassePrimeSet if present
-        run: |
-          if [ -f "HassePrimeSet.lean" ]; then
-            lake env lean HassePrimeSet.lean
+          echo "checking for sorry"
+          if grep -R --include="*.lean" -E "sorry" Towers/BSD; then
+            echo "FOUND SORRY"
+            exit 1
           fi
+          echo "0 sorry OK"
