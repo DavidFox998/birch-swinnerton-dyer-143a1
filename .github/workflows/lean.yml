@@ -10,16 +10,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache elan
+      - name: Cache elan and lake
         uses: actions/cache@v4
         with:
-          path: ~/.elan
-          key: elan-v1
+          path: |
+            ~/.elan
+            .lake
+            lean/.lake
+          key: elan-v1-${{ hashFiles('lean-toolchain') }}
+          restore-keys: |
+            elan-v1-
 
-      - name: Install elan
+      - name: Install elan (retry on 503)
         run: |
-          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          if [ -f "$HOME/.elan/bin/elan" ]; then
+            echo "elan cached, skipping download"
+          else
+            for i in 1 2 3 4 5; do
+              echo "elan install attempt $i"
+              curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh && \
+              sh /tmp/elan-init.sh -y --default-toolchain none && break
+              echo "failed, sleep $((i*10))s"
+              sleep $((i*10))
+            done
+          fi
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
+          ~/.elan/bin/elan --version || true
 
       - name: Lake build
         run: |
@@ -28,7 +44,6 @@ jobs:
 
       - name: Check 0 sorry
         run: |
-          echo "checking Towers/BSD"
           if grep -R --include="*.lean" -E "^[[:space:]]*sorry" Towers/BSD; then
             echo "FOUND REAL SORRY"
             exit 1
