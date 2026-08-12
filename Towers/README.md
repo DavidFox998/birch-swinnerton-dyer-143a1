@@ -1,0 +1,1 @@
+BSD_Frobenius_Ker_card_eq_degree — a² + p b² - a_p a b = |ker(a - b·Frob)| • BSD_Frobenius_Degree_Nonneg_143a1 — |ker| ≥0 → r² - a_p r + p ≥0 • BSD_Hasse_From_Frobenius_143a1 — a_p² ≤4p from discriminant at r=a_p/2 • BSD_WeilHasse_Frobenius_143a1_proved — closes Gate 1 
