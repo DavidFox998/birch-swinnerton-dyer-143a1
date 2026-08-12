@@ -42,4 +42,3 @@ jobs:
           path: |
             ap_table.json
             Towers/BSD/HassePrimeSet.lean
-            lean/HassePrimeSet.lean
