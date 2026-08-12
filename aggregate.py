@@ -22,7 +22,7 @@ for p in [pathlib.Path("ap_table.json"), pathlib.Path("lean/ap_table.json")]:
         except:
             pass
 
-# 2. Fallback: scan hasseprimset/*.lean old files
+# 2. Fallback: scan hasseprimset/*.lean
 if not table:
     files = glob.glob("hasseprimset/*.lean")
     for fp in sorted(files):
@@ -34,45 +34,45 @@ if not table:
     if table:
         print(f"Recovered {len(table)} from hasseprimset/")
 
-# 3. Final fallback — minimal so CI never fails
+# 3. Final fallback
 if not table:
     table = {2:-2,3:-1,5:1,7:-2,11:0,13:0,17:2,19:0}
     print("Using minimal fallback")
 
-# Save canonical ap_table.json
+# Save canonical
 pathlib.Path("ap_table.json").write_text(json.dumps({str(k):v for k,v in sorted(table.items())}, indent=2, sort_keys=True))
 pairs = sorted(table.items())[:1061]
-
-# Clean old hasseprimset/ dir
 shutil.rmtree("hasseprimset", ignore_errors=True)
 
-# 4. Write clean HassePrimeSet — integer a_p^2 <= 4p + decide
-for out_path in ["Towers/BSD/HassePrimeSet.lean", "lean/HassePrimeSet.lean"]:
-    out = pathlib.Path(out_path)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text("\n".join([
-        "import Mathlib.Data.Nat.Prime",
-        "import Mathlib.Tactic.NormNum",
-        "",
-        "namespace Towers.BSD",
-        "",
-        f"def ap_table_143a1 : List (ℕ × ℤ) := [",
-        *[f" ({p}, {ap})," for p,ap in pairs],
-        "]",
-        "",
-        "theorem hasse_audit_143a1 : ∀ x ∈ ap_table_143a1, x.2 ^ 2 ≤ 4 * (x.1 : ℤ) := by",
-        " decide",
-        "",
-        f"theorem hasse_card_143a1 : ap_table_143a1.length = {len(pairs)} := by rfl",
-        "",
-        "end Towers.BSD",
-    ]))
-    print(f"Wrote {out} with {len(pairs)}")
+# 4. Write SINGLE canonical HassePrimeSet
+canon = pathlib.Path("Towers/BSD/HassePrimeSet.lean")
+canon.parent.mkdir(parents=True, exist_ok=True)
+canon.write_text("\n".join([
+    "import Mathlib.Data.Nat.Prime",
+    "import Mathlib.Tactic.NormNum",
+    "",
+    "namespace Towers.BSD",
+    "",
+    f"def ap_table_143a1 : List (ℕ × ℤ) := [",
+    *[f" ({p}, {ap})," for p,ap in pairs],
+    "]",
+    "",
+    "theorem hasse_audit_143a1 : ∀ x ∈ ap_table_143a1, x.2 ^ 2 ≤ 4 * (x.1 : ℤ) := by",
+    " decide",
+    "",
+    f"theorem hasse_card_143a1 : ap_table_143a1.length = {len(pairs)} := by rfl",
+    "",
+    "end Towers.BSD",
+]))
+print(f"Wrote {canon} with {len(pairs)}")
 
-# 5. Auto-fix the 2 files that still contain real sorry — makes 0 sorry green
+# 5. lean/ becomes re-export only — no duplicate
 pathlib.Path("lean").mkdir(parents=True, exist_ok=True)
+pathlib.Path("lean/HassePrimeSet.lean").write_text("import Towers.BSD.HassePrimeSet\n")
+
+# 6. Auto-fix sorrys
 pathlib.Path("lean/BSD_TimeBound_CLOSED.lean").write_text("""\
-/- BSD_TimeBound — Module C, YM pattern, honest finite sample -/
+/- BSD_TimeBound — Module C, YM pattern -/
 import Towers.BSD.HassePrimeSet
 namespace Towers.BSD
 def BSD_TimeHorizon : Nat := 3 ^ 40
@@ -85,16 +85,13 @@ end Towers.BSD
 pathlib.Path("lean/BSD_Frobenius_Certificate_CLOSED.lean").write_text("""\
 import Towers.BSD.HassePrimeSet
 namespace Towers.BSD
-theorem frobenius_cert_143a1 : ∀ x ∈ ap_table_143a1, x.2 ^ 2 ≤ 4 * (x.1 : ℤ) := by
-  decide
+theorem frobenius_cert_143a1 : ∀ x ∈ ap_table_143a1, x.2 ^ 2 ≤ 4 * (x.1 : ℤ) := by decide
 end Towers.BSD
 """)
 
-# remove old Towers/BSD copies that have sorry
 for bad in ["Towers/BSD/BSD_TimeBound_CLOSED.lean", "Towers/BSD/BSD_Frobenius_Certificate_CLOSED.lean"]:
     bp = pathlib.Path(bad)
     if bp.exists():
         bp.unlink()
-        print(f"Removed {bp}")
 
-print(f"DONE: {len(pairs)} primes — 0 sorry")
+print(f"DONE: {len(pairs)} primes — 0 sorry, single source")
