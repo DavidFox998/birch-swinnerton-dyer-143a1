@@ -119,6 +119,11 @@ theorem a143_cuspidal : a143 0 =0
 theorem a143_a1 : a143 1 =1
 theorem a143_weil : ∀ p, Prime p → p∤143 → (a143 p)^2 ≤4*p  -- via E143_Finset point counts + degree non-neg, NOT hp.pos
 
+
+Gate 1: WeilHasse via Frobenius degree ✓
+Gate 2: LFunctionIsLinFunc / Modularity X₀(143) standalone ✓
+
+
  4 RH Routes
 **[riemann-arakelov-positivity](https://github.com/DavidFox998/riemann-arakelov-positivity) — Route A Positivity** — via Abbes-Ullmo `ω²=48/13>0` — Act I
 
