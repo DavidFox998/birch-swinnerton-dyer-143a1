@@ -1,41 +1,32 @@
 name: Lean Build - 0 sorry verification
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache elan + lake
+      - name: Cache elan
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.elan
-           .lake
-            lean/.lake
-          key: lean-${{ hashFiles('lean-toolchain', 'lakefile.*', 'lake-manifest.json') }}-v1
+          path: ~/.elan
+          key: elan-v1
 
       - name: Install elan
         run: |
-          if! command -v elan &> /dev/null; then
-            curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
-          fi
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
-      - name: Lake update and build
+      - name: Lake build
         run: |
           ~/.elan/bin/lake update
-          ~/.elan/bin/lake build lean || ~/.elan/bin/lake build
-          if [ -f "HassePrimeSet.lean" ]; then
-            echo "Checking HassePrimeSet.lean..."
-            ~/.elan/bin/lake env lean HassePrimeSet.lean || true
-          fi
+          ~/.elan/bin/lake build
 
       - name: Check 0 sorry
         run: |
-         ! grep -R "sorry" --include="*.lean" Towers/BSD || (echo "FOUND SORRY" && exit 1)
-          echo "0 sorry OK"
+          echo "checking Towers/BSD"
+          ! grep -R "sorry" --include="*.lean" Towers/BSD
