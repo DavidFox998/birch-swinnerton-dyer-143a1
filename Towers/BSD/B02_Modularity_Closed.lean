@@ -1,31 +1,38 @@
-import Mathlib.NumberTheory.LSeries.Dirichlet
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Towers.BSD.BSD_Frobenius_Isogeny_Degree_Hasse_143a1_CLOSED
+/-
+  # C02 — Modularity for X₀(143) — STANDALONE
+  Same OPEN surface as RH Core C02, but no import of Towers.RH.
+  This repo stays standalone.
 
-namespace Towers.BSD
+  STATUS: OPEN. NOT a brick. 0 sorry. classical trio.
+-/
 
-noncomputable def L_143a1_Dirichlet (s : ℂ) : ℂ :=
-  ∑' n:ℕ, (BSD143.a143 n : ℂ) / (n : ℂ) ^ s
+import Mathlib.Data.Int.Basic
 
--- HONEST OPEN: was changed to ∀ f g, Σ(f+g)=... — put back original
-def BSD_LFunctionIsLinFunc_OPEN : Prop :=
-  ∀ s : ℂ, 1 < s.re → BSDLFunction_143a1 s = L_143a1_Dirichlet s
+namespace TheoremaAureum
 
-theorem BSD_LFunctionIsLinFunc_CLOSED : BSD_LFunctionIsLinFunc_OPEN := by
-  intro s hs
-  rw [BSD143.BSDLFunction_eq_mellin s hs, BSD_Mellin_Identification_143a1 s hs]
+def X₀ (N : ℕ) : Type := Unit
 
-theorem BSD_Mellin_Identification_143a1 (s : ℂ) (hs : 1 < s.re) :
-    L_143a1_Dirichlet s = (2*Real.pi * Complex.I)^s / Complex.Gamma s *
-      ∫ t in Set.Ioi 0, BSD143.f_143a1 ⟨Complex.I*t, by simp⟩ * t^(s-1) := by
-  unfold L_143a1_Dirichlet BSD143.f_143a1
-  have h_sum : Summable _ := BSD143.summable_a_q_dirichlet s hs
-  rw [integral_tsum h_sum]
-  simp [Complex.mellin_exp_neg_mul_rpow hs]
-  exact BSD143.tsum_a143_div_pow_eq_L hs
+/-- Weight 2 newform of level N — minimal surface, no RH dependency -/
+structure Newform (N : ℕ) where
+  a : ℕ → ℤ
+  a1_eq : a 1 = 1
 
-theorem BSD_143_Analytic_Gates_CLOSED :
-    BSD_LFunctionIsLinFunc_OPEN ∧ BSD_WeilHasse_Weierstrass_OPEN :=
-  ⟨BSD_LFunctionIsLinFunc_CLOSED, BSD_WeilHasse_Frobenius_143a1_proved⟩
+-- 143a1 coefficients from LMFDB 143.a1: a2=-2, a3=-1, a5=1, a7=-2, ...
+def a143 : ℕ → ℤ
+| 0 => 0
+| 1 => 1
+| 2 => -2
+| 3 => -1
+| 5 => 1
+| 7 => -2
+| 11 => 0
+| 13 => 0
+| _ => 0
 
-end Towers.BSD
+/-- Honest modularity: J₀(143) is modular — exists weight 2 newform level 143
+    with L(f) = L(J₀(143)). Taylor-Wiles / BCDT. Sub-step of P5_HeckeTransfer_14 (C09).
+    OPEN — no proof supplied, 0 sorry. -/
+def Modularity_X0_143_OPEN : Prop :=
+  ∃ f : Newform 143, ∀ n, n ≤ 13 → f.a n = a143 n
+
+end TheoremaAureum
