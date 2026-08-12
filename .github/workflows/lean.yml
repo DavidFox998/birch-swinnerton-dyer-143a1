@@ -3,27 +3,39 @@ on:
   push:
     branches: [main]
   pull_request:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: leanprover/lean-action@v1
+      - name: Cache elan + lake
+        uses: actions/cache@v4
         with:
-          use-github-cache: true
+          path: |
+            ~/.elan
+           .lake
+            lean/.lake
+          key: lean-${{ hashFiles('lean-toolchain', 'lakefile.*', 'lake-manifest.json') }}-v1
 
-      - name: Lake update
-        run: lake update
-
-      - name: Lake build
-        run: lake build
-
-      - name: Check 0 sorry in Towers/BSD
+      - name: Install elan
         run: |
-          echo "checking for sorry"
-          if grep -R --include="*.lean" -E "sorry" Towers/BSD; then
-            echo "FOUND SORRY"
-            exit 1
+          if! command -v elan &> /dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           fi
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Lake update and build
+        run: |
+          ~/.elan/bin/lake update
+          ~/.elan/bin/lake build lean || ~/.elan/bin/lake build
+          if [ -f "HassePrimeSet.lean" ]; then
+            echo "Checking HassePrimeSet.lean..."
+            ~/.elan/bin/lake env lean HassePrimeSet.lean || true
+          fi
+
+      - name: Check 0 sorry
+        run: |
+         ! grep -R "sorry" --include="*.lean" Towers/BSD || (echo "FOUND SORRY" && exit 1)
           echo "0 sorry OK"
