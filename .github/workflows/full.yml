@@ -1,0 +1,17 @@
+name: Build full 1061
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python rebuild_full.py
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add ap_table.json Towers/BSD/HassePrimeSet.lean
+          git commit -m "full 1061 audit" || echo "no change"
+          git push
