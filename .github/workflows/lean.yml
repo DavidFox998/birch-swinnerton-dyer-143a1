@@ -17,25 +17,10 @@ jobs:
       - name: Run aggregate.py
         run: python aggregate.py
 
-      - name: Cache elan and lake
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.elan
-           .lake
-            lean/.lake
-          key: elan-v1-${{ hashFiles('lean-toolchain') }}
-          restore-keys: |
-            elan-v1-
-
-      - name: Install elan (retry on 503)
+      - name: Install elan
         run: |
-          if [ -f "$HOME/.elan/bin/elan" ]; then echo "cached"; else
-            for i in 1 2 3 4 5; do
-              curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh && sh /tmp/elan-init.sh -y --default-toolchain none && break
-              sleep $((i*10))
-            done
-          fi
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
       - name: Lake build
@@ -46,7 +31,7 @@ jobs:
       - name: Check 0 sorry
         run: |
           if grep -R --include="*.lean" -E "^[[:space:]]*sorry" Towers/BSD lean; then
-            echo "FOUND REAL SORRY"; exit 1
+            echo "FOUND SORRY"; exit 1
           fi
           echo "0 sorry OK"
 
@@ -58,4 +43,3 @@ jobs:
             ap_table.json
             Towers/BSD/HassePrimeSet.lean
             lean/HassePrimeSet.lean
-            lean/BSD_TimeBound_CLOSED.lean
