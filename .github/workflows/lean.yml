@@ -26,7 +26,7 @@ jobs:
           ~/.elan/bin/lake update
           ~/.elan/bin/lake build
 
-      -       - name: Check 0 sorry
+      - name: Check 0 sorry
         run: |
           echo "checking Towers/BSD"
           if grep -R --include="*.lean" -E "^[[:space:]]*sorry" Towers/BSD; then
