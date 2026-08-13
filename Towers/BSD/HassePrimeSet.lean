@@ -1070,6 +1070,8 @@ def ap_table_143a1 : List (ℕ × ℤ) := [
 theorem hasse_audit_143a1 : ∀ x ∈ ap_table_143a1, x.2 ^ 2 ≤ 4 * (x.1 : ℤ) := by
  decide
 
-f"theorem hasse_card_143a1 : ap_table_143a1.length = {len(pairs)} := by rfl
+theorem hasse_card_143a1 : ap_table_143a1.length = 1061 := by rfl
+
+end Towers.BSD
 
 end Towers.BSD
