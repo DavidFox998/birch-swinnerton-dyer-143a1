@@ -295,7 +295,7 @@ We will address:
 
 This repo stays `v1.0-CLAY-CLOSED` for 143a1 — foundation for family. After CERN upload, we will tag `birch-swinnerton-dyer-11a1`, `37a1`, etc. using same 3-gate pattern.
 
-### 4 RH Routes (same C)
+### 4 RH Routes
 
 **[riemann-arakelov-positivity](https://github.com/DavidFox998/riemann-arakelov-positivity) — Route A Positivity:** M3 as height ω²=48/13>0 — if Siegel zero, height negative.
 **[arakelov-rh-descent](https://github.com/DavidFox998/arakelov-rh-descent) — Route B Descent:** M1-M2 as Kim-Sarnak λ₁≥975/4096 → Selberg trace = Bost-Connes → GRH → RH.
