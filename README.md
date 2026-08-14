@@ -157,7 +157,6 @@ Both routes give same theorem, plus third result: `ClassGroup = ⟨[p2]⟩` cycl
 
 Parent `birch-swinnerton-dyer-143` — 230 files, 160 Genesis — 6 gates, 4→2→2 combinators
 
-
 Tier 0 — Scaffolding (OPEN surfaces for Wiles-Taylor)
   B01_EllipticCurve.lean
     └─ opaque anchors: Weierstrass [0,-1,1,-1,-2], conductor 143=11*13, point (4,6), L_143a1
@@ -241,7 +240,6 @@ Result parent:
 
 This repo `birch-swinnerton-dyer-143a1` — 127 files + 3 bricks — 3 gates CLOSED
 
-
 Root (4 primes, not 14)
   BostBound143.lean
     └─ S4={2,3,19,191} C=11.422148...>2√13≈7.211 margin x1.58 — no duplicates
@@ -279,7 +277,6 @@ Result this repo:
   127 files not 160, 33 duplicates removed, 0 OPEN in MathlibGaps/
   0 sorry, classical trio, build #175 GREEN, aggregate.yml 0 sorry
   Parent zip kept for referees in parent_full_history/)
-
 
 ### Multiple curves — future work
 
@@ -340,6 +337,7 @@ This repo stays `v1.0-CLAY-CLOSED` for 143a1 — foundation for family. After CE
 ---
 
 ORCID: [0009-0008-1290-6105](https://orcid.org/0009-0008-1290-6105) · Archive: [pistus-theoria](https://github.com/DavidFox998/pistus-theoria) — `OperaNumerorum_MasterEquations.pdf SHA 7f6b31b4`
+**Ensemble:** `sha256:e1617bc96018da4577f153f2e0cd8cc4eda1183434a9624b6cefaedc655db6c5` · hub [`rh-p5-bridge-14`](https://github.com/DavidFox998/rh-p5-bridge-14) · anchor `d04e4bd1`
 ### Build
 lake build — 122 runs GREEN — 0 sorry — axioms propext, Classical.choice, Quot.sound
 python3 aggregate.py — regenerates HassePrimeSet.lean from hasseprimset/ 127 files
