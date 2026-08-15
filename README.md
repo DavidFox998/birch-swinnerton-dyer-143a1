@@ -1,6 +1,9 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21585041.svg)](https://doi.org/10.5281/zenodo.21585041)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21585042.svg)](https://doi.org/10.5281/zenodo.21585042)
 
+> **Opera Numerorum ensemble** — 19 repos · chain `7472f4e5` · [REPOS.md →](https://github.com/DavidFox998/rh-p5-bridge-14/blob/main/REPOS.md)
+
+
 # birch-swinnerton-dyer-143a1 — BSD for Curve 143a1 — Hasse Infinite HONEST + Bost Bound S₄ — Analytic Rank 1 = Algebraic Rank 1 — Lean 4.12.0 — 0 sorry — BUILD #175 GREEN
 
 **Curve:** E: y² + y = x³ - x² - x -2 — Cremona 143a1, LMFDB 143.a1, Conductor N=143=11·13, Rank 1, Point (4,6) — Heegner.
