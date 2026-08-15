@@ -2,7 +2,6 @@ name: Zenodo DOI
 on:
   release:
     types: [published]
-  workflow_dispatch:
 
 jobs:
   deposit:
@@ -16,7 +15,9 @@ jobs:
           ZENODO_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
         run: |
           echo "Token length: ${#ZENODO_TOKEN}"
-          curl -s "https://zenodo.org/api/deposit/depositions?access_token=$ZENODO_TOKEN&size=1" -o /tmp/r.txt -w "\nHTTP: %{http_code}\n"
+          curl -s "https://zenodo.org/api/deposit/depositions?access_token=$ZENODO_TOKEN&size=1" -o /tmp/r.txt -w "
+HTTP: %{http_code}
+"
           cat /tmp/r.txt
 
       - name: Publish to Zenodo
@@ -24,6 +25,7 @@ jobs:
         env:
           ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
         with:
+          upsert-doi: 10.5281/zenodo.21585041
           publish: true
           sandbox: false
           verbose: true
