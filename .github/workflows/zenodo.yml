@@ -10,15 +10,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Debug Token
+      - name: Skip if token not configured
         env:
-          ZENODO_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
+          ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
         run: |
-          echo "Token length: ${#ZENODO_TOKEN}"
-          curl -s "https://zenodo.org/api/deposit/depositions?access_token=$ZENODO_TOKEN&size=1" -o /tmp/r.txt -w "
-HTTP: %{http_code}
-"
-          cat /tmp/r.txt
+          if [ -z "$ZENODO_ACCESS_TOKEN" ]; then
+            echo "ZENODO_ACCESS_TOKEN not configured — Zenodo webhook handles archival natively"
+            exit 0
+          fi
 
       - name: Publish to Zenodo
         uses: zenodraft/action@0.13.3
