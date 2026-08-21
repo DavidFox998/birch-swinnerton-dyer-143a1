@@ -1,5 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21585041.svg)](https://doi.org/10.5281/zenodo.21585041)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21585042.svg)](https://doi.org/10.5281/zenodo.21585042)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22049021.svg)](https://doi.org/10.5281/zenodo.22049021) [![CI](https://github.com/DavidFox998/birch-swinnerton-dyer-143a1/actions/workflows/lean.yml/badge.svg)](https://github.com/DavidFox998/birch-swinnerton-dyer-143a1/actions/workflows/lean.yml)
 
 > **Opera Numerorum ensemble** — 19 repos · chain `7472f4e5` · [REPOS.md →](https://github.com/DavidFox998/rh-p5-bridge-14/blob/main/REPOS.md)
 
