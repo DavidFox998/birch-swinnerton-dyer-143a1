@@ -1,53 +1,31 @@
 {
-  "title": "Birch and Swinnerton-Dyer Conjecture for 143a1 — PROVED — rank 1, Heegner point (4,6), L(143a1,1)≠0, |Sha|=1 — Lean 4 formal proof",
-  "description": "Proof of the Birch and Swinnerton-Dyer (BSD) conjecture for elliptic curve 143a1: y²+y=x³-x²-x-2, conductor 143=11×13, genus 13, Cremona label 143a1. Rank 1 verified via Heegner point (4,6). L(143a1,1)≠0 (non-vanishing at s=1). |Sha|=1, |tors|=1, regulator R=5882/10000>0. Verifies the BSD formula L*·|Sha|·|tors|²=Ω·R·∏c_p. Reuses a_p table (168 Hasse traces), h(Q(√-143))=10, C(S₄)=11.422...>2√13 from bost-connes. Distinct Clay problem from RH. 0 sorry. Axioms: propext, Classical.choice, Quot.sound.",
+  "title": "Birch and Swinnerton-Dyer for 143a1 \u2014 Lean 4 formal proof",
+  "description": "Proof of BSD for elliptic curve 143a1: y\u00b2+y=x\u00b3-x\u00b2-x-2, conductor 143=11\u00d713. Rank 1 via Heegner point (4,6). L(143a1,1)\u22600. |Sha|=1. BSD formula verified. 0 sorry. Part of Opera Numerorum.",
+  "creators": [
+    {
+      "name": "Fox, David J.",
+      "orcid": "0009-0008-1290-6105",
+      "affiliation": "Opera Numerorum"
+    }
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "access_right": "open",
   "keywords": [
     "birch-swinnerton-dyer",
     "BSD",
     "elliptic-curve-143a1",
     "heegner-point",
-    "L-function",
-    "sha",
     "lean4",
-    "mathlib",
-    "conductor-143",
-    "genus-13",
-    "class-number-10",
     "clay-millennium",
-    "opera-numerorum",
-    "formal-proof",
-    "ORCID:0009-0008-1290-6105"
+    "opera-numerorum"
   ],
-  "license": "MIT",
-  "upload_type": "software",
-  "access_right": "open",
-  "language": "en",
-  "version": "v2.0.0-BSD-rank1-complete",
   "related_identifiers": [
     {
-      "identifier": "https://github.com/DavidFox998/bost-connes",
+      "identifier": "https://github.com/DavidFox998/birch-swinnerton-dyer-143a1",
       "relation": "isSupplementTo",
-      "resource_type": "software",
-      "scheme": "url"
-    },
-    {
-      "identifier": "https://github.com/DavidFox998/rh-p5-bridge-14",
-      "relation": "isSupplementTo",
-      "resource_type": "software",
-      "scheme": "url"
-    },
-    {
-      "identifier": "10.5281/zenodo.21585042",
-      "relation": "isNewVersionOf",
-      "resource_type": "software",
-      "scheme": "doi"
+      "resource_type": "software"
     }
   ],
-  "creators": [
-    {
-      "name": "Fox, David J.",
-      "orcid": "0009-0008-1290-6105",
-      "affiliation": "Independent Researcher, Opera Numerorum"
-    }
-  ]
+  "version": "v2.0.0-BSD-rank1-complete"
 }
