@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "Birch–Swinnerton-Dyer for Curve 143a1 — Hasse and Rank Formalization"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Fox
+    given-names: David
+    orcid: "https://orcid.org/0009-0008-1290-6105"
+    affiliation: "Opera Numerorum"
+license: MIT
+repository-code: "https://github.com/DavidFox998/birch-swinnerton-dyer-143a1"
+keywords:
+  - "Birch–Swinnerton-Dyer conjecture"
+  - "BSD"
+  - "elliptic curve 143a1"
+  - "Hasse bound"
+  - "analytic rank"
+  - "Lean 4"
+  - "formal verification"
+abstract: "Lean 4 formalization of the Hasse-bound, analytic-rank, and Birch–Swinnerton-Dyer formalization for Cremona elliptic curve 143a1 of conductor 143. This repository is part of David Fox's Opera Numerorum ensemble."
