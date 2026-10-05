@@ -325,7 +325,6 @@ This repo stays `v1.0-CLAY-CLOSED` for 143a1 — foundation for family. After CE
 
 
 
-ORCID: [0009-0008-1290-6105](https://orcid.org/0009-0008-1290-6105) · Archive: [pistus-theoria](https://github.com/DavidFox998/pistus-theoria) — `OperaNumerorum_MasterEquations.pdf SHA 7f6b31b4`
 **Ensemble:** `sha256:e1617bc96018da4577f153f2e0cd8cc4eda1183434a9624b6cefaedc655db6c5` · hub [`rh-p5-bridge-14`](https://github.com/DavidFox998/rh-p5-bridge-14) · anchor `d04e4bd1`
 ### Build
 lake build — 122 runs GREEN — 0 sorry — axioms propext, Classical.choice, Quot.sound
