@@ -2,9 +2,67 @@ name: Zenodo DOI
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      delete_draft:
+        description: "Unpublished deposition id to print and delete"
+        required: false
+        default: "23178477"
 
 jobs:
+  inspect-draft:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
+    steps:
+      - name: Print draft metadata and delete if unpublished
+        run: |
+          set -euo pipefail
+          id="${{ github.event.inputs.delete_draft }}"
+          if [ -z "${ZENODO_ACCESS_TOKEN:-}" ]; then
+            echo "ZENODO_ACCESS_TOKEN not configured"
+            exit 1
+          fi
+          code=$(curl -sS -o /tmp/dep.json -w "%{http_code}" \
+            -H "Authorization: Bearer $ZENODO_ACCESS_TOKEN" \
+            "https://zenodo.org/api/deposit/depositions/${id}")
+          echo "GET ${id} HTTP ${code}"
+          python3 - << 'PY'
+          import json
+          d = json.load(open("/tmp/dep.json"))
+          if "metadata" not in d:
+              print(json.dumps({k: d.get(k) for k in ("status", "message")}))
+              raise SystemExit(1)
+          m = d["metadata"]
+          print(json.dumps({
+              "id": d.get("id"),
+              "state": d.get("state"),
+              "submitted": d.get("submitted"),
+              "conceptrecid": d.get("conceptrecid"),
+              "title": m.get("title"),
+              "version": m.get("version"),
+              "upload_type": m.get("upload_type"),
+              "publication_date": m.get("publication_date"),
+              "creators": m.get("creators"),
+              "license": m.get("license"),
+              "description": (m.get("description") or "")[:500],
+          }, indent=2))
+          open("/tmp/state", "w").write(d.get("state") or "")
+          PY
+          state=$(cat /tmp/state)
+          if [ "$state" != "unsubmitted" ] && [ "$state" != "inprogress" ]; then
+            echo "Not deleting state=${state}"
+            exit 1
+          fi
+          dcode=$(curl -sS -o /tmp/del.json -w "%{http_code}" -X DELETE \
+            -H "Authorization: Bearer $ZENODO_ACCESS_TOKEN" \
+            "https://zenodo.org/api/deposit/depositions/${id}")
+          echo "DELETE ${id} HTTP ${dcode}"
+          test "$dcode" = "204" -o "$dcode" = "200" -o "$dcode" = "404"
+
   deposit:
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     env:
       ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
@@ -14,13 +72,38 @@ jobs:
 
       - name: Note when token is not configured
         if: env.ZENODO_ACCESS_TOKEN == ''
-        run: echo "ZENODO_ACCESS_TOKEN not configured — deposit step skipped, Zenodo webhook handles archival natively"
+        run: echo "ZENODO_ACCESS_TOKEN not configured — deposit step skipped"
 
-      - name: Publish to Zenodo
+      - name: Set version to the release tag
+        if: env.ZENODO_ACCESS_TOKEN != ''
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python3 - << 'PY'
+          import json, os
+          meta = json.load(open(".zenodo.json"))
+          meta["version"] = os.environ["RELEASE_TAG"]
+          # Zenodo community "lean" returns 404. The published record has no community.
+          meta.pop("communities", None)
+          json.dump(meta, open(".zenodo.json", "w"), indent=2)
+          print(json.dumps({
+              "title": meta["title"],
+              "version": meta["version"],
+              "upload_type": meta["upload_type"],
+              "license": meta["license"],
+              "creators": meta["creators"],
+          }, indent=2))
+          PY
+
+      - name: Publish a new version of concept 21585041
         if: env.ZENODO_ACCESS_TOKEN != ''
         uses: zenodraft/action@0.13.3
         with:
-          upsert-doi: 10.5281/zenodo.21585041
+          # concept adds a version to 10.5281/zenodo.21585041.
+          # upsert-doi does not select a record. It rewrites CITATION.cff
+          # with a prereserved DOI, and this workflow leaves that off.
+          concept: "21585041"
+          metadata: ".zenodo.json"
           publish: true
           sandbox: false
           verbose: true

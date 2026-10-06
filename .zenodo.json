@@ -27,10 +27,6 @@
       "resource_type": "software"
     }
   ],
-  "communities": [
-    {
-      "identifier": "lean"
-    }
-  ],
-  "language": "en"
+  "language": "en",
+  "version": "set-by-zenodo-workflow-to-the-release-tag"
 }
