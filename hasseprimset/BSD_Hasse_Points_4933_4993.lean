@@ -25,6 +25,17 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 import hasseprimset.BSD_TauBound_small_proved
 import Mathlib.Tactic
 
+private instance instFactPrime4933 : Fact (4933 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4937 : Fact (4937 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4943 : Fact (4943 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4951 : Fact (4951 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4957 : Fact (4957 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4967 : Fact (4967 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4969 : Fact (4969 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4973 : Fact (4973 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4987 : Fact (4987 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4993 : Fact (4993 : ℕ).Prime := ⟨by norm_num⟩
+
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
 
