@@ -54,7 +54,18 @@ Axiom footprint: classical trio {propext, Classical.choice, Quot.sound}.
 ================================================================
 -/
 
-import Towers.BSD.BSD_BSD_L143a1_zero_at_one
+import Towers.BSD.BSD_L143a1_zero_at_one
+
+private instance instFactPrime251 : Fact (251 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime257 : Fact (257 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime263 : Fact (263 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime269 : Fact (269 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime271 : Fact (271 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime277 : Fact (277 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime281 : Fact (281 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime283 : Fact (283 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime293 : Fact (293 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime307 : Fact (307 : ℕ).Prime := ⟨by norm_num⟩
 
 set_option maxRecDepth 10000
 
