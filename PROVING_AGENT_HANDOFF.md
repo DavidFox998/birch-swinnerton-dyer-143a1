@@ -9,7 +9,8 @@
 - Batch 5 is done at `d86e7e9`. `lake build BSD_Assessed_Batch5` and `lake build BSD_Clean_Aggregation` both exit 0.
 - Batch 6 is done at `0b28ede`. `lake build BSD_Assessed_Batch6` and `lake build BSD_Clean_Aggregation` both exit 0.
 - Batch 7 is done at `8742b26`. `lake build BSD_Assessed_Batch7` and `lake build BSD_Clean_Aggregation` both exit 0.
-- Next file is `BSD_Assessed_Batch8.lean`.
+- Batch 8 is done at `8784abe`. `lake build BSD_Assessed_Batch8` and `lake build BSD_Clean_Aggregation` both exit 0.
+- Next file is `BSD_Assessed_Batch9.lean`.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -50,6 +51,12 @@ Batch 7 theorems, and only these:
 - `BSD_DegreeNonneg_p569_prop`, `BSD_DegreeNonneg_p571_prop`, `BSD_DegreeNonneg_p577_prop`, `BSD_DegreeNonneg_p619_prop`, `BSD_DegreeNonneg_p631_prop`, `BSD_DegreeNonneg_p641_prop`, from `Towers/BSD/BSD_Hasse_Points_569_641.lean`. Counts: p=569 card 601, `a_p=−32`; p=571 card 531, `a_p=40`; p=577 card 546, `a_p=31`; p=619 card 626, `a_p=−7`; p=631 card 658, `a_p=−27`; p=641 card 674, `a_p=−33`. The original `decide` proofs were replaced by `native_decide`.
 - Not Hasse for every prime. The clean build now checks finite point counts for `{2,3,5,7}`, primes 17 through 241, `{251,257,263}`, `{373,379,383,433,439,443,491,499,503}`, and `{569,571,577,619,631,641}`. Primes 11 and 13 divide 143. Nothing past 641 is in the clean build. The 54 props with `p≥4999` stay NEEDS_AUTHORING.
 - Batch 8 is the same degree-nonnegativity shape. The only primes there small enough to match this method are `{683,691,701,757,761,769}`. Primes from 6569 upward stay NEEDS_AUTHORING.
+
+Batch 8 theorems, and only these:
+
+- `BSD_DegreeNonneg_p683_prop`, `BSD_DegreeNonneg_p691_prop`, `BSD_DegreeNonneg_p701_prop`, `BSD_DegreeNonneg_p757_prop`, `BSD_DegreeNonneg_p761_prop`, `BSD_DegreeNonneg_p769_prop`, from `Towers/BSD/BSD_Hasse_Points_683_769.lean`. Counts: p=683 card 687, `a_p=−4`; p=691 card 736, `a_p=−45`; p=701 card 711, `a_p=−10`; p=757 card 727, `a_p=30`; p=761 card 795, `a_p=−34`; p=769 card 769, `a_p=0`. The original `decide` proofs were replaced by `native_decide`.
+- Not Hasse for every prime. The clean build now checks finite point counts for `{2,3,5,7}`, primes 17 through 241, `{251,257,263}`, `{373,379,383,433,439,443,491,499,503}`, `{569,571,577,619,631,641}`, and `{683,691,701,757,761,769}`. Primes 11 and 13 divide 143. Nothing past 769 is in the clean build. The 54 props with `p≥6569` stay NEEDS_AUTHORING.
+- Batch 9 is the same degree-nonnegativity shape. The only primes there small enough to match this method are `{827,829,839,887,907,911,971,977,983}`. Primes from 8209 upward stay NEEDS_AUTHORING. `971`, `977`, and `983` are larger enumerations than `769`; if `native_decide` does not finish, drop those three first.
 
 ## Where everything lives
 
@@ -121,7 +128,7 @@ For each `def <Name>_prop : Prop := True` (or real statement):
 
 1. **Batch 1-2** (81 props, 31 with real statements) — most likely to have mechanical fixes
 2. **Batch 3-4** (102 props, 12 with real statements) — mixed
-3. **Batch 8-10** — Batches 5 through 7 are done. Next file is `BSD_Assessed_Batch8.lean`.
+3. **Batch 9-10** — Batches 5 through 8 are done. Next file is `BSD_Assessed_Batch9.lean`.
 
 ## Verification
 
