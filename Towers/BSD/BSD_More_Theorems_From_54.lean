@@ -59,7 +59,8 @@ theorem BSD_Hasse_Forms_Equiv_84
 /-! ## 2. Coprime multiplicativity at two checked primes -/
 
 lemma a_n_eq_a_p (p : ℕ) [Fact p.Prime] : a_n p = a_p p := by
-  rw [← pow_one p, a_n_prime_pow p 1]
+  conv_lhs => rw [← Nat.pow_one p]
+  rw [a_n_prime_pow p 1]
   rfl
 
 /-- `a_n` is multiplicative on coprime arguments. This is the Batch 3 theorem.
@@ -77,7 +78,7 @@ theorem BSD_Coprime_Multiplicativity_Applies_84 :
   have hprod : (21 : ℤ) * 18 = 378 := by decide
   have hN : 251 * 257 = 64507 := by decide
   refine ⟨hmul, h251, h257, hN, ?_⟩
-  rw [hN, hmul, h251, h257, hprod]
+  rw [← hN, hmul, h251, h257, hprod]
 
 /-! ## 3. Weierstrass coefficients and the affine point (2, 0) -/
 
