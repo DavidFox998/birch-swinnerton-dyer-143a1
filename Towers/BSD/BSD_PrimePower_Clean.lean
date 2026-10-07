@@ -27,29 +27,32 @@ private lemma abs_sin_mul_le (n : ℕ) (θ : ℝ) :
   induction n with
   | zero => simp
   | succ n ih =>
-    have harg : ((n + 2 : ℕ) : ℝ) * θ = ((n + 1 : ℕ) : ℝ) * θ + θ := by ring
-    have hsin : sin ((n + 2) * θ) =
-        sin ((n + 1) * θ) * cos θ + cos ((n + 1) * θ) * sin θ := by
+    have harg : ((n + 1 + 1 : ℕ) : ℝ) * θ = ((n + 1 : ℕ) : ℝ) * θ + θ := by ring_nf
+    have hsin : sin (((n + 1 + 1 : ℕ) : ℝ) * θ) =
+        sin (((n + 1 : ℕ) : ℝ) * θ) * cos θ +
+          cos (((n + 1 : ℕ) : ℝ) * θ) * sin θ := by
       rw [harg, sin_add]
-    rw [hsin]
     have hadd :
-        |sin ((n + 1) * θ) * cos θ + cos ((n + 1) * θ) * sin θ| ≤
-          |sin ((n + 1) * θ) * cos θ| + |cos ((n + 1) * θ) * sin θ| :=
+        |sin (((n + 1 : ℕ) : ℝ) * θ) * cos θ +
+            cos (((n + 1 : ℕ) : ℝ) * θ) * sin θ| ≤
+          |sin (((n + 1 : ℕ) : ℝ) * θ) * cos θ| +
+            |cos (((n + 1 : ℕ) : ℝ) * θ) * sin θ| :=
       abs_add _ _
     have hcos1 : |cos θ| ≤ 1 := abs_cos_le_one θ
-    have hcos2 : |cos ((n + 1) * θ)| ≤ 1 := abs_cos_le_one _
-    have h1 : |sin ((n + 1) * θ) * cos θ| ≤ |sin ((n + 1) * θ)| := by
+    have hcos2 : |cos (((n + 1 : ℕ) : ℝ) * θ)| ≤ 1 := abs_cos_le_one _
+    have h1 : |sin (((n + 1 : ℕ) : ℝ) * θ) * cos θ| ≤
+        |sin (((n + 1 : ℕ) : ℝ) * θ)| := by
       rw [abs_mul]
       exact mul_le_of_le_one_right (abs_nonneg _) hcos1
-    have h2 : |cos ((n + 1) * θ) * sin θ| ≤ |sin θ| := by
+    have h2 : |cos (((n + 1 : ℕ) : ℝ) * θ) * sin θ| ≤ |sin θ| := by
       rw [abs_mul]
       exact mul_le_of_le_one_left (abs_nonneg _) hcos2
-    calc |sin ((n + 2) * θ)|
-        ≤ |sin ((n + 1) * θ)| + |sin θ| := by
-            linarith
-      _ ≤ (n + 1 : ℝ) * |sin θ| + |sin θ| := by
-            linarith [ih]
-      _ = (n + 2 : ℝ) * |sin θ| := by ring
+    calc |sin (((n + 1 + 1 : ℕ) : ℝ) * θ)|
+        = |sin (((n + 1 : ℕ) : ℝ) * θ) * cos θ +
+            cos (((n + 1 : ℕ) : ℝ) * θ) * sin θ| := by rw [hsin]
+      _ ≤ |sin (((n + 1 : ℕ) : ℝ) * θ)| + |sin θ| := by linarith
+      _ ≤ (n + 1 : ℝ) * |sin θ| + |sin θ| := by linarith [ih]
+      _ = ((n + 1 + 1 : ℕ) : ℝ) * |sin θ| := by ring_nf
 
 private lemma chebyshev_U_eval_one (n : ℕ) :
     (Chebyshev.U ℝ (n : ℤ)).eval (1 : ℝ) = (n : ℝ) + 1 := by
@@ -61,11 +64,13 @@ private lemma chebyshev_U_eval_one (n : ℕ) :
       cases n with
       | zero =>
         simp [Chebyshev.U_one, eval_mul, eval_ofNat, eval_X]
+        norm_num
       | succ n =>
         rw [show ((n + 2 : ℕ) : ℤ) = (n : ℤ) + 2 by simp, Chebyshev.U_add_two]
         simp only [eval_sub, eval_mul, eval_ofNat, eval_X]
+        rw [show (n : ℤ) + 1 = ((n + 1 : ℕ) : ℤ) by simp]
         rw [ih (n + 1) (by omega), ih n (by omega)]
-        ring
+        ring_nf
 
 private lemma chebyshev_U_eval_neg_one (n : ℕ) :
     (Chebyshev.U ℝ (n : ℤ)).eval (-1 : ℝ) = (-1 : ℝ) ^ n * ((n : ℝ) + 1) := by
@@ -77,11 +82,13 @@ private lemma chebyshev_U_eval_neg_one (n : ℕ) :
       cases n with
       | zero =>
         simp [Chebyshev.U_one, eval_mul, eval_ofNat, eval_X]
+        norm_num
       | succ n =>
         rw [show ((n + 2 : ℕ) : ℤ) = (n : ℤ) + 2 by simp, Chebyshev.U_add_two]
         simp only [eval_sub, eval_mul, eval_ofNat, eval_X]
+        rw [show (n : ℤ) + 1 = ((n + 1 : ℕ) : ℤ) by simp]
         rw [ih (n + 1) (by omega), ih n (by omega)]
-        ring
+        ring_nf
 
 private lemma abs_chebyshev_U_le (n : ℕ) {x : ℝ} (hx : |x| ≤ 1) :
     |(Chebyshev.U ℝ (n : ℤ)).eval x| ≤ (n : ℝ) + 1 := by
@@ -118,14 +125,16 @@ private lemma abs_chebyshev_U_le (n : ℕ) {x : ℝ} (hx : |x| ≤ 1) :
       rw [hcos] at hU
       have hidx : ((n : ℤ) + 1) * θ = ((n + 1 : ℕ) : ℝ) * θ := by
         push_cast
-        ring
+        ring_nf
       have habs : |(Chebyshev.U ℝ (n : ℤ)).eval x| * sin θ =
           |sin (((n + 1 : ℕ) : ℝ) * θ)| := by
-        rw [← hU, hidx, abs_mul, abs_of_nonneg hsin_nonneg]
+        rw [abs_mul, abs_of_nonneg hsin_nonneg, hU, hidx]
+      have hsin_le : |sin (((n + 1 : ℕ) : ℝ) * θ)| ≤ ((n : ℝ) + 1) * sin θ := by
+        simpa [abs_of_nonneg hsin_nonneg] using abs_sin_mul_le n θ
       have hle : |(Chebyshev.U ℝ (n : ℤ)).eval x| * sin θ ≤
           ((n : ℝ) + 1) * sin θ := by
-        rw [habs, abs_of_nonneg hsin_nonneg]
-        simpa using abs_sin_mul_le n θ
+        rw [habs]
+        exact hsin_le
       exact le_of_mul_le_mul_right hle hsin_pos
 
 private lemma a_prime_pow_as_chebyshev
@@ -147,6 +156,7 @@ private lemma a_prime_pow_as_chebyshev
       | zero =>
         simp only [a_prime_pow, Chebyshev.U_one, eval_mul, eval_ofNat, eval_X, pow_one]
         field_simp [hs_pos.ne']
+        ring
       | succ k =>
         have ih1 := ih (k + 1) (by omega)
         have ih0 := ih k (by omega)
@@ -155,14 +165,13 @@ private lemma a_prime_pow_as_chebyshev
         rw [Int.cast_sub, Int.cast_mul, Int.cast_mul, Int.cast_natCast, ih1, ih0]
         rw [show ((k + 2 : ℕ) : ℤ) = (k : ℤ) + 2 by simp, Chebyshev.U_add_two]
         simp only [eval_sub, eval_mul, eval_ofNat, eval_X]
-        have hs_pow : sqrt (p : ℝ) ^ (k + 2) =
-            sqrt (p : ℝ) ^ 2 * sqrt (p : ℝ) ^ k := by ring
-        have hs_mid : sqrt (p : ℝ) ^ (k + 2) =
-            sqrt (p : ℝ) * sqrt (p : ℝ) ^ (k + 1) := by ring
+        rw [show (k : ℤ) + 1 = ((k + 1 : ℕ) : ℤ) by simp]
+        have hs3 : (p : ℝ) * sqrt (p : ℝ) = sqrt (p : ℝ) ^ 3 := by
+          rw [← hs_sq]
+          ring
         field_simp [hs_pos.ne']
+        rw [hs3]
         ring_nf
-        rw [hs_sq]
-        ring
 
 /-- For each of the 84 checked primes and every `k`, `|a_{p^k}| ≤ (k+1) p^{k/2}`.
     Uses `|a_p| ≤ 2√p` from the compiled degree form. Not every prime.
