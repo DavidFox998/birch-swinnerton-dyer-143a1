@@ -194,7 +194,7 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
       (p : ℝ) ^ (ε * n.factorization p) := fun p => by
     rw [← Real.rpow_natCast ((p : ℝ) ^ ε) (n.factorization p),
         ← Real.rpow_mul (Nat.cast_nonneg p)]
-    congr 1; ring
+    congr 1
   -- Factorization product equals n^ε (§5)
   have hfact : ∏ p in S, (p : ℝ) ^ (ε * n.factorization p) = (n : ℝ) ^ ε :=
     factorization_rpow_eq n hn ε
@@ -217,8 +217,9 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
       intro p hp
       simp only [hSs_def, Finset.mem_filter] at hp
       obtain ⟨hmem, _⟩ := hp
-      have hp_prime : p.Prime :=
-        Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem)
+      have hp_prime : p.Prime := by
+        have hmem' : p ∈ n.factorization.support := hS_def ▸ hmem
+        exact Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem')
       have hpe_gt1 : 1 < (p : ℝ) ^ ε := by
         rw [← Real.rpow_zero (p : ℝ)]
         apply Real.rpow_lt_rpow_of_exponent_lt
@@ -240,13 +241,15 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
               (Finset.prod_nonneg fun p _ =>
                 Real.rpow_nonneg (Nat.cast_nonneg p) _)
             -- ∏ S_s coeff ≤ D = ∏ small_ps coeff (S_s ⊆ small_ps, all factors ≥ 1)
+            dsimp only [D]
             apply Finset.prod_le_prod_of_subset_of_one_le'
             · -- S_s ⊆ small_ps
               intro p hp
               simp only [hSs_def, Finset.mem_filter] at hp
               obtain ⟨hmem, h_small⟩ := hp
-              have hp_prime : p.Prime :=
-                Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem)
+              have hp_prime : p.Prime := by
+                have hmem' : p ∈ n.factorization.support := hS_def ▸ hmem
+                exact Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem')
               -- p < B: from p^ε < 2 we get p < 2^{1/ε} ≤ ↑(ceil(2^{1/ε})) < ↑B
               have hp_lt_B : p < B := by
                 have h1ε : (0 : ℝ) < 1 / ε := div_pos one_pos hε
@@ -450,11 +453,13 @@ lemma prod_distinct_primes_factorization {s : Finset ℕ}
     rw [Finset.prod_insert ha, Nat.factorization_mul ha_prime.ne_zero hprod_pos.ne']
     simp only [Finsupp.add_apply]
     rw [ha_prime.factorization, ih hs', Finsupp.single_apply]
-    by_cases hqa : a = q
-    · simp [hqa, ha, Finset.mem_insert]
-    · by_cases hqs : q ∈ s
-      · simp [hqa, hqs, Finset.mem_insert]
-      · simp [hqa, hqs, Finset.mem_insert]
+    by_cases hqa : q = a
+    · have hnot : q ∉ s := by simpa [hqa] using ha
+      simp [hqa, hnot, Finset.mem_insert]
+    · have hqa' : ¬ a = q := by simpa [eq_comm] using hqa
+      by_cases hqs : q ∈ s
+      · simp [hqa, hqa', hqs, Finset.mem_insert]
+      · simp [hqa, hqa', hqs, Finset.mem_insert, if_neg hqa]
 
 /-- Squarefree `n` supported on the 84 checked primes divide the product of
     those primes, so there are finitely many of them. The Dirichlet series
