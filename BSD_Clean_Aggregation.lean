@@ -42,6 +42,7 @@ import Towers.BSD.BSD_Hasse_Points_127_149
 import Towers.BSD.BSD_Hasse_Points_151_191
 import Towers.BSD.BSD_Hasse_Points_193_223
 import Towers.BSD.BSD_Hasse_Points_227_241
+import Towers.BSD.BSD_Hasse_Points_251_263
 -- B02_Modularity_Closed as honest Prop (rfl/type errors need authoring)
 -- See BSD_Targeted_Placeholders.B02_Modularity_Closed_Prop
 
