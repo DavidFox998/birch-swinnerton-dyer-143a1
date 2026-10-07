@@ -1,6 +1,7 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_HasseEndDeg_CLOSED.lean — extracted 5 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
 
 theorem BSD_HasseViaEndDeg
     (h : BSD_EndomorphismDegree_OPEN) :
