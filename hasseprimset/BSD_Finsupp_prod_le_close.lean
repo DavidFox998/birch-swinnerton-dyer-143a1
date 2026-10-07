@@ -43,7 +43,7 @@ OPEN (genuine mathematical gaps, no timeline):
 BSD: OPEN.  No Clay claim.
 -/
 
-import hasseprimset.BSD_BSD_aNBound_Finsupp_bridge_close
+import hasseprimset.BSD_aNBound_Finsupp_bridge_close
 import Mathlib.NumberTheory.LSeries.Basic
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 
