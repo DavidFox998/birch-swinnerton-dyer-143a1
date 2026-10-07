@@ -29,8 +29,10 @@ import Towers.BSD.Traces_E1859_All_168
 import Towers.BSD.BSD_Targeted_Placeholders
 import Towers.BSD.BSD_Frobenius_Certificate_Clean
 
--- 9 Fact-fixed ported files — with Fact p.Prime instances + targeted placeholders
--- 5 small (primes up to 113) use decide; 4 large (127-241) use native_decide
+-- Fact-fixed point counts. p ∈ {2,3,5,7,17..47} use decide.
+-- p ∈ {53,59,61,67} and p ≥ 71 use native_decide.
+-- These are finite checks, not Hasse for every prime.
+import Towers.BSD.BSD_Hasse_Points_2_7
 import Towers.BSD.BSD_Hasse_Points_17_29
 import Towers.BSD.BSD_Hasse_Points_31_67
 import Towers.BSD.BSD_Hasse_Points_71_79
