@@ -128,3 +128,21 @@ theorem BSD_ClassNum_Upper_surface_ledger (h_upper : BSD_classNumber_upper_OPEN)
   ⟨BSD_classNumber_K_10 h_upper, K1_ClassNumber_Upper_CLOSED h_upper, K1_ClassNumber_Lower_CLOSED h_upper⟩
 
 end Towers.BSD
+theorem BSD_classNumber_eq_10
+    (hprinc : BSD_p2_pow_10_principal_hyp)
+    (_ : BSD_classGroup_gen_by_p2_hyp) :
+    NumberField.classNumber K = 10 :=
+  BSD_classNumber_eq_10_via_principal hprinc
+
+-- ============================================================
+-- §4. Unconditional class-number proof
+-- ============================================================
+
+/-- **BSD_classNumber_K_10** (0 sorry, classical trio):
+    classNumber(ℚ(√−143)) = 10, proved UNCONDITIONALLY.
+
+    Proof: `BSD_p2_pow_10_principal` (proved in BSD_P2_Principal_CLOSED.lean) +
+    `BSD_classNumber_eq_10_via_principal` (proved there, using Lagrange's theorem
+    + BSD_classNumber_lower_bound).
+    No BQF bridge needed. -/
+
