@@ -16,6 +16,7 @@
 - `Towers/BSD/BSD_Finite_Hasse_54_Theorem.lean` is at `66f0326`. It cites the 84 compiled finite checks. The assessed tally stays 54 of 504. The checked set is not every good prime.
 - Five corollaries are in `Towers/BSD/BSD_More_Theorems_From_54.lean` at `767d141`. `lake build Towers.BSD.BSD_More_Theorems_From_54` and `lake build BSD_Clean_Aggregation` both exit 0. They are not five more of the 504. The assessed tally stays 54 of 504. The other 450 stay NEEDS_AUTHORING.
 - `Towers/BSD/BSD_Final_Aggregate_84_54_450.lean` packages those citations in `BSD_84_54_450`. `lake build Towers.BSD.BSD_Final_Aggregate_84_54_450` and `lake build BSD_Clean_Aggregation` both exit 0. No new `E143_Finset` enumeration. The assessed tally stays 54 of 504. `84 ≠ 54`. `54 + 450 = 504` does not prove the 450.
+- `Towers/BSD/BSD_450_Gates_Documentation.lean` names each of the 450 and records its gate. It does not prove them. `lake build Towers.BSD.BSD_450_Gates_Documentation` and `lake build BSD_Clean_Aggregation` both exit 0. `FINAL_BSD_HANDOFF_54_84.md` is not in the repository.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -120,6 +121,29 @@ The compiled finite checks are collected in `Towers/BSD/BSD_Finite_Hasse_54_Theo
 - The coefficient-bound implication, still a hypothesis on every `n`. `BSD_LSeriesSummable_OPEN → True` is the existing sentinel and does not prove summability.
 - Registry placeholders, each definitionally `True` or the constant 0: `BSD_L143a1_DerivAtOne = 0`, `BSD_HasseBound_Discriminant_OPEN`, Gross–Zagier, Kolyvagin, Sha, Tamagawa, Euler convergence, Heegner, the registry `BSD_FuncEq_OPEN` (not the root declaration), the regulator placeholder, the Néron–Tate placeholder, the tau-bound placeholder, and `BSD_PrimePowBound_to_aNBound_OPEN_prop`. These equalities do not prove those conjectures. `BSD_WeilHasse_Weierstrass_OPEN` stays unproved. `BinaryQuadraticForm.classGroupEquiv` stays absent from Mathlib v4.12.0. No prime ≥ 1000 is enumerated.
 
+## The 450 gates
+
+`Towers/BSD/BSD_450_Gates_Documentation.lean` is an audit. Each of the 450 assessed defs is `#check`ed and marked NEEDS_AUTHORING. `#check` does not prove the prop. `BSD_450_audit_tally` is `(54 : ℕ) + 450 = 504 ∧ (84 : ℕ) ≠ 54`. That arithmetic does not discharge the 450. No sorry. No new enumeration.
+
+Searches this round:
+
+- Mathlib v4.12.0 `AlgebraicGeometry/EllipticCurve` has Affine, DivisionPolynomial, Group, Jacobian, Projective, VariableChange, and Weierstrass. No Hasse bound. Group A stays NEEDS_AUTHORING.
+- `BinaryQuadraticForm` and `classGroupEquiv`: zero declarations in Mathlib v4.12.0. Group B stays NEEDS_AUTHORING. The lower bound still depends on `master_not_principal_1_to_9` and `p2_OK` outside the clean build.
+- There is no `hasseprimset/BSD_LFunction.lean` and no `Towers/BSD/BSD_AnalyticContinuation` file. `Towers/BSD/BSD_LFunction.lean` defines `BSD_LSeriesSummable_OPEN`, `BSD_EulerProduct_OPEN`, `BSD_AnalyticOn_OPEN`, and `BSD_FuncEq_OPEN` and does not prove a Hasse–Weil derivative. The registry derivative stays the constant 0. Group C stays NEEDS_AUTHORING.
+- `hasseprimset/BSD_TauBound_small_proved.lean` imports `Towers.BSD.BSD_Genesis781_CLOSED` and is outside the clean build. `hasseprimset/BSD_antisupersingular.lean` leaves the Finsupp product unformalized. Group D stays NEEDS_AUTHORING.
+- Groups E, F, and G stay NEEDS_AUTHORING. Sentinels `trivial` on `True`, `rfl` of the constants 1 and 2, `∃ R, R > 0 ∧ True`, and `fun _ => ⟨1, rfl⟩` are not closed.
+
+| Group | Props | Gate |
+|-------|------:|------|
+| A | 328 | No general Hasse theorem in Mathlib v4.12.0. 11 of these are the degree and Hasse props at primes ≥ 9721, including both props at 9973. The other 317 are uncompiled degree props from 311 upward, the forall `a_p² ≤ 4p`, the non-definitional iff, and the Weierstrass structure placeholder. |
+| B | 26 | Class number. `classGroupEquiv` absent. |
+| C | 12 | Registry derivative is 0. Linear anchor is not the Hasse–Weil L-function. |
+| D | 9 | Divisor estimate outside the clean build. Summability not proved. |
+| E | 11 | Euler product, functional equation, analytic continuation. |
+| F | 54 | Gross–Zagier, Kolyvagin, Heegner, Sha, Tamagawa, regulator, Néron–Tate, torsion, rank. |
+| G | 10 | Ideal equalities, modularity, Wiles–Taylor, α_BSD_period. |
+| **Total** | **450** | Still NEEDS_AUTHORING. |
+
 ## Where everything lives
 
 **Repo:** `DavidFox998/birch-swinnerton-dyer-143a1`
@@ -190,7 +214,7 @@ For each `def <Name>_prop : Prop := True` (or real statement):
 
 1. **Batch 1-2** (81 props, 31 with real statements) — most likely to have mechanical fixes
 2. **Batch 3-4** (102 props, 12 with real statements) — mixed
-3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. The five corollaries and `BSD_84_54_450` do not add to the 54. Do not enumerate further primes. The remaining 450 props stay NEEDS_AUTHORING until a general proof is in the clean build.
+3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. The five corollaries, `BSD_84_54_450`, and the 450-gate audit do not add to the 54. Do not enumerate further primes. The 450 props stay NEEDS_AUTHORING. Their gates are in `BSD_450_Gates_Documentation.lean`.
 
 ## Verification
 
