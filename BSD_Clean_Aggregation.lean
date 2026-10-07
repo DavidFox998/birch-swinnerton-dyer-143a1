@@ -73,6 +73,8 @@ import Towers.BSD.BSD_Finite_Hasse_54_Theorem
 import Towers.BSD.BSD_More_Theorems_From_54
 import Towers.BSD.BSD_Final_Aggregate_84_54_450
 import Towers.BSD.BSD_450_Gates_Documentation
+import Towers.BSD.BSD_ClassNumber_Lower_Clean
+import Towers.BSD.BSD_TauBound_Clean
 
 /-- Clean build marker: true iff this aggregation compiles. -/
 def cleanBuilds : Bool := true
