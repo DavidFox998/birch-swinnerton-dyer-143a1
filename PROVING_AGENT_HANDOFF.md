@@ -5,7 +5,8 @@
 - Batch 1 is done at `9474564`. Three theorems. The rest of Batch 1 is NEEDS_AUTHORING.
 - Batch 2 is done at `3c62767`. `lake build BSD_Assessed_Batch2` and `lake build BSD_Clean_Aggregation` both exit 0.
 - Batch 3 is done at `cd0eafc`. `lake build BSD_Assessed_Batch3` and `lake build BSD_Clean_Aggregation` both exit 0.
-- Next file is `BSD_Assessed_Batch4.lean`.
+- Batch 4 is done at `82af374`. `lake build BSD_Assessed_Batch4` and `lake build BSD_Clean_Aggregation` both exit 0.
+- Next file is `BSD_Assessed_Batch5.lean`.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -20,6 +21,15 @@ Batch 3 theorems, and only these:
 - `BSD_HeckeMultiplicativity_143_CLOSED_prop`: `a_n (m * n) = a_n m * a_n n` when `Nat.Coprime m n`. Not modularity.
 - `BSD_RamanujanBound_iff_Discriminant_prop`: `|a_p| ≤ 2√p` if and only if `a_p² ≤ 4p`, for good primes. Neither side is proved for every prime.
 - Class number `10 ≤ h(K)` and `h(K) ≤ 10` are restored and not proved. Sha, Tamagawa, torsion injection, Gross–Zagier, Kolyvagin, and the ideal equalities stay NEEDS_AUTHORING.
+
+Batch 4 theorems, and only these:
+
+- `E143a1_prop`: coefficients `(0, -1, 1, -1, -2)` of the Weierstrass model.
+- `E143a1_has_rational_point_prop`: affine point `(2, 0)`. Not rank 1, not BSD.
+- `E143a1_bost_bound_prop`: the literal `11.42214868898 > 2√13`, by comparing squares. Not a derivation of Bost's sum.
+- `BSD_isBigO_to_LSeries_close_prop`: a coefficient bound implies summability for `Re(s) > 3/2`. The bound is a hypothesis.
+- `BSD_L143a1_HasDerivAt_CLOSED_prop`: derivative of `(5759/10000)·(s−1)`. Not the Hasse–Weil L-function. Registry derivative stays 0.
+- `p≥1009` degree checks stay NEEDS_AUTHORING. Those proofs are `native_decide` on `E143_Finset p`. The clean build stops at 241.
 
 ## Where everything lives
 
