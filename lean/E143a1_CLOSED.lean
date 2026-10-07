@@ -6,8 +6,8 @@ import Towers.BSD.B01_EllipticCurve
 import Towers.BSD.Genus_X0_143
 import Towers.BSD.BostBound_143
 import Towers.BSD.BSD_TorsionSha_CLOSED
-import Towers.BSD.BSD_Genesis735_CLOSED
-import Towers.BSD.BSD_Genesis737_CLOSED
+import Towers.BSD.BSD_TorsionBound_P2P5_Closed
+import BSD_Regulator_RealPeriod_Closed
 import hassewiles
 import lean.01_genus_X0_143
 import lean.02_hecke_operators
