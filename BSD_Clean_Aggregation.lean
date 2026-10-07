@@ -70,6 +70,7 @@ import BSD_Assessed_Batch8
 import BSD_Assessed_Batch9
 import BSD_Assessed_Batch10
 import Towers.BSD.BSD_Finite_Hasse_54_Theorem
+import Towers.BSD.BSD_More_Theorems_From_54
 
 /-- Clean build marker: true iff this aggregation compiles. -/
 def cleanBuilds : Bool := true
