@@ -6,15 +6,15 @@ import Towers.BSD.B01_EllipticCurve
 import Towers.BSD.MathlibGaps.Genus_X0_143
 import Towers.BSD.MathlibGaps.BostBound_143
 import Towers.BSD.MathlibGaps.BSD_TorsionSha_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis735_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis736_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis737_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis738_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis741_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis742_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis743_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis744_CLOSED
-import Towers.BSD.MathlibGaps.BSD_Genesis745_CLOSED
+import Towers.BSD.BSD_TorsionBound_P2P5_Closed
+import Towers.BSD.BSD_Hasse_Points_17_29
+import BSD_Regulator_RealPeriod_Closed
+import Towers.BSD.BSD_Hasse_Points_31_67
+import Towers.BSD.BSD_Hasse_Points_101_113
+import Towers.BSD.BSD_Hasse_Points_127_149
+import Towers.BSD.BSD_Hasse_Points_151_191
+import Towers.BSD.BSD_Hasse_Points_193_223
+import Towers.BSD.BSD_Hasse_Points_227_241
 import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
 
 /-!
