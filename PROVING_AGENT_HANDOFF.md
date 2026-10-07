@@ -11,7 +11,8 @@
 - Batch 7 is done at `8742b26`. `lake build BSD_Assessed_Batch7` and `lake build BSD_Clean_Aggregation` both exit 0.
 - Batch 8 is done at `8784abe`. `lake build BSD_Assessed_Batch8` and `lake build BSD_Clean_Aggregation` both exit 0.
 - Batch 9 is done at `a96b7b8`. `lake build BSD_Assessed_Batch9` and `lake build BSD_Clean_Aggregation` both exit 0.
-- Next file is `BSD_Assessed_Batch10.lean`.
+- Batch 10 is done at `09c726c`. `lake build BSD_Assessed_Batch10` and `lake build BSD_Clean_Aggregation` both exit 0.
+- There is no Batch 11. The ten assessed files are done. What remains is NEEDS_AUTHORING.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -64,6 +65,13 @@ Batch 9 theorems, and only these:
 - `BSD_DegreeNonneg_p827_prop`, `BSD_DegreeNonneg_p829_prop`, `BSD_DegreeNonneg_p839_prop`, `BSD_DegreeNonneg_p887_prop`, `BSD_DegreeNonneg_p907_prop`, `BSD_DegreeNonneg_p911_prop`, `BSD_DegreeNonneg_p971_prop`, `BSD_DegreeNonneg_p977_prop`, `BSD_DegreeNonneg_p983_prop`, from `Towers/BSD/BSD_Hasse_Points_827_983.lean`. Counts: p=827 card 777, `a_p=50`; p=829 card 800, `a_p=29`; p=839 card 786, `a_p=53`; p=887 card 875, `a_p=12`; p=907 card 855, `a_p=52`; p=911 card 919, `a_p=−8`; p=971 card 1020, `a_p=−49`; p=977 card 986, `a_p=−9`; p=983 card 1014, `a_p=−31`. The original `decide` proofs were replaced by `native_decide`. All nine compiled, including 971, 977, and 983.
 - Not Hasse for every prime. The clean build now checks finite point counts for `{2,3,5,7}`, primes 17 through 241, `{251,257,263}`, `{373,379,383,433,439,443,491,499,503}`, `{569,571,577,619,631,641}`, `{683,691,701,757,761,769}`, and `{827,829,839,887,907,911,971,977,983}`. Primes 11 and 13 divide 143. Nothing past 983 is in the clean build. The 51 props with `p≥8209` stay NEEDS_AUTHORING.
 - Batch 10 is the last file. Its degree checks and `BSD_Hasse_OPEN 9973` are primes at or above 9721. Those enumerations are far larger than 983, so they stay NEEDS_AUTHORING. `BSD_WeilHasse_eq_Gate1` is `Iff.rfl` only in the non-building original, where both sides are the same statement. In the registry, `BSD_HasseBound_Discriminant_OPEN` is `True` and `BSD_WeilHasse_Weierstrass_OPEN` is the forall, so the assessed iff is not definitional. Do not prove it. The tau-bound file is a long argument, not a tactic rename. Flag it unless those pieces already build in the clean tree.
+
+Batch 10 theorems, and only these:
+
+- `BSD_isBigO_to_LSeries_OPEN_prop` cites `BSD_isBigO_to_LSeries_close_prop` from Batch 4. Same implication: a coefficient bound implies summability for `Re(s) > 3/2`. The bound is a hypothesis. Not a new bound.
+- `BSD_aNBound_to_LSeries_OPEN_prop` is the original sentinel `BSD_LSeriesSummable_OPEN → True`. It does not prove summability, and it is not the missing divisor bound.
+- Not Hasse for every prime. Nothing past 983 is in the clean build. The 11 props at `p≥9721`, the Hasse forall, the non-definitional iff, the Weierstrass structure (a type, not a Prop), and the tau-bound arguments stay NEEDS_AUTHORING. Nineteen props in this file stay NEEDS_AUTHORING.
+- The ten assessed files are done. Running total is 54 theorems out of 504. The other 450 stay NEEDS_AUTHORING. Do not treat a registry `True` as a proved conjecture.
 
 ## Where everything lives
 
@@ -135,7 +143,7 @@ For each `def <Name>_prop : Prop := True` (or real statement):
 
 1. **Batch 1-2** (81 props, 31 with real statements) — most likely to have mechanical fixes
 2. **Batch 3-4** (102 props, 12 with real statements) — mixed
-3. **Batch 10** — Batches 5 through 9 are done. Next file is `BSD_Assessed_Batch10.lean`.
+3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. What remains is NEEDS_AUTHORING.
 
 ## Verification
 
