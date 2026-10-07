@@ -163,15 +163,14 @@ private lemma a_prime_pow_as_chebyshev
         rw [show ((k + 2 : ℕ) : ℤ) = (k : ℤ) + 2 by simp, Chebyshev.U_add_two]
         simp only [eval_sub, eval_mul, eval_ofNat, eval_X]
         rw [show (k : ℤ) + 1 = ((k + 1 : ℕ) : ℤ) by simp]
-        field_simp [hs_pos.ne']
-        simp only [pow_add, pow_one, pow_two, hs_sq]
-        have hsub : sqrt (p : ℝ) * sqrt (p : ℝ) ^ k * (p : ℝ) =
-            sqrt (p : ℝ) ^ 3 * sqrt (p : ℝ) ^ k := by
-          calc sqrt (p : ℝ) * sqrt (p : ℝ) ^ k * (p : ℝ)
-              = (p : ℝ) * sqrt (p : ℝ) * sqrt (p : ℝ) ^ k := by ring
-            _ = sqrt (p : ℝ) ^ 2 * sqrt (p : ℝ) * sqrt (p : ℝ) ^ k := by rw [hs_sq]
-            _ = sqrt (p : ℝ) ^ 3 * sqrt (p : ℝ) ^ k := by ring
-        rw [hsub]
+        -- Name the square root so `p = s^2` cannot rewrite inside `√p`.
+        generalize hsdef : sqrt (p : ℝ) = s
+        have hs_pos' : (0 : ℝ) < s := by rw [← hsdef]; exact hs_pos
+        have hs_sq' : s ^ 2 = (p : ℝ) := by rw [← hsdef]; exact hs_sq
+        field_simp [hs_pos'.ne']
+        simp only [pow_add, pow_one]
+        rw [← hs_sq']
+        ring
 
 /-- For each of the 84 checked primes and every `k`, `|a_{p^k}| ≤ (k+1) p^{k/2}`.
     Uses `|a_p| ≤ 2√p` from the compiled degree form. Not every prime.
