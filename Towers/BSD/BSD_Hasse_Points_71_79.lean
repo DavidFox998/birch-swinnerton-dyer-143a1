@@ -2,6 +2,10 @@
 
 import Towers.BSD.BSD_LFunction
 
+private instance instFactPrime71 : Fact (71 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime73 : Fact (73 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime79 : Fact (79 : ℕ).Prime := ⟨by norm_num⟩
+
 theorem BSD_E143_card_p71 : (E143_Finset 71).card = 80 := by decide
 
 /-- **`BSD_E143_card_p73`** — 143a1 has exactly **89 affine 𝔽₇₃-points**.
