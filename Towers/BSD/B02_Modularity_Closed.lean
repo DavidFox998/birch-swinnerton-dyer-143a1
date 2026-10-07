@@ -1,6 +1,11 @@
 import Towers.BSD.BSD_Frobenius_Isogeny_Degree_Hasse_143a1_CLOSED
 import Mathlib.NumberTheory.LSeries.Dirichlet
 
+private instance instFactPrime2 : Fact (2 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime3 : Fact (3 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime5 : Fact (5 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime7 : Fact (7 : ℕ).Prime := ⟨by norm_num⟩
+
 namespace Towers.BSD
 
 open Complex
