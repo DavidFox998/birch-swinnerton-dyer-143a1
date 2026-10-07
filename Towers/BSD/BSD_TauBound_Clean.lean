@@ -255,8 +255,7 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
                 have h1ε : (0 : ℝ) < 1 / ε := div_pos one_pos hε
                 -- (p:ℝ) = ((p:ℝ)^ε)^{1/ε} < 2^{1/ε}
                 have hpe_eq : ((p : ℝ) ^ ε) ^ (1 / ε) = (p : ℝ) := by
-                  rw [← Real.rpow_natCast ((p : ℝ) ^ ε), ← Real.rpow_mul (Nat.cast_nonneg p)]
-                  -- Hmm, ε * (1/ε) = 1 and then rpow_one
+                  rw [← Real.rpow_mul (Nat.cast_nonneg p)]
                   have hmul : ε * (1 / ε) = 1 := by field_simp
                   rw [hmul, Real.rpow_one]
                 have hp_real : (p : ℝ) < (2 : ℝ) ^ (1 / ε) := by
@@ -282,17 +281,38 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
                 · exact hε
               rw [le_div_iff₀ (by linarith)]
               linarith
+            have hrest : 1 ≤ ∏ p in small_ps \ S_s,
+                (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
+              refine Finset.prod_induction
+                (fun p => (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) (fun x => 1 ≤ x)
+                ?_ le_rfl ?_
+              · intro a b ha hb
+                exact mul_le_mul ha hb (by linarith) (by linarith)
+              · intro p hp
+                exact hge p (Finset.mem_sdiff.mp hp).1 (Finset.mem_sdiff.mp hp).2
+            have hsplit : ∏ p in small_ps, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) =
+                (∏ p in small_ps \ S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) *
+                  ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
+              rw [← Finset.prod_union Finset.sdiff_disjoint, Finset.sdiff_union_of_subset hsub]
             calc ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)
-                ≤ (∏ p in small_ps \ S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) *
-                    ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) :=
-                  le_mul_of_one_le_left' <| Finset.one_le_prod' <| by
-                    intro p hp
-                    exact hge p (Finset.mem_sdiff.mp hp).1 (Finset.mem_sdiff.mp hp).2
-              _ = ∏ p in small_ps \ S_s ∪ S_s,
-                    (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) :=
-                  (Finset.prod_union Finset.sdiff_disjoint).symm
-              _ = ∏ p in small_ps, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
-                  rw [Finset.sdiff_union_of_subset hsub]
+                = 1 * ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by ring
+              _ ≤ (∏ p in small_ps \ S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) *
+                    ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
+                  apply mul_le_mul_of_nonneg_right hrest
+                  apply Finset.prod_nonneg
+                  intro p hp
+                  have hpos : 0 < (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
+                    have hmem' : p ∈ n.factorization.support := hS_def ▸
+                      (by simpa [hSs_def, Finset.mem_filter] using hp)
+                    have hp_prime :=
+                      Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem')
+                    have hpe : 1 < (p : ℝ) ^ ε := by
+                      rw [← Real.rpow_zero (p : ℝ)]
+                      exact Real.rpow_lt_rpow_of_exponent_lt
+                        (by exact_mod_cast Nat.lt_of_lt_of_le (by norm_num) hp_prime.two_le) hε
+                    exact div_pos (by linarith) (by linarith)
+                  linarith
+              _ = ∏ p in small_ps, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := hsplit.symm
   -- Combine: τ(n) ≤ (∏ S_l p^{ε·e}) · D · (∏ S_s p^{ε·e}) = D · n^ε
   calc (∏ p in S_l, ((n.factorization p : ℝ) + 1)) *
         (∏ p in S_s, ((n.factorization p : ℝ) + 1))
