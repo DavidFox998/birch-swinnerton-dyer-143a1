@@ -1,5 +1,19 @@
 # Proving Agent Handoff — BSD 504 Propositions
 
+## Status
+
+- Batch 1 is done at `9474564`. Three theorems. The rest of Batch 1 is NEEDS_AUTHORING.
+- Batch 2 is done at `3c62767`. `lake build BSD_Assessed_Batch2` and `lake build BSD_Clean_Aggregation` both exit 0.
+- Next file is `BSD_Assessed_Batch3.lean`.
+- Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
+
+Batch 2 theorems, and only these:
+
+- `BSD_EndomorphismDegree_Partial_CLOSED_prop` and `BSD_Hasse_OPEN_partial_CLOSED_prop` for p ∈ {2, 3, 5, 7}, from `Towers/BSD/BSD_Hasse_Points_2_7.lean`. Not Hasse for every prime.
+- `BSD_HeegnerPoint_CLOSED_prop` and `BSD_HeegnerPoint_surface_ledger_prop`: the affine point (2, 0). Not non-torsion, not rank 1, not BSD.
+- `BSD_VanishingOrder_APIBridge_RETRACTED_prop`: the B01 constant-function counterexample. Not `¬ True`.
+- Sentinels that do not discharge an open: `BSD_endeg_sentinel_prop`, `BSD_linFunc_sentinel_prop`, `BSD_modularityE143_is_open_prop`, `BSD_bsdFormula_is_open_prop`.
+
 ## Where everything lives
 
 **Repo:** `DavidFox998/birch-swinnerton-dyer-143a1`
