@@ -1,6 +1,13 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis742_CLOSED.lean — extracted 20 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+
+private instance instFactPrime127 : Fact (127 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime131 : Fact (131 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime137 : Fact (137 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime139 : Fact (139 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime149 : Fact (149 : ℕ).Prime := ⟨by norm_num⟩
 
 theorem BSD_E143_card_p127 : (E143_Finset 127).card = 135 := by decide
 
