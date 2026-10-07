@@ -1,4 +1,4 @@
-import Towers.BSD.BSD_Genesis760_CLOSED
+import BSD_EndDeg_DiscBound_Closed
 
 /-!
 # BSD_ClaySubmission — Clay Prize Submission for E_{143a1}/ℚ
