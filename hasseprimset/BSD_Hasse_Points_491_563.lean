@@ -25,6 +25,17 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 
 import hasseprimset.BSD_Hasse_Points_433_487
 
+private instance instFactPrime491 : Fact (491 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime499 : Fact (499 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime503 : Fact (503 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime509 : Fact (509 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime521 : Fact (521 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime523 : Fact (523 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime541 : Fact (541 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime547 : Fact (547 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime557 : Fact (557 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime563 : Fact (563 : ℕ).Prime := ⟨by norm_num⟩
+
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
 
