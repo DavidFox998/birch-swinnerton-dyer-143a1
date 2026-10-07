@@ -37,8 +37,7 @@ lemma nω_OK_coe : (nω_OK : K) = ω := ω_OK_coe
 
 lemma one_le_sq_of_ne_zero_BSD {n : ℤ} (hn : n ≠ 0) : 1 ≤ n ^ 2 := by
   rcases lt_or_gt_of_ne hn with h | h
-  · have hle : n ≤ -1 := Int.le_sub_one_of_lt h
-    nlinarith [sq_nonneg (n + 1)]
+  · nlinarith [sq_nonneg (n + 1), Int.le_sub_one_of_lt h]
   · nlinarith [sq_nonneg (n - 1)]
 
 /-! ### Step 2: Norm-form impossibilities (odd powers of 2) -/
@@ -321,11 +320,10 @@ theorem norm_form_BSD_rat (a b : ℤ) :
                Matrix.of_apply,
                Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
                Matrix.head_fin_const,
-               smul_eq_mul, mul_one, mul_zero, add_zero, zero_add] <;>
-    push_cast <;> ring
+               smul_eq_mul, mul_one, mul_zero, add_zero, zero_add]
   rw [hM, Matrix.det_fin_two]
   simp [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, Matrix.head_fin_const]
-  push_cast; ring
+  ring
 
 /-! ## §2. General ℤ-norm form via BSD_intBasis -/
 
