@@ -65,7 +65,7 @@ private theorem finset_prod_rpow {α : Type*} [DecidableEq α] (s : Finset α) (
   induction s using Finset.induction_on with
   | empty => simp [Real.one_rpow]
   | insert ha ih =>
-    rename_i a s' _
+    rename_i _inst a s'
     rw [Finset.prod_insert ha, Finset.prod_insert ha]
     rw [Real.mul_rpow (hf a (Finset.mem_insert_self a s'))
       (Finset.prod_nonneg (fun i hi => hf i (Finset.mem_insert_of_mem hi)))]
@@ -110,7 +110,8 @@ private theorem succ_le_rpow_small (k : ℕ) (β : ℝ) (hβ : 1 < β) :
   -- Goal: (↑k + 1) * (β - 1) ≤ β^(k+1)
   -- Bernoulli: β^(k+1) = (1+(β-1))^(k+1) ≥ 1 + (k+1)*(β-1) ≥ (k+1)*(β-1)
   have hbern := bernoulli_ineq (k + 1) (β - 1) hβ1.le
-  simp only [sub_add_cancel] at hbern
+  have hβeq : 1 + (β - 1) = β := by ring
+  rw [hβeq] at hbern
   push_cast at hbern ⊢
   linarith
 
@@ -169,8 +170,8 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
   rw [divisors_card_factorization n hn]
   set S := n.factorization.support with hS_def
   -- Split S into large primes (p^ε ≥ 2) and small primes (p^ε < 2)
-  set S_l := S.filter (fun p => 2 ≤ (p : ℝ) ^ ε) with hSl_def
-  set S_s := S.filter (fun p => (p : ℝ) ^ ε < 2) with hSs_def
+  set S_l := S.filter (fun p : ℕ => 2 ≤ (p : ℝ) ^ ε) with hSl_def
+  set S_s := S.filter (fun p : ℕ => (p : ℝ) ^ ε < 2) with hSs_def
   have hS_disj : Disjoint S_l S_s := by
     apply Finset.disjoint_left.mpr
     intro p h1 h2
@@ -362,11 +363,12 @@ theorem BSD_an_squarefree_checked_bound
     have h_an : a_n n = ∏ p in S, f p := by
       simpa [f, hS] using a_n_squarefree_prod n hn hs
     have habsZ : |∏ p in S, f p| = ∏ p in S, |f p| := Finset.abs_prod _ _
-    have hcast_abs : ((|a_n n| : ℤ) : ℝ) = |(a_n n : ℝ)| := Int.cast_abs (a_n n)
-    have hcast_prod : ((∏ p in S, |f p|) : ℝ) =
-        ∏ p in S, ((|f p| : ℤ) : ℝ) :=
+    have hcast_abs : (Int.cast (R := ℝ) |a_n n|) = |(a_n n : ℝ)| := Int.cast_abs
+    have hcast_prod :
+        Int.cast (R := ℝ) (∏ p in S, |f p|) =
+          ∏ p in S, Int.cast (R := ℝ) |f p| :=
       map_prod (Int.castRingHom ℝ) (fun p => |f p|) S
-    have hpoint : ∀ p ∈ S, ((|f p| : ℤ) : ℝ) ≤ 2 * Real.sqrt (p : ℝ) := by
+    have hpoint : ∀ p ∈ S, Int.cast (R := ℝ) |f p| ≤ 2 * Real.sqrt (p : ℝ) := by
       intro p hp
       have hp_pf : p ∈ n.primeFactors :=
         (Nat.support_factorization n) ▸ (hS.symm ▸ hp)
@@ -376,7 +378,7 @@ theorem BSD_an_squarefree_checked_bound
       have hf : f p = a_p p := by simp [f, hp_prime]
       rw [Int.cast_abs, hf]
       exact hH
-    have hprod_le : ∏ p in S, ((|f p| : ℤ) : ℝ) ≤
+    have hprod_le : ∏ p in S, Int.cast (R := ℝ) |f p| ≤
         ∏ p in S, (2 * Real.sqrt (p : ℝ)) :=
       Finset.prod_le_prod (fun _ _ => by positivity) hpoint
     have hsplit : ∏ p in S, (2 * Real.sqrt (p : ℝ)) =
@@ -393,10 +395,10 @@ theorem BSD_an_squarefree_checked_bound
     have hcard : S.card = n.primeFactors.card := by
       rw [hS, Nat.support_factorization]
     calc |(a_n n : ℝ)|
-        = ((|a_n n| : ℤ) : ℝ) := hcast_abs.symm
-      _ = ((|∏ p in S, f p| : ℤ) : ℝ) := by rw [h_an]
-      _ = ((∏ p in S, |f p|) : ℝ) := by rw [habsZ]
-      _ = ∏ p in S, ((|f p| : ℤ) : ℝ) := hcast_prod
+        = Int.cast (R := ℝ) |a_n n| := hcast_abs.symm
+      _ = Int.cast (R := ℝ) |∏ p in S, f p| := by rw [h_an]
+      _ = Int.cast (R := ℝ) (∏ p in S, |f p|) := by rw [habsZ]
+      _ = ∏ p in S, Int.cast (R := ℝ) |f p| := hcast_prod
       _ ≤ ∏ p in S, (2 * Real.sqrt (p : ℝ)) := hprod_le
       _ = (2 : ℝ) ^ S.card * ∏ p in S, Real.sqrt (p : ℝ) := by rw [hsplit, htwo]
       _ = (2 : ℝ) ^ n.primeFactors.card * Real.sqrt (n : ℝ) := by
@@ -448,7 +450,7 @@ lemma prod_distinct_primes_factorization {s : Finset ℕ}
     rw [Finset.prod_insert ha, Nat.factorization_mul ha_prime.ne_zero hprod_pos.ne']
     simp only [Finsupp.add_apply]
     rw [ha_prime.factorization, ih hs', Finsupp.single_apply]
-    by_cases hqa : q = a
+    by_cases hqa : a = q
     · simp [hqa, ha, Finset.mem_insert]
     · by_cases hqs : q ∈ s
       · simp [hqa, hqs, Finset.mem_insert]
