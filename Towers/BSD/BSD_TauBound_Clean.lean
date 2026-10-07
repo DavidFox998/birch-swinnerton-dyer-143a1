@@ -284,7 +284,7 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
             have hrest : 1 ≤ ∏ p in small_ps \ S_s,
                 (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
               refine Finset.prod_induction
-                (fun p => (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) (fun x => 1 ≤ x)
+                (fun p : ℕ => (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) (fun x => 1 ≤ x)
                 ?_ le_rfl ?_
               · intro a b ha hb
                 exact mul_le_mul ha hb (by linarith) (by linarith)
@@ -302,8 +302,9 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
                   apply Finset.prod_nonneg
                   intro p hp
                   have hpos : 0 < (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
-                    have hmem' : p ∈ n.factorization.support := hS_def ▸
-                      (by simpa [hSs_def, Finset.mem_filter] using hp)
+                    have hpS : p ∈ S := by
+                      simpa only [hSs_def, Finset.mem_filter] using hp
+                    have hmem' : p ∈ n.factorization.support := hS_def ▸ hpS
                     have hp_prime :=
                       Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem')
                     have hpe : 1 < (p : ℝ) ^ ε := by
