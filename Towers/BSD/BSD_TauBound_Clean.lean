@@ -194,7 +194,7 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
       (p : ℝ) ^ (ε * n.factorization p) := fun p => by
     rw [← Real.rpow_natCast ((p : ℝ) ^ ε) (n.factorization p),
         ← Real.rpow_mul (Nat.cast_nonneg p)]
-    congr 1
+    rfl
   -- Factorization product equals n^ε (§5)
   have hfact : ∏ p in S, (p : ℝ) ^ (ε * n.factorization p) = (n : ℝ) ^ ε :=
     factorization_rpow_eq n hn ε
@@ -241,8 +241,10 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
               (Finset.prod_nonneg fun p _ =>
                 Real.rpow_nonneg (Nat.cast_nonneg p) _)
             -- ∏ S_s coeff ≤ D = ∏ small_ps coeff (S_s ⊆ small_ps, all factors ≥ 1)
-            dsimp only [D]
-            apply Finset.prod_le_prod_of_subset_of_one_le'
+            have hDdef : D = ∏ p in small_ps,
+                (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := rfl
+            rw [hDdef]
+            refine Finset.prod_le_prod_of_subset_of_one_le' ?_ ?_
             · -- S_s ⊆ small_ps
               intro p hp
               simp only [hSs_def, Finset.mem_filter] at hp
@@ -406,7 +408,6 @@ theorem BSD_an_squarefree_checked_bound
       _ = (2 : ℝ) ^ S.card * ∏ p in S, Real.sqrt (p : ℝ) := by rw [hsplit, htwo]
       _ = (2 : ℝ) ^ n.primeFactors.card * Real.sqrt (n : ℝ) := by
           rw [hcard, hsqrt_prod]
-  have hDτ := hτ n hn
   have hmul : (2 : ℝ) ^ n.primeFactors.card * Real.sqrt (n : ℝ) ≤
       D * (n : ℝ) ^ ((1 : ℝ) / 2 + ε) := by
     have hpow : (n : ℝ) ^ ((1 : ℝ) / 2) * (n : ℝ) ^ ε =
@@ -450,16 +451,16 @@ lemma prod_distinct_primes_factorization {s : Finset ℕ}
     have hs' : ∀ p ∈ s, p.Prime := fun p hp => hs p (Finset.mem_insert_of_mem hp)
     have hprod_pos : 0 < ∏ p in s, p :=
       Finset.prod_pos fun p hp => (hs' p hp).pos
-    rw [Finset.prod_insert ha, Nat.factorization_mul ha_prime.ne_zero hprod_pos.ne']
-    simp only [Finsupp.add_apply]
-    rw [ha_prime.factorization, ih hs', Finsupp.single_apply]
-    by_cases hqa : q = a
-    · have hnot : q ∉ s := by simpa [hqa] using ha
-      simp [hqa, hnot, Finset.mem_insert]
-    · have hqa' : ¬ a = q := by simpa [eq_comm] using hqa
+    rw [Finset.prod_insert ha, Nat.factorization_mul ha_prime.ne_zero hprod_pos.ne',
+        ha_prime.factorization, ih hs']
+    simp only [Finsupp.add_apply, Finsupp.single_apply, Finset.mem_insert]
+    rcases eq_or_ne q a with hqa | hqa
+    · subst hqa
+      simp [ha]
+    · have hqa' : ¬ a = q := Ne.symm hqa
       by_cases hqs : q ∈ s
-      · simp [hqa, hqa', hqs, Finset.mem_insert]
-      · simp [hqa, hqa', hqs, Finset.mem_insert, if_neg hqa]
+      · simp [hqa, hqa', hqs]
+      · simp [hqa, hqa', hqs]
 
 /-- Squarefree `n` supported on the 84 checked primes divide the product of
     those primes, so there are finitely many of them. The Dirichlet series
