@@ -28,7 +28,7 @@ private lemma abs_sin_mul_le (n : ℕ) (θ : ℝ) :
   | zero => simp
   | succ n ih =>
     have hc : ((n + 1 : ℕ) : ℝ) = (n : ℝ) + 1 := by norm_cast
-    rw [hc] at ih ⊢
+    simp_rw [hc] at ih ⊢
     have harg : ((n : ℝ) + 1 + 1) * θ = ((n : ℝ) + 1) * θ + θ := by ring
     rw [harg, sin_add]
     have hcos1 : |cos θ| ≤ 1 := abs_cos_le_one θ
@@ -81,13 +81,8 @@ private lemma chebyshev_U_eval_neg_one (n : ℕ) :
         simp only [eval_sub, eval_mul, eval_ofNat, eval_X]
         rw [show (n : ℤ) + 1 = ((n + 1 : ℕ) : ℤ) by simp]
         rw [ih (n + 1) (by omega), ih n (by omega)]
-        have hsign : (-1 : ℝ) ^ (n + 2) = (-1 : ℝ) ^ n := by
-          rw [pow_add, pow_two]
-          norm_num
         push_cast
         ring_nf
-        rw [hsign]
-        ring
 
 private lemma abs_chebyshev_U_le (n : ℕ) {x : ℝ} (hx : |x| ≤ 1) :
     |(Chebyshev.U ℝ (n : ℤ)).eval x| ≤ (n : ℝ) + 1 := by
@@ -168,12 +163,8 @@ private lemma a_prime_pow_as_chebyshev
         rw [show ((k + 2 : ℕ) : ℤ) = (k : ℤ) + 2 by simp, Chebyshev.U_add_two]
         simp only [eval_sub, eval_mul, eval_ofNat, eval_X]
         rw [show (k : ℤ) + 1 = ((k + 1 : ℕ) : ℤ) by simp]
-        have hs3 : (p : ℝ) * sqrt (p : ℝ) = sqrt (p : ℝ) ^ 3 := by
-          calc (p : ℝ) * sqrt (p : ℝ)
-              = sqrt (p : ℝ) ^ 2 * sqrt (p : ℝ) := by rw [hs_sq]
-            _ = sqrt (p : ℝ) ^ 3 := by ring
         field_simp [hs_pos.ne']
-        rw [hs3]
+        simp only [pow_add, pow_one, pow_two, hs_sq]
         ring_nf
 
 /-- For each of the 84 checked primes and every `k`, `|a_{p^k}| ≤ (k+1) p^{k/2}`.
