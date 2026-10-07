@@ -1,7 +1,24 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis743_CLOSED.lean — extracted 32 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Mathlib.Tactic
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+import Mathlib.Tactic
+import Towers.BSD.BSD_Targeted_Placeholders
 
+set_option maxRecDepth 100000
+
+private instance instFactPrime151 : Fact (151 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime157 : Fact (157 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime163 : Fact (163 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime167 : Fact (167 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime173 : Fact (173 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime179 : Fact (179 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime181 : Fact (181 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime191 : Fact (191 : ℕ).Prime := ⟨by norm_num⟩
+
+
+namespace Towers.BSD
 theorem BSD_E143_card_p151 : (E143_Finset 151).card = 147 := by decide
 
 /-- **`BSD_E143_card_p157`** — 143a1 has exactly **152 affine 𝔽₁₅₇-points**.
