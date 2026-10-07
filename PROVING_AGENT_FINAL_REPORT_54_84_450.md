@@ -2,7 +2,7 @@
 
 Repository-only audit of `DavidFox998/birch-swinnerton-dyer-143a1` on `bsd-clean-214-propositions-assessed`. This report does not prove a conjecture. It records what compiled.
 
-Tip of this report: `70b40e1` (`ebbd266` → `0792f0d` → `70b40e1`).
+Tip of this report: `6d21d82` (continued from `3835c4c`; the partial section at `70b40e1` is the earlier record).
 Lean audit: `52eb949` (`Towers/BSD/BSD_450_Gates_Documentation.lean`).
 Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `FINAL_BSD_HANDOFF_54_84.md` is not in the repository. The gate list is Authoring Phase 2 in `PROVING_AGENT_HANDOFF.md`.
@@ -20,7 +20,12 @@ Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `lake build Towers.BSD.BSD_Euler_FEq_Clean` — EXIT:0 (`/tmp/bsd-euler-clean.log`).
 `lake build Towers.BSD.BSD_Torsion_Rank_Clean` — EXIT:0 (`/tmp/bsd-torsion-clean.log`).
 `lake build Towers.BSD.BSD_Ideal_Wiles_Clean` — EXIT:0 (`/tmp/bsd-ideal-clean.log`).
-`lake build BSD_Clean_Aggregation` — EXIT:0 again after the C, E, F, and G partial theorems (`/tmp/bsd-cefg.log`), and again for this report (`/tmp/bsd-final-70b40e1.log`).
+`lake build BSD_Clean_Aggregation` — EXIT:0 again after the C, E, F, and G partial theorems (`/tmp/bsd-cefg.log`), and again for the `70b40e1` report (`/tmp/bsd-final-70b40e1.log`).
+
+`lake build Towers.BSD.BSD_ClassGroupEquiv_Clean` — EXIT:0 (`/tmp/bsd-cg-equiv.log`).
+`lake build Towers.BSD.BSD_Frobenius_Clean` — EXIT:0 (`/tmp/bsd-frob-clean.log`).
+`lake build Towers.BSD.BSD_PrimePower_Clean` — EXIT:0 (`/tmp/bsd-ppow.log`).
+`lake build BSD_Clean_Aggregation` — EXIT:0 again after those three files (`/tmp/bsd-keep-proving-450.log`).
 
 No `sorry`. The aggregation log has two warnings, both the old unused `r` variables in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321.
 
@@ -37,6 +42,9 @@ No `sorry`. The aggregation log has two warnings, both the old unused `r` variab
 - `Towers.BSD.BSD_Euler_FEq_Clean`
 - `Towers.BSD.BSD_Torsion_Rank_Clean`
 - `Towers.BSD.BSD_Ideal_Wiles_Clean`
+- `Towers.BSD.BSD_ClassGroupEquiv_Clean`
+- `Towers.BSD.BSD_Frobenius_Clean`
+- `Towers.BSD.BSD_PrimePower_Clean`
 
 No new `E143_Finset` enumeration. No prime at or above 1000 was enumerated.
 
@@ -69,6 +77,9 @@ The assessed tally is 54 theorems out of 504 propositions. The other 450 stay NE
 | `Towers/BSD/BSD_Euler_FEq_Clean.lean` | Finite-support Dirichlet series. Not the Euler product. |
 | `Towers/BSD/BSD_Torsion_Rank_Clean.lean` | `(2, 0)` in each checked `E143_Finset`. Not non-torsion, not rank 1. |
 | `Towers/BSD/BSD_Ideal_Wiles_Clean.lean` | `143 = 11 * 13`. Ideal equalities stay NEEDS_AUTHORING. |
+| `Towers/BSD/BSD_ClassGroupEquiv_Clean.lean` | Ten reduced forms, and every class has an ideal of norm at most 7. `classNumber = 10` stays NEEDS_AUTHORING. |
+| `Towers/BSD/BSD_Frobenius_Clean.lean` | The degree form implies `a_p² ≤ 4p` for an arbitrary prime. The forall stays NEEDS_AUTHORING. |
+| `Towers/BSD/BSD_PrimePower_Clean.lean` | `|a_{p^k}| ≤ (k+1) p^{k/2}` on the 84, and `|a_n| ≤ D n^{1/2+ε}` when every prime factor of `n` is in that set. |
 
 ## Five corollaries
 
@@ -137,6 +148,14 @@ All of these are partial. None of them rewrites an assessed definition. The asse
 - **F.** `BSD_affine_point_in_E143_Finset_checked` cites `BSD_Weierstrass_Coeff_Affine_Point_Theorem`: `(2, 0) ∈ E143_Finset p` for each checked prime, by `0 = 8 - 4 - 2 - 2` in `ZMod p`. `BSD_affine_not_proved_non_torsion` records that membership together with the placeholders: Heegner, Gross–Zagier, Kolyvagin, Sha, and Tamagawa are `True`; `BSD_TorsCard = 1`; `BSD_TamagawaProd = 1`; `BSD_LeadingCoeff 143 = 1`. Those equalities do not prove non-torsion, a generator, rank 1, or BSD. The sentinels were not closed. The 54 assessed defs in this group were not rewritten.
 - **G.** `BSD_conductor_factors` is `143 = 11 * 13`. Both factors are prime, both divide 143, and both lie outside the checked set, by `BSD_Ceiling_Theorem`. The file does not evaluate `E143_Finset` at 11 or 13. The ideal-equality names, `BSD_WilesTaylor_143_OPEN_prop`, and `BSD_Tier2B_ProvedFacts_prop` are `True`. `α_BSD_period` is not defined in this repository. The ideal equalities, Wiles–Taylor, and the period stay NEEDS_AUTHORING. The 10 assessed defs were not rewritten.
 
+## Continued B, A, and D at `6d21d82`
+
+These are further theorems. They do not rewrite an assessed definition. The assessed tally stays 54 of 504. The 450 stay NEEDS_AUTHORING. `84 ≠ 54`. `(54 : ℕ) + 450 = 504` does not prove the 450. No new `E143_Finset` enumeration. No prime at or above 1000. Groups C, E, F, and G are unchanged from `70b40e1`.
+
+- **B.** `BSD_reduced_forms_are_ten` cites the existing list of ten reduced binary quadratic forms of discriminant −143: each is reduced, the list has length 10, and the list is complete. Counting those forms is not the class number. `BSD_every_class_has_norm_le_seven` uses `NumberField.exists_ideal_in_class_of_norm_le` with `finrank ℚ K = 2`, one complex place, and `discr K = -143`. The Minkowski expression equals `(2/π)√143 < 8`, so every class contains an integral ideal of absolute norm at most 7. `BSD_classNumber_eq_10_needs_gauss_bridge` records length 10, the lower bound `10 ≤ classNumber K`, and the norm bound together. `classNumber K ≤ 10` and `classNumber K = 10` stay NEEDS_AUTHORING. Mathlib v4.12.0 has no `BinaryQuadraticForm.classGroupEquiv`, and this file does not define one. The 26 assessed defs were not rewritten.
+- **A.** `BSD_Hasse_square_of_degree` says that if `BSD_FrobeniusDegreeNonneg_OPEN p` holds, then `a_p² ≤ 4p`. The hypothesis is compiled for the 84 checked primes and is not proved for every good prime. `BSD_Hasse_forall_not_from_checked` records card 84, every checked prime below 1000, and the ceiling facts for 9973, 11, and 13. This file does not define a Frobenius endomorphism of `E(𝔽_p)`. Mathlib v4.12.0 has no Hasse theorem. The forall stays NEEDS_AUTHORING. The 328 assessed defs were not rewritten.
+- **D.** `BSD_prime_pow_bound_checked` is `|a_{p^k}| ≤ (k+1) p^{k/2}` for each of the 84 checked primes and every `k`. The identity is `a_{p^k} = U_k(a_p/(2√p)) · (√p)^k`, with `U` the Chebyshev polynomial of the second kind, using `|U_k(x)| ≤ k+1` for `|x| ≤ 1` and `|a_p| ≤ 2√p` on that set. `BSD_an_checked_support_bound` is `|a_n| ≤ D n^{1/2+ε}` for every `ε > 0` and every `n ≥ 1` whose prime factors all lie in the 84. The exponent may be greater than 1. `BSD_LSeriesSummable_OPEN` quantifies over every positive integer. A prime outside the 84 is not covered, so that statement stays NEEDS_AUTHORING. The 9 assessed defs were not rewritten.
+
 ## Standing limit
 
-There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, and the partial theorems for groups A through G are citations of proofs that compile. The 450 assessed defs are not among them. The Hasse forall, the Hasse–Weil derivative, the Euler product, the functional equation, the rank statements, and the ideal equalities are not among them.
+There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, the partial theorems for groups A through G, the norm bound of 7, the degree-form implication, and the checked-support coefficient bound are citations of proofs that compile. The 450 assessed defs are not among them. `classNumber K = 10`, the Hasse forall, `BSD_LSeriesSummable_OPEN`, the Hasse–Weil derivative, the Euler product, the functional equation, the rank statements, and the ideal equalities are not among them.
