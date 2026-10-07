@@ -13,6 +13,7 @@
 - Batch 9 is done at `a96b7b8`. `lake build BSD_Assessed_Batch9` and `lake build BSD_Clean_Aggregation` both exit 0.
 - Batch 10 is done at `09c726c`. `lake build BSD_Assessed_Batch10` and `lake build BSD_Clean_Aggregation` both exit 0.
 - There is no Batch 11. The ten assessed files are done. What remains is NEEDS_AUTHORING.
+- `Towers/BSD/BSD_Finite_Hasse_54_Theorem.lean` is at `66f0326`. It cites the 84 compiled finite checks. The assessed tally stays 54 of 504. The checked set is not every good prime.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -86,6 +87,8 @@ Mechanical enumeration is finished. `native_decide` of `E143_Finset p` compiled 
 4. **Opens that are not finite counts.** Euler product (`Towers/BSD/BSD_EulerProduct_Closed.lean`), functional equation (`Towers/BSD/BSD_BSD_FuncEq.lean`), Gross–Zagier (`Towers/BSD/BSD_GrossZagier_Closed.lean`), Kolyvagin, Sha and Tamagawa (`Towers/BSD/BSD_SHA_Tamagawa_Closed.lean`, `Towers/BSD/BSD_Tamagawa_Scaffold.lean`), regulator and Néron–Tate height, torsion and non-torsion, modularity (`Towers/BSD/B02_Modularity.lean`), and the ideal equalities `BSD_w3_ideal_equality_OPEN` and `BSD_w4_ideal_equality_OPEN` in `Towers/BSD/BSD_ClassNumber_UpperBound_CLOSED.lean` stay NEEDS_AUTHORING. Originals that are `trivial` on `True`, `rfl` of Tamagawa constants 1 and 2, `∃ R, R > 0 ∧ True`, `fun _ => ⟨1, rfl⟩`, or a function that ignores its arguments and returns 1 are sentinels. Do not close them with `trivial`.
 
 5. **Tau bound.** `BSD_PrimePowBound_to_aNBound_OPEN` is marked unformalized in `hasseprimset/BSD_antisupersingular.lean`. The divisor estimate is `hasseprimset/BSD_TauBound_small_proved.lean` and is not in the clean build. Do not invent it.
+
+The compiled finite checks are collected in `Towers/BSD/BSD_Finite_Hasse_54_Theorem.lean`. `BSD_Finite_Hasse_CheckedPrimes.card = 84`, not 54. The 54 is the assessed-theorem tally (`54 + 450 = 504`), and `84 ≠ 54`. `a_p p = p − (E143_Finset p).card` by definition. `BSD_Ceiling_Theorem` shows 9973 is prime, does not divide 143, and is not in the checked set. It does not evaluate `E143_Finset 9973`.
 
 ## Where everything lives
 
