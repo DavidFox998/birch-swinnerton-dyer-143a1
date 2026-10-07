@@ -8,9 +8,11 @@
   The triangle inequality on the recurrence does not give this coefficient.
 
   The hypothesis `|a_p| ≤ 2√p` is the compiled check on the 84 primes.
-  It is not known for every prime. `BSD_LSeriesSummable_OPEN` quantifies
-  over every positive integer and stays NEEDS_AUTHORING.
-  The 9 assessed definitions were not rewritten.
+  It is not known for every prime. For `n ≥ 1` whose prime factors all lie
+  in that set, multiplicativity gives `|a_n| ≤ τ(n) √n`, and the divisor
+  bound upgrades this to `|a_n| ≤ D n^{1/2+ε}`.
+  `BSD_LSeriesSummable_OPEN` quantifies over every positive integer and
+  stays NEEDS_AUTHORING. The 9 assessed definitions were not rewritten.
   No new point count. No sorry.
 -/
 
@@ -135,8 +137,7 @@ private lemma abs_chebyshev_U_le (n : ℕ) {x : ℝ} (hx : |x| ≤ 1) :
       exact le_of_mul_le_mul_right hle hsin_pos
 
 private lemma a_prime_pow_as_chebyshev
-    (p : ℕ) [Fact p.Prime]
-    (habs : |(a_p p : ℝ)| ≤ 2 * sqrt (p : ℝ)) (k : ℕ) :
+    (p : ℕ) [Fact p.Prime] (k : ℕ) :
     (a_prime_pow p k : ℝ) =
       (Chebyshev.U ℝ (k : ℤ)).eval ((a_p p : ℝ) / (2 * sqrt (p : ℝ))) *
         sqrt (p : ℝ) ^ k := by
@@ -187,8 +188,137 @@ theorem BSD_prime_pow_bound_checked
       abs_of_pos hs_pos]
     rw [div_le_one (by positivity)]
     exact habs
-  rw [a_prime_pow_as_chebyshev p habs k, abs_mul, abs_of_nonneg (pow_nonneg (le_of_lt hs_pos) k)]
+  rw [a_prime_pow_as_chebyshev p k, abs_mul, abs_of_nonneg (pow_nonneg (le_of_lt hs_pos) k)]
   exact mul_le_mul_of_nonneg_right (abs_chebyshev_U_le k hx) (pow_nonneg (le_of_lt hs_pos) k)
+
+private theorem finset_prod_cast {α : Type*} [DecidableEq α] (s : Finset α) (f : α → ℕ) :
+    (↑(∏ i in s, f i) : ℝ) = ∏ i in s, (f i : ℝ) := by
+  induction s using Finset.induction_on with
+  | empty => simp
+  | insert ha ih =>
+    rw [Finset.prod_insert ha, Finset.prod_insert ha, Nat.cast_mul, ih]
+
+private theorem finset_prod_rpow {α : Type*} [DecidableEq α] (s : Finset α) (f : α → ℝ)
+    (hf : ∀ i ∈ s, 0 ≤ f i) (r : ℝ) :
+    (∏ i in s, f i) ^ r = ∏ i in s, (f i) ^ r := by
+  induction s using Finset.induction_on with
+  | empty => simp [Real.one_rpow]
+  | insert ha ih =>
+    rename_i _inst a s'
+    rw [Finset.prod_insert ha, Finset.prod_insert ha]
+    rw [Real.mul_rpow (hf a (Finset.mem_insert_self a s'))
+      (Finset.prod_nonneg (fun i hi => hf i (Finset.mem_insert_of_mem hi)))]
+    rw [ih (fun i hi => hf i (Finset.mem_insert_of_mem hi))]
+
+lemma a_n_factor_prod (n : ℕ) (hn : 0 < n) :
+    a_n n = ∏ p in n.factorization.support,
+      if h : p.Prime then
+        haveI : Fact p.Prime := ⟨h⟩
+        a_prime_pow p (n.factorization p)
+      else 1 := by
+  rw [a_n, if_neg hn.ne', Finsupp.prod]
+
+/-- `n ≥ 1` with every prime factor among the 84 checked primes.
+    `|a_n| ≤ τ(n) √n ≤ D n^{1/2+ε}`. Higher prime powers are included.
+    A prime outside the 84 is not covered. `BSD_LSeriesSummable_OPEN`
+    quantifies over every positive integer and is not proved. -/
+theorem BSD_an_checked_support_bound
+    (ε : ℝ) (hε : 0 < ε) (n : ℕ) (hn : 0 < n)
+    (hfac : ∀ p : ℕ, p ∈ n.primeFactors → p ∈ BSD_Finite_Hasse_CheckedPrimes) :
+    ∃ D : ℝ, 0 < D ∧ |(a_n n : ℝ)| ≤ D * (n : ℝ) ^ ((1 : ℝ) / 2 + ε) := by
+  obtain ⟨D, hD, hτ⟩ := BSD_tau_bound_of_divisors ε hε
+  have hn0 : n ≠ 0 := hn.ne'
+  set S := n.factorization.support with hS
+  let f : ℕ → ℤ := fun p =>
+    if h : p.Prime then
+      haveI : Fact p.Prime := ⟨h⟩
+      a_prime_pow p (n.factorization p)
+    else 1
+  have h_an : a_n n = ∏ p in S, f p := by
+    simpa [f, hS] using a_n_factor_prod n hn
+  have hpoint : ∀ p ∈ S, (Int.cast (R := ℝ) |f p|) ≤
+      ((n.factorization p + 1 : ℕ) : ℝ) * sqrt (p : ℝ) ^ n.factorization p := by
+    intro p hp
+    have hp_pf : p ∈ n.primeFactors :=
+      (Nat.support_factorization n) ▸ (hS.symm ▸ hp)
+    have hp_prime : p.Prime := Nat.prime_of_mem_primeFactors hp_pf
+    haveI : Fact p.Prime := ⟨hp_prime⟩
+    have hf : f p = a_prime_pow p (n.factorization p) := by simp [f, hp_prime]
+    rw [Int.cast_abs, hf]
+    exact BSD_prime_pow_bound_checked p (hfac p hp_pf) (n.factorization p)
+  have habs : |(a_n n : ℝ)| ≤ (n.divisors.card : ℝ) * sqrt (n : ℝ) := by
+    have habsZ : |∏ p in S, f p| = ∏ p in S, |f p| := Finset.abs_prod _ _
+    have hcast_abs : (Int.cast (R := ℝ) |a_n n|) = |(a_n n : ℝ)| := Int.cast_abs
+    have hcast_prod :
+        Int.cast (R := ℝ) (∏ p in S, |f p|) =
+          ∏ p in S, Int.cast (R := ℝ) |f p| :=
+      map_prod (Int.castRingHom ℝ) (fun p => |f p|) S
+    have hprod_le :
+        ∏ p in S, Int.cast (R := ℝ) |f p| ≤
+          ∏ p in S, (((n.factorization p + 1 : ℕ) : ℝ) *
+            sqrt (p : ℝ) ^ n.factorization p) :=
+      Finset.prod_le_prod (fun _ _ => by positivity) hpoint
+    have hsplit :
+        ∏ p in S, (((n.factorization p + 1 : ℕ) : ℝ) *
+            sqrt (p : ℝ) ^ n.factorization p) =
+          (∏ p in S, ((n.factorization p + 1 : ℕ) : ℝ)) *
+            ∏ p in S, sqrt (p : ℝ) ^ n.factorization p :=
+      Finset.prod_mul_distrib
+    have htau : ∏ p in S, ((n.factorization p + 1 : ℕ) : ℝ) =
+        (n.divisors.card : ℝ) := by
+      rw [divisors_card_factorization n hn, ← hS]
+      refine Finset.prod_congr rfl fun p _ => ?_
+      push_cast
+      rfl
+    have hsqrt_prod : ∏ p in S, sqrt (p : ℝ) ^ n.factorization p = sqrt (n : ℝ) := by
+      have hnat : ∏ p in S, p ^ n.factorization p = n := by
+        have h := Nat.factorization_prod_pow_eq_self hn0
+        simp only [Finsupp.prod] at h
+        simpa [hS] using h
+      have hcast : (n : ℝ) = ∏ p in S, (p : ℝ) ^ n.factorization p := by
+        have h : (n : ℝ) = ↑(∏ p in S, p ^ n.factorization p) := by
+          exact_mod_cast hnat.symm
+        rw [h, finset_prod_cast]
+        congr 1
+        ext p
+        push_cast
+        rfl
+      have hterm : ∀ p ∈ S, sqrt (p : ℝ) ^ n.factorization p =
+          ((p : ℝ) ^ n.factorization p) ^ ((1 : ℝ) / 2) := by
+        intro p _
+        rw [Real.sqrt_eq_rpow, ← Real.rpow_natCast]
+        rw [← Real.rpow_mul (Nat.cast_nonneg p)]
+        rw [← Real.rpow_natCast, ← Real.rpow_mul (Nat.cast_nonneg p)]
+        congr 1
+        ring
+      simp_rw [hterm]
+      rw [← finset_prod_rpow S (fun p => (p : ℝ) ^ n.factorization p)
+        (fun p _ => pow_nonneg (Nat.cast_nonneg p) _) ((1 : ℝ) / 2), ← hcast]
+      exact (Real.sqrt_eq_rpow (n : ℝ)).symm
+    calc |(a_n n : ℝ)|
+        = Int.cast (R := ℝ) |a_n n| := hcast_abs.symm
+      _ = Int.cast (R := ℝ) |∏ p in S, f p| := by rw [h_an]
+      _ = Int.cast (R := ℝ) (∏ p in S, |f p|) := by rw [habsZ]
+      _ = ∏ p in S, Int.cast (R := ℝ) |f p| := hcast_prod
+      _ ≤ ∏ p in S, (((n.factorization p + 1 : ℕ) : ℝ) *
+          sqrt (p : ℝ) ^ n.factorization p) := hprod_le
+      _ = (n.divisors.card : ℝ) * sqrt (n : ℝ) := by rw [hsplit, htau, hsqrt_prod]
+  have hmul : (n.divisors.card : ℝ) * sqrt (n : ℝ) ≤
+      D * (n : ℝ) ^ ((1 : ℝ) / 2 + ε) := by
+    have hpow : (n : ℝ) ^ ((1 : ℝ) / 2) * (n : ℝ) ^ ε =
+        (n : ℝ) ^ ((1 : ℝ) / 2 + ε) := by
+      rw [← Real.rpow_add (by exact_mod_cast hn) ((1 : ℝ) / 2) ε]
+    have hsqrt_eq : sqrt (n : ℝ) = (n : ℝ) ^ ((1 : ℝ) / 2) :=
+      Real.sqrt_eq_rpow (n : ℝ)
+    calc (n.divisors.card : ℝ) * sqrt (n : ℝ)
+        = (n.divisors.card : ℝ) * (n : ℝ) ^ ((1 : ℝ) / 2) := by rw [hsqrt_eq]
+      _ ≤ (D * (n : ℝ) ^ ε) * (n : ℝ) ^ ((1 : ℝ) / 2) := by
+          apply mul_le_mul_of_nonneg_right (hτ n hn)
+          exact Real.rpow_nonneg (Nat.cast_nonneg n) _
+      _ = D * ((n : ℝ) ^ ε * (n : ℝ) ^ ((1 : ℝ) / 2)) := by ring
+      _ = D * (n : ℝ) ^ ((1 : ℝ) / 2 + ε) := by
+          rw [mul_comm ((n : ℝ) ^ ε), hpow]
+  refine ⟨D, hD, habs.trans hmul⟩
 
 /-- The prime-power bound on the checked set does not prove summability of
     the L-series. The registry summability name stays `True`. The root

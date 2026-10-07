@@ -142,8 +142,9 @@ lemma divisors_card_factorization (n : ℕ) (hn : 0 < n) :
     `Nat.card_divisors` replaces `BSD_card_divisors_close`. That lemma lived in
     `Towers.BSD.BSD_Genesis781_CLOSED`, which is not imported.
     This is not summability of the L-series. The prime-power bound
-    `|a_{p^k}| ≤ (k+1) p^{k/2}` stays unformalized, so the coefficient bound
-    for every `n` stays NEEDS_AUTHORING. -/
+    `|a_{p^k}| ≤ (k+1) p^{k/2}` is proved only for the 84 checked primes,
+    in `BSD_PrimePower_Clean`. The coefficient bound for every `n` stays
+    NEEDS_AUTHORING. -/
 theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
     ∃ D : ℝ, 0 < D ∧ ∀ n : ℕ, 0 < n →
       (n.divisors.card : ℝ) ≤ D * (n : ℝ) ^ ε := by
