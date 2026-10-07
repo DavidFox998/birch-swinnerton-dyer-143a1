@@ -719,11 +719,7 @@ theorem master_not_principal_1_to_9 (k : ℕ) (hk1 : 1 ≤ k) (hk9 : k ≤ 9) :
   · exact p2_pow_not_principal_odd k h
   · exact EvenK_NonPrincipal_Bridge_proof k h
 
-end NonPrincipalityResults
-
-/-! ## §3. Lower bound: 10 ≤ classNumber K  (NEW — proved in this file) -/
-
-section LowerBound
+/-! ## §3. Lower bound: 10 ≤ classNumber K -/
 
 /-!
 ### Proof outline
