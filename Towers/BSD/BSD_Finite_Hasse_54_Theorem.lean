@@ -55,7 +55,7 @@ theorem BSD_Finite_Hasse_CheckedPrimes_lt_1000
     simpa [BSD_Finite_Hasse_CheckedPrimes] using hp
   have hall : BSD_Finite_Hasse_CheckedList.all (· < 1000) = true := by
     decide
-  exact (List.all_eq_true.mp hall) p hp'
+  exact of_decide_eq_true ((List.all_eq_true.mp hall) p hp')
 
 /-- Each compiled prime: the degree form is nonnegative, so `|a_p| ≤ 2√p`,
     and `a_p` is `p` minus the affine count. Cites the existing proofs.
@@ -334,7 +334,17 @@ theorem BSD_Ceiling_Theorem :
       13 ∉ BSD_Finite_Hasse_CheckedPrimes ∧
       11 ∣ 143 ∧ 13 ∣ 143 ∧
       BSD_Finite_Hasse_CheckedPrimes.card = 84 := by
-  decide
+  have h9973 : 9973 ∉ BSD_Finite_Hasse_CheckedList := by
+    simp only [BSD_Finite_Hasse_CheckedList]; decide
+  have h11 : 11 ∉ BSD_Finite_Hasse_CheckedList := by
+    simp only [BSD_Finite_Hasse_CheckedList]; decide
+  have h13 : 13 ∉ BSD_Finite_Hasse_CheckedList := by
+    simp only [BSD_Finite_Hasse_CheckedList]; decide
+  refine ⟨by decide, by decide, ?_, ?_, ?_, by decide, by decide,
+    BSD_Finite_Hasse_CheckedPrimes_card⟩
+  · simpa [BSD_Finite_Hasse_CheckedPrimes] using h9973
+  · simpa [BSD_Finite_Hasse_CheckedPrimes] using h11
+  · simpa [BSD_Finite_Hasse_CheckedPrimes] using h13
 
 /-
   Assessed tally, separate from the 84 compiled primes.
