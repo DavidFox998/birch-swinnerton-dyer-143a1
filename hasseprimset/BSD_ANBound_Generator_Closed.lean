@@ -34,7 +34,7 @@ BSD: OPEN.  NOT a Clay claim.  No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_BSD_antisupersingular
+import hasseprimset.BSD_antisupersingular
 
 namespace Towers.BSD
 
