@@ -64,12 +64,17 @@ namespace Towers_BSD_E143a1_CLOSED_Assessed
   theorem E143a1_has_rational_point_prop :
       ∃ (x y : ℚ), y ^ 2 + y = x ^ 3 - x ^ 2 - x - 2 :=
     ⟨2, 0, by norm_num⟩
-  /-- Literal from BostBound143.lean. Copied from `C_S4_gt_2sqrt13`. -/
+  /-- Literal from BostBound143.lean. The file's `nlinarith` step does not
+      close `√13 < 3.6056`. Both sides are positive, so compare squares:
+      `(2√13)² = 52 < C_S4²`. -/
   theorem E143a1_bost_bound_prop :
       (11.42214868898 : ℝ) > 2 * Real.sqrt 13 := by
-    have : Real.sqrt 13 < 3.6056 := by
-      nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 13 by norm_num)]
-    linarith
+    have hsq : (2 * Real.sqrt 13) ^ 2 < (11.42214868898 : ℝ) ^ 2 := by
+      rw [mul_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 13)]
+      norm_num
+    have habs : |2 * Real.sqrt 13| < |(11.42214868898 : ℝ)| := sq_lt_sq.mp hsq
+    rw [abs_of_nonneg (by positivity), abs_of_nonneg (by norm_num)] at habs
+    exact habs
 end Towers_BSD_E143a1_CLOSED_Assessed
 
 namespace hasseprimset_BSD_ANBound_Generator_Closed_Assessed
@@ -93,9 +98,9 @@ namespace hasseprimset_BSD_Finsupp_prod_le_close_Assessed
         Summable fun n : ℕ+ => (a_n n : ℂ) / (n : ℂ) ^ s) := by
     intro h_bound
     intro s hs
-    set ε₀ := (s.re - 3 / 2) / 2 with hε₀_def
+    set ε₀ := (s.re - 3 / 2) / 2
     have hε₀_pos : (0 : ℝ) < ε₀ := by unfold_let ε₀; linarith
-    obtain ⟨C, hC_pos, hC_bound⟩ := h_bound ε₀ hε₀_pos
+    obtain ⟨C, _, hC_bound⟩ := h_bound ε₀ hε₀_pos
     have hx_lt : 3 / 2 + ε₀ < s.re := by unfold_let ε₀; linarith
     have hexp : (3 / 2 + ε₀ : ℝ) - 1 = 1 / 2 + ε₀ := by ring
     have hLS : LSeriesSummable (fun n : ℕ => (a_n n : ℂ)) s := by
