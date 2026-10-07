@@ -14,6 +14,7 @@
 - Batch 10 is done at `09c726c`. `lake build BSD_Assessed_Batch10` and `lake build BSD_Clean_Aggregation` both exit 0.
 - There is no Batch 11. The ten assessed files are done. What remains is NEEDS_AUTHORING.
 - `Towers/BSD/BSD_Finite_Hasse_54_Theorem.lean` is at `66f0326`. It cites the 84 compiled finite checks. The assessed tally stays 54 of 504. The checked set is not every good prime.
+- Five corollaries are in `Towers/BSD/BSD_More_Theorems_From_54.lean` at `767d141`. `lake build Towers.BSD.BSD_More_Theorems_From_54` and `lake build BSD_Clean_Aggregation` both exit 0. They are not five more of the 504. The assessed tally stays 54 of 504. The other 450 stay NEEDS_AUTHORING.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -90,6 +91,20 @@ Mechanical enumeration is finished. `native_decide` of `E143_Finset p` compiled 
 
 The compiled finite checks are collected in `Towers/BSD/BSD_Finite_Hasse_54_Theorem.lean`. `BSD_Finite_Hasse_CheckedPrimes.card = 84`, not 54. The 54 is the assessed-theorem tally (`54 + 450 = 504`), and `84 ≠ 54`. `a_p p = p − (E143_Finset p).card` by definition. `BSD_Ceiling_Theorem` shows 9973 is prime, does not divide 143, and is not in the checked set. It does not evaluate `E143_Finset 9973`.
 
+## Corollaries from the 84 checks
+
+`Towers/BSD/BSD_More_Theorems_From_54.lean` imports Batches 1–10 and `BSD_Finite_Hasse_54_Theorem`. `BSD_Clean_Aggregation` imports it. No new `E143_Finset` enumeration. No sorry. These five theorems are corollaries of proofs that already compile. They do not change the assessed tally.
+
+1. `BSD_Hasse_Forms_Equiv_84`. For each of the 84 checked primes, `|a_p| ≤ 2√p` and `a_p² ≤ 4p`. The pointwise comparison is the Batch 3 square algebra with the quantifiers removed. `BSD_RamanujanBound_iff_Discriminant_prop` still equates two unproved foralls. This does not prove Hasse for every prime.
+
+2. `BSD_Coprime_Multiplicativity_Applies_84`. Cites `BSD_HeckeMultiplicativity_143_CLOSED_prop`. `a_n p = a_p p` for a prime, so the compiled counts give `a_n 251 = 21` and `a_n 257 = 18`. Then `a_n (251 * 257) = a_n 251 * a_n 257` and `a_n 64507 = 378`. Not modularity.
+
+3. `BSD_Weierstrass_Coeff_Affine_Point_Theorem`. Coefficients `(0, -1, 1, -1, -2)` by rfl. The rational point `(2, 0)` satisfies `y² + y = x³ − x² − x − 2`. The same point lies in `E143_Finset p` for each checked prime, by the ring identity `0 = 8 - 4 - 2 - 2` in `ZMod p`. Not non-torsion, not a generator, not rank 1, not BSD. `BSD_HeegnerPoint_OPEN` stays the registry `True`.
+
+4. `BSD_Minkowski_H1_AP_Ledger_Theorem`. Conjunction of `BSD_minkowski_lt_8_prop`, `BSD_H1_decomp_verified_prop` (`True ∧ True ∧ True ∧ True`), and `BSD_AP_surface_ledger_prop`. Class number stays NEEDS_AUTHORING. `BinaryQuadraticForm.classGroupEquiv` is absent from Mathlib v4.12.0. The ledger does not discharge the empirical `a_p` props.
+
+5. `BSD_Coefficient_Bound_Implies_Summability_54`. Cites `BSD_isBigO_to_LSeries_close_prop`. A bound on every `a_n` implies summability for `Re(s) > 3/2`. Each checked prime satisfies `|a_p| ≤ 2√p`. Those 84 inequalities are not a bound for every `n`. Summability of the L-series is not discharged. There is no truncated L-series.
+
 ## Where everything lives
 
 **Repo:** `DavidFox998/birch-swinnerton-dyer-143a1`
@@ -160,7 +175,7 @@ For each `def <Name>_prop : Prop := True` (or real statement):
 
 1. **Batch 1-2** (81 props, 31 with real statements) — most likely to have mechanical fixes
 2. **Batch 3-4** (102 props, 12 with real statements) — mixed
-3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. Do not enumerate further primes. The remaining props stay NEEDS_AUTHORING until a general proof is in the clean build.
+3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. The five corollaries in `BSD_More_Theorems_From_54.lean` do not add to the 54. Do not enumerate further primes. The remaining 450 props stay NEEDS_AUTHORING until a general proof is in the clean build.
 
 ## Verification
 
