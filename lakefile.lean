@@ -13,8 +13,8 @@ require mathlib from git
 lean_lib lean where
   srcDir := "lean"
 
--- Root aggregates — HassePrimeSet.lean capstone 127 files
-lean_lib HassePrimeSet where
+-- Root aggregates — BSD_Hasse_1061_Primes_Audit_143a1.lean capstone
+lean_lib BSD_Hasse_1061_Primes_Audit_143a1 where
   srcDir := "."
 
 -- Bost bound S₄ = {2,3,19,191} C=11.422 >2√13
@@ -27,4 +27,9 @@ lean_lib hasseprimset where
 
 -- Towers/BSD/ — Genesis 762, 763 honest point counts via E143_Finset by decide
 lean_lib Towers where
+  srcDir := "."
+
+-- Clean aggregation — only files that actually compile (13/243)
+-- See BSD_Clean_Aggregation.lean for the honest baseline.
+lean_lib BSD_Clean_Aggregation where
   srcDir := "."
