@@ -334,12 +334,9 @@ theorem BSD_Ceiling_Theorem :
       13 ∉ BSD_Finite_Hasse_CheckedPrimes ∧
       11 ∣ 143 ∧ 13 ∣ 143 ∧
       BSD_Finite_Hasse_CheckedPrimes.card = 84 := by
-  have h9973 : 9973 ∉ BSD_Finite_Hasse_CheckedList := by
-    simp only [BSD_Finite_Hasse_CheckedList]; decide
-  have h11 : 11 ∉ BSD_Finite_Hasse_CheckedList := by
-    simp only [BSD_Finite_Hasse_CheckedList]; decide
-  have h13 : 13 ∉ BSD_Finite_Hasse_CheckedList := by
-    simp only [BSD_Finite_Hasse_CheckedList]; decide
+  have h9973 : 9973 ∉ BSD_Finite_Hasse_CheckedList := by native_decide
+  have h11 : 11 ∉ BSD_Finite_Hasse_CheckedList := by native_decide
+  have h13 : 13 ∉ BSD_Finite_Hasse_CheckedList := by native_decide
   refine ⟨by decide, by decide, ?_, ?_, ?_, by decide, by decide,
     BSD_Finite_Hasse_CheckedPrimes_card⟩
   · simpa [BSD_Finite_Hasse_CheckedPrimes] using h9973
