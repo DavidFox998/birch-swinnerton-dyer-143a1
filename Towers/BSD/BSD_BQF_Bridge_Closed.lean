@@ -34,3 +34,10 @@ theorem BSD_BQF_classNumber_eq_numForms :
   exact hcn
 
 end Towers.BSD
+theorem BSD_BQF_ClassNumber_bridge_CLOSED :
+    Towers.BSD.BSD_BQF_ClassNumber_bridge :=
+  (BSD_classNumber_eq_10_via_principal BSD_p2_pow_10_principal).trans
+    Towers.BSD.BSD_numReducedForms143.symm
+
+end BSD
+
