@@ -54,8 +54,11 @@ namespace Towers_BSD_BSD_AlgNorm_Assessed
 end Towers_BSD_BSD_AlgNorm_Assessed
 
 namespace Towers_BSD_BSD_AnalyticCapstone_Assessed
-  -- NEEDS_AUTHORING: registry sets BSD_L143a1_DerivAtOne := 0, so this is 0 ≠ 0.
-  -- The original norm_num proof used a different constant. Not discharged.
+  -- NEEDS_AUTHORING: registry BSD_L143a1_DerivAtOne is the constant 0
+  -- (Towers/BSD/BSD_MissingDefinitionsRegistry.lean). This goal is 0 ≠ 0.
+  -- Towers/BSD/BSD_VanishingOrder_Kolyvagin_Closed.lean differentiates the
+  -- linear anchor (5759/10000)·(s−1). That derivative is 5759/10000, and it is
+  -- not the Hasse–Weil L-function. Do not change the registry constant.
   def BSD_L143a1_DerivAtOne_Nonzero_prop : Prop := BSD_L143a1_DerivAtOne ≠ 0
   -- NEEDS_AUTHORING: registry sets BSD_LeadingCoeff := fun _ => 1.
   -- Proving 1 ≠ 0 would not be the LMFDB leading coefficient.
@@ -93,6 +96,8 @@ end Towers_BSD_BSD_ClassGroup_Generator_CLOSED_Assessed
 namespace Towers_BSD_BSD_ClassNum_Unconditional_CLOSED_Assessed
   -- NEEDS_AUTHORING: original proof calls BSD_classGroupCard_le_10_CLOSED and
   -- BSD_small_norm_in_zpowers_CLOSED, outside the clean build. Statement restored.
+  -- The upper gate is BinaryQuadraticForm.classGroupEquiv, absent from Mathlib v4.12.0.
+  -- See Towers/BSD/BSD_ClassNum_Upper_CLOSED.lean. Do not invent the equivalence.
   def BSD_ClassNum_Unconditional_prop : Prop :=
     NumberField.classNumber Towers.BSD.K ≤ 10
   def BSD_classNumber_upper_gate_discharged_prop : Prop :=

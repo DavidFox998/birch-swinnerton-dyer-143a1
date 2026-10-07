@@ -56,8 +56,9 @@ namespace hasseprimset_BSD_Hasse_Points_9973_9973_Assessed
 end hasseprimset_BSD_Hasse_Points_9973_9973_Assessed
 
 namespace hasseprimset_BSD_TauBound_small_proved_Assessed
-  -- NEEDS_AUTHORING: the original proof is a long divisor estimate.
-  -- It is not a tactic rename, and it is not in the clean build.
+  -- NEEDS_AUTHORING: the original proof is a long divisor estimate in
+  -- hasseprimset/BSD_TauBound_small_proved.lean. It is not a tactic rename,
+  -- and it is not in the clean build. Do not invent the divisor bound.
   def BSD_TauBound_small_proved_prop : Prop := True -- was: BSD_TauBound_small_OPEN
   -- NEEDS_AUTHORING: this cites the unproved small-eps divisor bound.
   def BSD_TauBound_OPEN_proved_prop : Prop := True -- was: BSD_TauBound_OPEN
@@ -68,7 +69,9 @@ namespace hasseprimset_BSD_WeilDeligne_Closed_Assessed
   -- a structure, not a proposition. The coefficient tuple is Batch 4.
   def E143_Weierstrass_prop : Prop := True -- was: WeierstrassCurve ℤ
   -- NEEDS_AUTHORING: registry statement is a_p² ≤ 4p for every good prime.
-  -- Not trivial. Not proved by the finite point counts.
+  -- Not trivial. Finite E143_Finset counts through 983 do not prove the forall.
+  -- Do not native_decide p≥1000. Mathlib v4.12.0 has no general elliptic Hasse
+  -- theorem to cite for this curve. See hasseprimset/BSD_WeilDeligne_Closed.lean.
   def BSD_WeilHasse_Weierstrass_OPEN_prop : Prop := True -- was: BSD_WeilHasse_Weierstrass_OPEN
   -- NEEDS_AUTHORING: discriminant name is True; Weierstrass name is the forall.
   -- The original Iff.rfl used two copies of the same statement. This iff is not definitional.
@@ -91,7 +94,8 @@ namespace hasseprimset_BSD_abs_prod_real_Assessed
 end hasseprimset_BSD_abs_prod_real_Assessed
 
 namespace hasseprimset_BSD_antisupersingular_Assessed
-  -- NEEDS_AUTHORING: the original calls the Finsupp product identity unformalized.
+  -- NEEDS_AUTHORING: hasseprimset/BSD_antisupersingular.lean calls the
+  -- Finsupp product identity unformalized. Do not invent it.
   def BSD_PrimePowBound_to_aNBound_OPEN_prop : Prop := True -- was: BSD_PrimePowBound_to_aNBound_OPEN
   /-- Original sentinel in hasseprimset/BSD_antisupersingular.lean.
       The def is `BSD_LSeriesSummable_OPEN → True`.

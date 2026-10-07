@@ -24,12 +24,15 @@ No sorry. Registry `True` placeholders are not discharged.
 -/
 
 namespace Towers_BSD_BSD_MasterProof_Assessed
-  -- NEEDS_AUTHORING: the original proof uses master_not_principal_1_to_9
-  -- and p2_OK, which live outside the clean build.
+  -- NEEDS_AUTHORING: lower bound. Towers/BSD/BSD_ClassNumberLowerProof.lean
+  -- and Towers/BSD/BSD_MasterProof.lean use master_not_principal_1_to_9 and p2_OK.
+  -- Those files are outside the clean build. Do not import them.
   def BSD_classNumber_lower_bound_prop : Prop :=
     10 ≤ NumberField.classNumber Towers.BSD.K
-  -- NEEDS_AUTHORING: upper bound is the BQF / class-group gate.
-  -- Gauss–Dirichlet bijection is absent from Mathlib v4.12.0.
+  -- NEEDS_AUTHORING: upper bound. Towers/BSD/BSD_ClassNum_Upper_CLOSED.lean,
+  -- Towers/BSD/BSD_ReducedForms.lean, and Towers/BSD/BSD_MasterProof.lean
+  -- require BinaryQuadraticForm.classGroupEquiv. That declaration is absent
+  -- from Mathlib v4.12.0. Do not invent the equivalence.
   def BSD_classNumber_upper_OPEN_prop : Prop :=
     NumberField.classNumber Towers.BSD.K ≤ 10
 end Towers_BSD_BSD_MasterProof_Assessed
