@@ -73,6 +73,20 @@ Batch 10 theorems, and only these:
 - Not Hasse for every prime. Nothing past 983 is in the clean build. The 11 props at `p≥9721`, the Hasse forall, the non-definitional iff, the Weierstrass structure (a type, not a Prop), and the tau-bound arguments stay NEEDS_AUTHORING. Nineteen props in this file stay NEEDS_AUTHORING.
 - The ten assessed files are done. Running total is 54 theorems out of 504. The other 450 stay NEEDS_AUTHORING. Do not treat a registry `True` as a proved conjecture.
 
+## Authoring Phase 2
+
+Mechanical enumeration is finished. `native_decide` of `E143_Finset p` compiled through p=983 (966289 pairs). `decide` hits the recursion limit at p≥53. Do not `native_decide` p≥1000. A count at p=9973 is about 99 million pairs and will not compile. Finite counts are not Hasse for every prime. There is no Batch 11. Phase 2 does not add theorems.
+
+1. **Class number.** `10 ≤ classNumber K` and `classNumber K ≤ 10` stay NEEDS_AUTHORING. There is no `Towers/BSD/B01_ClassNumber.lean`. The lower bound is `Towers/BSD/BSD_ClassNumberLowerProof.lean` and `Towers/BSD/BSD_MasterProof.lean`, using `master_not_principal_1_to_9` and `p2_OK`, outside the clean build. The upper bound is the binary-quadratic-form gate in `Towers/BSD/BSD_ClassNum_Upper_CLOSED.lean`, `Towers/BSD/BSD_ReducedForms.lean`, and `Towers/BSD/BSD_MasterProof.lean`. It needs `BinaryQuadraticForm.classGroupEquiv`. That declaration is absent from Mathlib v4.12.0. Do not invent it.
+
+2. **Registry derivative.** `BSD_L143a1_DerivAtOne` in `Towers/BSD/BSD_MissingDefinitionsRegistry.lean` is the constant 0, so `BSD_L143a1_DerivAtOne ≠ 0` is `0 ≠ 0`. `Towers/BSD/BSD_VanishingOrder_Kolyvagin_Closed.lean` differentiates `(5759/10000)·(s−1)`, and Batch 4 proved that derivative is `5759/10000`. That is not the Hasse–Weil L-function. Do not change the registry constant. Stays NEEDS_AUTHORING until an actual `L_143a1` derivative is proved.
+
+3. **Hasse for every prime.** `BSD_WeilHasse_Weierstrass_OPEN` is `a_p² ≤ 4p` for every good prime. `BSD_WeilHasse_eq_Gate1` is that forall if and only if `True`, because `BSD_HasseBound_Discriminant_OPEN` is `True`. The original `Iff.rfl` in `hasseprimset/BSD_WeilDeligne_Closed.lean` used two copies of the same statement. Counts through 983 do not prove the forall. Mathlib v4.12.0 has no general elliptic Hasse theorem to cite for this curve. Do not extend the enumeration to 3559, 4999, 6569, 8209, 9721, or 9973.
+
+4. **Opens that are not finite counts.** Euler product (`Towers/BSD/BSD_EulerProduct_Closed.lean`), functional equation (`Towers/BSD/BSD_BSD_FuncEq.lean`), Gross–Zagier (`Towers/BSD/BSD_GrossZagier_Closed.lean`), Kolyvagin, Sha and Tamagawa (`Towers/BSD/BSD_SHA_Tamagawa_Closed.lean`, `Towers/BSD/BSD_Tamagawa_Scaffold.lean`), regulator and Néron–Tate height, torsion and non-torsion, modularity (`Towers/BSD/B02_Modularity.lean`), and the ideal equalities `BSD_w3_ideal_equality_OPEN` and `BSD_w4_ideal_equality_OPEN` in `Towers/BSD/BSD_ClassNumber_UpperBound_CLOSED.lean` stay NEEDS_AUTHORING. Originals that are `trivial` on `True`, `rfl` of Tamagawa constants 1 and 2, `∃ R, R > 0 ∧ True`, `fun _ => ⟨1, rfl⟩`, or a function that ignores its arguments and returns 1 are sentinels. Do not close them with `trivial`.
+
+5. **Tau bound.** `BSD_PrimePowBound_to_aNBound_OPEN` is marked unformalized in `hasseprimset/BSD_antisupersingular.lean`. The divisor estimate is `hasseprimset/BSD_TauBound_small_proved.lean` and is not in the clean build. Do not invent it.
+
 ## Where everything lives
 
 **Repo:** `DavidFox998/birch-swinnerton-dyer-143a1`
@@ -143,7 +157,7 @@ For each `def <Name>_prop : Prop := True` (or real statement):
 
 1. **Batch 1-2** (81 props, 31 with real statements) — most likely to have mechanical fixes
 2. **Batch 3-4** (102 props, 12 with real statements) — mixed
-3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. What remains is NEEDS_AUTHORING.
+3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. Do not enumerate further primes. The remaining props stay NEEDS_AUTHORING until a general proof is in the clean build.
 
 ## Verification
 
