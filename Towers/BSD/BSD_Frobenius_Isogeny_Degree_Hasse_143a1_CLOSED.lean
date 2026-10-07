@@ -5,7 +5,7 @@ deg(a - b·Frob) = a² + p b² - a_p a b = |ker| ≥0 → Hasse
 Closes: BSD_WeilHasse_Weierstrass_OPEN (Gate 1)
 0 sorry, classical trio
 -/
-import Towers.BSD.BSD_Genesis782_CLOSED
+import hasseprimset.BSD_TauBound_small_proved
 import HassePrimeSet
 
 namespace Towers.BSD
