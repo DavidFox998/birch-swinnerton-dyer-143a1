@@ -334,14 +334,23 @@ theorem BSD_Ceiling_Theorem :
       13 ∉ BSD_Finite_Hasse_CheckedPrimes ∧
       11 ∣ 143 ∧ 13 ∣ 143 ∧
       BSD_Finite_Hasse_CheckedPrimes.card = 84 := by
-  have h9973 : 9973 ∉ BSD_Finite_Hasse_CheckedList := by native_decide
-  have h11 : 11 ∉ BSD_Finite_Hasse_CheckedList := by native_decide
-  have h13 : 13 ∉ BSD_Finite_Hasse_CheckedList := by native_decide
-  refine ⟨by decide, by decide, ?_, ?_, ?_, by decide, by decide,
-    BSD_Finite_Hasse_CheckedPrimes_card⟩
-  · simpa [BSD_Finite_Hasse_CheckedPrimes] using h9973
-  · simpa [BSD_Finite_Hasse_CheckedPrimes] using h11
-  · simpa [BSD_Finite_Hasse_CheckedPrimes] using h13
+  refine ⟨by native_decide, by native_decide, ?_, ?_, ?_, by native_decide,
+      by native_decide, BSD_Finite_Hasse_CheckedPrimes_card⟩
+  · intro hp
+    have hlt := BSD_Finite_Hasse_CheckedPrimes_lt_1000 hp
+    omega
+  · intro hp
+    have hp' : 11 ∈ BSD_Finite_Hasse_CheckedList := by
+      simpa [BSD_Finite_Hasse_CheckedPrimes] using hp
+    have hall : BSD_Finite_Hasse_CheckedList.all (fun n => decide (n ≠ 11)) = true := by
+      native_decide
+    exact absurd rfl (of_decide_eq_true ((List.all_eq_true.mp hall) 11 hp'))
+  · intro hp
+    have hp' : 13 ∈ BSD_Finite_Hasse_CheckedList := by
+      simpa [BSD_Finite_Hasse_CheckedPrimes] using hp
+    have hall : BSD_Finite_Hasse_CheckedList.all (fun n => decide (n ≠ 13)) = true := by
+      native_decide
+    exact absurd rfl (of_decide_eq_true ((List.all_eq_true.mp hall) 13 hp'))
 
 /-
   Assessed tally, separate from the 84 compiled primes.
