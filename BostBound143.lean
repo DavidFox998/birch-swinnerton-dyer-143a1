@@ -3,7 +3,8 @@
    0 sorry, classical trio
 -/
 import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.NumberTheory.QuadraticForm.Basic
+import Mathlib.Data.Real.Sqrt
+import Mathlib.Tactic
 
 def genus_X0_143 : ℕ := 13
 def classNumber_143 : ℕ := 10
