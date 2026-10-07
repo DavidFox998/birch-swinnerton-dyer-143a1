@@ -80,6 +80,9 @@ import Towers.BSD.BSD_LFunction_Clean
 import Towers.BSD.BSD_Euler_FEq_Clean
 import Towers.BSD.BSD_Torsion_Rank_Clean
 import Towers.BSD.BSD_Ideal_Wiles_Clean
+import Towers.BSD.BSD_ClassGroupEquiv_Clean
+import Towers.BSD.BSD_Frobenius_Clean
+import Towers.BSD.BSD_PrimePower_Clean
 
 /-- Clean build marker: true iff this aggregation compiles. -/
 def cleanBuilds : Bool := true
