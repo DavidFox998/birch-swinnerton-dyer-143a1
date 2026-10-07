@@ -6,7 +6,8 @@
 - Batch 2 is done at `3c62767`. `lake build BSD_Assessed_Batch2` and `lake build BSD_Clean_Aggregation` both exit 0.
 - Batch 3 is done at `cd0eafc`. `lake build BSD_Assessed_Batch3` and `lake build BSD_Clean_Aggregation` both exit 0.
 - Batch 4 is done at `82af374`. `lake build BSD_Assessed_Batch4` and `lake build BSD_Clean_Aggregation` both exit 0.
-- Next file is `BSD_Assessed_Batch5.lean`.
+- Batch 5 is done at `d86e7e9`. `lake build BSD_Assessed_Batch5` and `lake build BSD_Clean_Aggregation` both exit 0.
+- Next file is `BSD_Assessed_Batch6.lean`.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -29,7 +30,12 @@ Batch 4 theorems, and only these:
 - `E143a1_bost_bound_prop`: the literal `11.42214868898 > 2√13`, by comparing squares. Not a derivation of Bost's sum.
 - `BSD_isBigO_to_LSeries_close_prop`: a coefficient bound implies summability for `Re(s) > 3/2`. The bound is a hypothesis.
 - `BSD_L143a1_HasDerivAt_CLOSED_prop`: derivative of `(5759/10000)·(s−1)`. Not the Hasse–Weil L-function. Registry derivative stays 0.
-- `p≥1009` degree checks stay NEEDS_AUTHORING. Those proofs are `native_decide` on `E143_Finset p`. The clean build stops at 241.
+- `p≥1009` degree checks stay NEEDS_AUTHORING. Those proofs are `native_decide` on `E143_Finset p`. Batch 4 left the compiled counts at 241.
+
+Batch 5 theorems, and only these:
+
+- `BSD_DegreeNonneg_p251_prop`, `BSD_DegreeNonneg_p257_prop`, `BSD_DegreeNonneg_p263_prop`, from `Towers/BSD/BSD_Hasse_Points_251_263.lean`. Counts: p=251 card 230, `a_p=21`; p=257 card 239, `a_p=18`; p=263 card 281, `a_p=−18`. The original `decide` proofs were replaced by `native_decide`.
+- Not Hasse for every prime. The clean build now checks finite point counts through 263, with the earlier gap at 11 and 13, and nothing past 263. Primes from 311 upward in this batch stay NEEDS_AUTHORING.
 
 ## Where everything lives
 
