@@ -13,6 +13,8 @@ Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 
 `lake build Towers.BSD.BSD_TauBound_Clean` — EXIT:0 (`/tmp/bsd-tau-clean.log`).
 `lake build Towers.BSD.BSD_ClassNumber_Lower_Clean` — EXIT:0 (`/tmp/bsd-cn-clean.log`).
+`lake build Towers.BSD.BSD_Hasse_General_Clean` — EXIT:0 (`/tmp/bsd-hasse-general.log`).
+`lake build BSD_Clean_Aggregation` — EXIT:0 again after the Group A partial theorem (`/tmp/bsd-agg-a.log`).
 
 No `sorry`. The aggregation log has two warnings, both the old unused `r` variables in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321.
 
@@ -24,6 +26,7 @@ No `sorry`. The aggregation log has two warnings, both the old unused `r` variab
 - `Towers.BSD.BSD_450_Gates_Documentation`
 - `Towers.BSD.BSD_ClassNumber_Lower_Clean`
 - `Towers.BSD.BSD_TauBound_Clean`
+- `Towers.BSD.BSD_Hasse_General_Clean`
 
 No new `E143_Finset` enumeration. No prime at or above 1000 was enumerated.
 
@@ -49,6 +52,7 @@ The assessed tally is 54 theorems out of 504 propositions. The other 450 stay NE
 | `Towers/BSD/BSD_More_Theorems_From_54.lean` | Five corollaries of proofs that already compiled. Not five more of the 504. |
 | `Towers/BSD/BSD_Final_Aggregate_84_54_450.lean` | `BSD_84_54_450` cites those checks, the five corollaries, and the ceiling. |
 | `Towers/BSD/BSD_450_Gates_Documentation.lean` | `#check` of each of the 450, with its gate and original file. `#check` does not prove it. |
+| `Towers/BSD/BSD_Hasse_General_Clean.lean` | Degree-form equivalence on the 84 checked primes. The forall stays NEEDS_AUTHORING. |
 
 ## Five corollaries
 
@@ -64,7 +68,7 @@ All 450 remain NEEDS_AUTHORING. No sentinel was closed. `trivial` on `True`, `rf
 
 | Group | Props | Gate |
 |------:|------:|------|
-| A | 328 | Mathlib v4.12.0 `AlgebraicGeometry/EllipticCurve` has no Hasse theorem. 11 props are the degree and Hasse names at primes ≥ 9721, including both at 9973. The other 317 are uncompiled degree props from 311 upward, the forall `a_p² ≤ 4p`, and the non-definitional iff. Counts through 983 do not prove the forall. |
+| A | 328 | Partial: `BSD_Hasse_for_checked_is_degree_form` is `|a_p| ≤ 2√p` iff `a_p² ≤ 4p` and the degree form, on the 84 checked primes. The forall stays NEEDS_AUTHORING. Mathlib v4.12.0 has no Hasse theorem. 11 assessed defs are the degree and Hasse names at primes ≥ 9721, including both at 9973. The 328 assessed defs were not rewritten. |
 | B | 26 | The lower bound `10 ≤ classNumber K` is now `BSD_classNumber_lower_bound` in the clean build. The upper bound still needs `BinaryQuadraticForm.classGroupEquiv`, which has zero declarations in Mathlib v4.12.0. The 26 assessed defs were not rewritten. |
 | C | 12 | No `hasseprimset/BSD_LFunction.lean`. `Towers/BSD/BSD_LFunction.lean` does not prove a Hasse–Weil derivative. `BSD_L143a1_DerivAtOne` stays the constant 0, so `≠ 0` is `0 ≠ 0`. The linear anchor `(5759/10000)·(s−1)` is Batch 4 and is not that L-function. |
 | D | 9 | `BSD_tau_bound_of_divisors` is `τ(n) ≤ D n^ε` with no Genesis781 import. `|a_n| ≤ D n^{1/2+ε}` holds for squarefree `n` on the 84 checked primes. The series over that finite set is summable. Prime powers `k ≥ 2` and `BSD_LSeriesSummable_OPEN` stay open. The 9 assessed defs were not rewritten. |
@@ -81,8 +85,20 @@ These are new theorems. They do not raise the assessed tally. The 450 assessed d
 
 `BSD_tau_bound_of_divisors` uses `Nat.card_divisors`. `BSD_an_squarefree_checked_bound` uses Hasse on the 84 checked primes and `a_n` as a product of `a_p` when every exponent is 1. `BSD_squarefree_checked_dirichlet_summable` is summability of a finite sum: every such `n` divides the product of the 84 primes. The hypothesis `σ > 3/2` is the requested threshold. Finiteness is the reason the sum converges. This is not `BSD_LSeriesSummable_OPEN`. The bound `|a_{p^k}| ≤ (k+1) p^{k/2}` for `k ≥ 2` is still unformalized, so the series over every `n` supported on the 84 primes is not proved summable.
 
-Groups A, C, E, F, and G were not started.
+## Group A, partial
+
+This is a new theorem on the checked set. It does not raise the assessed tally. The 328 assessed defs in Group A stay NEEDS_AUTHORING.
+
+`BSD_Hasse_degree_nonneg` cites `BSD_Finite_Hasse_54_proved`, then `BSD_hasse_of_degree_nonneg`, then `BSD_Hasse_forms_pointwise`. For each of the 84 checked primes, `a_p² ≤ 4p`.
+
+`BSD_Hasse_for_checked_is_degree_form` is the equivalence: `|a_p| ≤ 2√p` if and only if `a_p² ≤ 4p` and `BSD_FrobeniusDegreeNonneg_OPEN p`. The degree form is the one already compiled. The square comparison is the Batch 3 algebra with the quantifiers removed. This is not Hasse for every good prime.
+
+`BSD_Hasse_forall_needs_general` records the ceiling. The checked set has card 84, and every prime in it is below 1000. `983` is in the set, and `983 * 983 = 966289`. `9973 * 9973 = 99460729`. 9973 is prime, does not divide 143, and is outside the checked set. 11 and 13 divide 143 and are outside. The file does not evaluate `E143_Finset 9973`. Enumeration through 983 does not prove `a_p² ≤ 4p` for every good prime.
+
+Mathlib v4.12.0 `AlgebraicGeometry/EllipticCurve` contains Affine, DivisionPolynomial, Group, Jacobian, Projective, VariableChange, and Weierstrass. A search of those files finds no Hasse and no Frobenius. The forall stays NEEDS_AUTHORING. A general proof is the Hasse argument in Silverman AEC §V.2, and it is not in this file.
+
+Groups C, E, F, and G were not started.
 
 ## Standing limit
 
-There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, the class-number lower bound, and the squarefree divisor bound are citations of proofs that compile. The 450 assessed defs are not among them.
+There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, the class-number lower bound, the squarefree divisor bound, and the degree-form equivalence on the 84 checked primes are citations of proofs that compile. The 450 assessed defs are not among them. The Hasse forall is not among them.
