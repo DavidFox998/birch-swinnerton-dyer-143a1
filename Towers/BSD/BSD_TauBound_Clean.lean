@@ -194,7 +194,6 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
       (p : ℝ) ^ (ε * n.factorization p) := fun p => by
     rw [← Real.rpow_natCast ((p : ℝ) ^ ε) (n.factorization p),
         ← Real.rpow_mul (Nat.cast_nonneg p)]
-    rfl
   -- Factorization product equals n^ε (§5)
   have hfact : ∏ p in S, (p : ℝ) ^ (ε * n.factorization p) = (n : ℝ) ^ ε :=
     factorization_rpow_eq n hn ε
@@ -244,8 +243,7 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
             have hDdef : D = ∏ p in small_ps,
                 (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := rfl
             rw [hDdef]
-            refine Finset.prod_le_prod_of_subset_of_one_le' ?_ ?_
-            · -- S_s ⊆ small_ps
+            have hsub : S_s ⊆ small_ps := by
               intro p hp
               simp only [hSs_def, Finset.mem_filter] at hp
               obtain ⟨hmem, h_small⟩ := hp
@@ -272,7 +270,8 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
                 simp only [B]; omega
               simp only [small_ps, Finset.mem_filter, Finset.mem_range]
               exact ⟨hp_lt_B, hp_prime⟩
-            · -- Each factor ≥ 1 for primes in small_ps
+            have hge : ∀ p ∈ small_ps, p ∉ S_s →
+                1 ≤ (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
               intro p hp _
               simp only [small_ps, Finset.mem_filter] at hp
               have hp_ge2 : 2 ≤ p := hp.2.two_le
@@ -283,6 +282,17 @@ theorem BSD_tau_bound_of_divisors (ε : ℝ) (hε : 0 < ε) :
                 · exact hε
               rw [le_div_iff₀ (by linarith)]
               linarith
+            calc ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)
+                ≤ (∏ p in small_ps \ S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) *
+                    ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) :=
+                  le_mul_of_one_le_left' <| Finset.one_le_prod' <| by
+                    intro p hp
+                    exact hge p (Finset.mem_sdiff.mp hp).1 (Finset.mem_sdiff.mp hp).2
+              _ = ∏ p in small_ps \ S_s ∪ S_s,
+                    (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) :=
+                  (Finset.prod_union Finset.sdiff_disjoint).symm
+              _ = ∏ p in small_ps, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
+                  rw [Finset.sdiff_union_of_subset hsub]
   -- Combine: τ(n) ≤ (∏ S_l p^{ε·e}) · D · (∏ S_s p^{ε·e}) = D · n^ε
   calc (∏ p in S_l, ((n.factorization p : ℝ) + 1)) *
         (∏ p in S_s, ((n.factorization p : ℝ) + 1))
@@ -451,9 +461,10 @@ lemma prod_distinct_primes_factorization {s : Finset ℕ}
     have hs' : ∀ p ∈ s, p.Prime := fun p hp => hs p (Finset.mem_insert_of_mem hp)
     have hprod_pos : 0 < ∏ p in s, p :=
       Finset.prod_pos fun p hp => (hs' p hp).pos
-    rw [Finset.prod_insert ha, Nat.factorization_mul ha_prime.ne_zero hprod_pos.ne',
-        ha_prime.factorization, ih hs']
-    simp only [Finsupp.add_apply, Finsupp.single_apply, Finset.mem_insert]
+    rw [Finset.prod_insert ha, Nat.factorization_mul ha_prime.ne_zero hprod_pos.ne']
+    have hih := ih hs'
+    simp only [Finsupp.add_apply, ha_prime.factorization, Finsupp.single_apply, hih,
+      Finset.mem_insert]
     rcases eq_or_ne q a with hqa | hqa
     · subst hqa
       simp [ha]
