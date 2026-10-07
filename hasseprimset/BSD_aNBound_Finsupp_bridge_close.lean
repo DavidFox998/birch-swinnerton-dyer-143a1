@@ -29,7 +29,7 @@ Two avenues closed this batch:
   BSD_aNBound_all_n_v2 replaces BSD_aNBound_all_n with htau_pos (0<m only).
 -/
 
-import hasseprimset.BSD_BSD_abs_prod_real
+import hasseprimset.BSD_abs_prod_real
 import Mathlib.NumberTheory.ArithmeticFunction
 
 open BigOperators Real Nat ArithmeticFunction
