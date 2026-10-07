@@ -165,7 +165,13 @@ private lemma a_prime_pow_as_chebyshev
         rw [show (k : ℤ) + 1 = ((k + 1 : ℕ) : ℤ) by simp]
         field_simp [hs_pos.ne']
         simp only [pow_add, pow_one, pow_two, hs_sq]
-        ring_nf
+        have hsub : sqrt (p : ℝ) * sqrt (p : ℝ) ^ k * (p : ℝ) =
+            sqrt (p : ℝ) ^ 3 * sqrt (p : ℝ) ^ k := by
+          calc sqrt (p : ℝ) * sqrt (p : ℝ) ^ k * (p : ℝ)
+              = (p : ℝ) * sqrt (p : ℝ) * sqrt (p : ℝ) ^ k := by ring
+            _ = sqrt (p : ℝ) ^ 2 * sqrt (p : ℝ) * sqrt (p : ℝ) ^ k := by rw [hs_sq]
+            _ = sqrt (p : ℝ) ^ 3 * sqrt (p : ℝ) ^ k := by ring
+        rw [hsub]
 
 /-- For each of the 84 checked primes and every `k`, `|a_{p^k}| ≤ (k+1) p^{k/2}`.
     Uses `|a_p| ≤ 2√p` from the compiled degree form. Not every prime.
