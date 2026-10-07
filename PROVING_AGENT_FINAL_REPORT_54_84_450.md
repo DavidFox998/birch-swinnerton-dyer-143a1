@@ -15,6 +15,11 @@ Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `lake build Towers.BSD.BSD_ClassNumber_Lower_Clean` — EXIT:0 (`/tmp/bsd-cn-clean.log`).
 `lake build Towers.BSD.BSD_Hasse_General_Clean` — EXIT:0 (`/tmp/bsd-hasse-general.log`).
 `lake build BSD_Clean_Aggregation` — EXIT:0 again after the Group A partial theorem (`/tmp/bsd-agg-a.log`).
+`lake build Towers.BSD.BSD_LFunction_Clean` — EXIT:0 (`/tmp/bsd-lfunc-clean.log`).
+`lake build Towers.BSD.BSD_Euler_FEq_Clean` — EXIT:0 (`/tmp/bsd-euler-clean.log`).
+`lake build Towers.BSD.BSD_Torsion_Rank_Clean` — EXIT:0 (`/tmp/bsd-torsion-clean.log`).
+`lake build Towers.BSD.BSD_Ideal_Wiles_Clean` — EXIT:0 (`/tmp/bsd-ideal-clean.log`).
+`lake build BSD_Clean_Aggregation` — EXIT:0 again after the C, E, F, and G partial theorems (`/tmp/bsd-cefg.log`).
 
 No `sorry`. The aggregation log has two warnings, both the old unused `r` variables in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321.
 
@@ -27,6 +32,10 @@ No `sorry`. The aggregation log has two warnings, both the old unused `r` variab
 - `Towers.BSD.BSD_ClassNumber_Lower_Clean`
 - `Towers.BSD.BSD_TauBound_Clean`
 - `Towers.BSD.BSD_Hasse_General_Clean`
+- `Towers.BSD.BSD_LFunction_Clean`
+- `Towers.BSD.BSD_Euler_FEq_Clean`
+- `Towers.BSD.BSD_Torsion_Rank_Clean`
+- `Towers.BSD.BSD_Ideal_Wiles_Clean`
 
 No new `E143_Finset` enumeration. No prime at or above 1000 was enumerated.
 
@@ -53,6 +62,10 @@ The assessed tally is 54 theorems out of 504 propositions. The other 450 stay NE
 | `Towers/BSD/BSD_Final_Aggregate_84_54_450.lean` | `BSD_84_54_450` cites those checks, the five corollaries, and the ceiling. |
 | `Towers/BSD/BSD_450_Gates_Documentation.lean` | `#check` of each of the 450, with its gate and original file. `#check` does not prove it. |
 | `Towers/BSD/BSD_Hasse_General_Clean.lean` | Degree-form equivalence on the 84 checked primes. The forall stays NEEDS_AUTHORING. |
+| `Towers/BSD/BSD_LFunction_Clean.lean` | Linear-anchor derivative and the registry constant 0. Not a Hasse–Weil derivative. |
+| `Towers/BSD/BSD_Euler_FEq_Clean.lean` | Finite-support Dirichlet series. Not the Euler product. |
+| `Towers/BSD/BSD_Torsion_Rank_Clean.lean` | `(2, 0)` in each checked `E143_Finset`. Not non-torsion, not rank 1. |
+| `Towers/BSD/BSD_Ideal_Wiles_Clean.lean` | `143 = 11 * 13`. Ideal equalities stay NEEDS_AUTHORING. |
 
 ## Five corollaries
 
@@ -70,11 +83,11 @@ All 450 remain NEEDS_AUTHORING. No sentinel was closed. `trivial` on `True`, `rf
 |------:|------:|------|
 | A | 328 | Partial: `BSD_Hasse_for_checked_is_degree_form` is `|a_p| ≤ 2√p` iff `a_p² ≤ 4p` and the degree form, on the 84 checked primes. The forall stays NEEDS_AUTHORING. Mathlib v4.12.0 has no Hasse theorem. 11 assessed defs are the degree and Hasse names at primes ≥ 9721, including both at 9973. The 328 assessed defs were not rewritten. |
 | B | 26 | The lower bound `10 ≤ classNumber K` is now `BSD_classNumber_lower_bound` in the clean build. The upper bound still needs `BinaryQuadraticForm.classGroupEquiv`, which has zero declarations in Mathlib v4.12.0. The 26 assessed defs were not rewritten. |
-| C | 12 | No `hasseprimset/BSD_LFunction.lean`. `Towers/BSD/BSD_LFunction.lean` does not prove a Hasse–Weil derivative. `BSD_L143a1_DerivAtOne` stays the constant 0, so `≠ 0` is `0 ≠ 0`. The linear anchor `(5759/10000)·(s−1)` is Batch 4 and is not that L-function. |
+| C | 12 | Partial: `BSD_linear_anchor_derivative` cites Batch 4. `BSD_L143a1_DerivAtOne = 0`, so `≠ 0` is `0 ≠ 0`. The registry `L_143a1` is the Prop `True`. The Hasse–Weil derivative stays NEEDS_AUTHORING. The 12 assessed defs were not rewritten. |
 | D | 9 | `BSD_tau_bound_of_divisors` is `τ(n) ≤ D n^ε` with no Genesis781 import. `|a_n| ≤ D n^{1/2+ε}` holds for squarefree `n` on the 84 checked primes. The series over that finite set is summable. Prime powers `k ≥ 2` and `BSD_LSeriesSummable_OPEN` stay open. The 9 assessed defs were not rewritten. |
-| E | 11 | No `Towers/BSD/BSD_AnalyticContinuation` file. The Euler product and the functional equation in `BSD_LFunction.lean` are open Props. Registry names that are `True` stay placeholders. |
-| F | 54 | Gross–Zagier, Kolyvagin, Heegner, Sha, Tamagawa, regulator, Néron–Tate, torsion, and rank. Affine `(2, 0)` is not non-torsion, not a generator, not rank 1, not BSD. |
-| G | 10 | Ideal equalities for 𝔭₂, 𝔭₃, and 𝔭₇, Wiles–Taylor, and `α_BSD_period` stay outside the clean build. |
+| E | 11 | Partial: `BSD_Euler_truncated_converges_checked` cites the finite-support series for `σ > 3/2`. The Euler product and the functional equation stay NEEDS_AUTHORING. There is no analytic-continuation file. The 11 assessed defs were not rewritten. |
+| F | 54 | Partial: `(2, 0) ∈ E143_Finset p` for each checked prime, by the compiled identity `0 = 8 - 4 - 2 - 2` in `ZMod p`. Non-torsion, a generator, rank 1, Gross–Zagier, Kolyvagin, Heegner, Sha, Tamagawa, the regulator, and Néron–Tate stay NEEDS_AUTHORING. Sentinels stay `True`. The 54 assessed defs were not rewritten. |
+| G | 10 | Partial: `BSD_conductor_factors` is `143 = 11 * 13`, with both factors prime, both dividing 143, and both outside the checked set. Ideal equalities, Wiles–Taylor, and `α_BSD_period` stay NEEDS_AUTHORING. The 10 assessed defs were not rewritten. |
 | **Total** | **450** | NEEDS_AUTHORING. |
 
 ## Groups B and D, partial
@@ -97,8 +110,18 @@ This is a new theorem on the checked set. It does not raise the assessed tally. 
 
 Mathlib v4.12.0 `AlgebraicGeometry/EllipticCurve` contains Affine, DivisionPolynomial, Group, Jacobian, Projective, VariableChange, and Weierstrass. A search of those files finds no Hasse and no Frobenius. The forall stays NEEDS_AUTHORING. A general proof is the Hasse argument in Silverman AEC §V.2, and it is not in this file.
 
-Groups C, E, F, and G were not started.
+## Groups C, E, F, and G, partial
+
+These are new theorems. They do not raise the assessed tally. The 450 assessed defs stay NEEDS_AUTHORING.
+
+`BSD_linear_anchor_derivative` is `HasDerivAt` of `(5759/10000)·(s−1)` at 1, cited from Batch 4. The value is `5759/10000`. `BSD_registry_derivative_is_zero` is `BSD_L143a1_DerivAtOne = 0`, so `≠ 0` is `0 ≠ 0`. `BSD_linear_anchor_not_HasseWeil` records that the registry name `L_143a1` is the Prop `True`, and that `0 ≠ 5759/10000`. `Towers/BSD/BSD_LFunction.lean` does not define a Hasse–Weil L-function. There is no `hasseprimset/BSD_LFunction.lean`. The Hasse–Weil derivative stays NEEDS_AUTHORING. The registry constant was not changed.
+
+`BSD_Euler_truncated_converges_checked` is `BSD_squarefree_checked_dirichlet_summable`. The sum is over squarefree `n` supported on the 84 checked primes, for `σ > 3/2`. Finiteness is the reason it converges. This is not the Euler product identity and not `BSD_LSeriesSummable_OPEN`. `BSD_Euler_full_needs_continuation` records that the registry Euler and functional-equation names are `True`. There is no `Towers/BSD/BSD_AnalyticContinuation` file.
+
+`BSD_affine_point_in_E143_Finset_checked` cites `BSD_Weierstrass_Coeff_Affine_Point_Theorem`. The identity is `0 = 8 - 4 - 2 - 2` in `ZMod p`. `BSD_affine_not_proved_non_torsion` records the same membership together with the placeholders: Heegner, Gross–Zagier, Kolyvagin, Sha, and Tamagawa are `True`; `BSD_TorsCard = 1`; `BSD_TamagawaProd = 1`; `BSD_LeadingCoeff 143 = 1`; the regulator, Néron–Tate, and non-torsion assessed names are `True`. Those equalities do not prove non-torsion, a generator, rank 1, or BSD. The sentinels were not closed.
+
+`BSD_conductor_factors` is `143 = 11 * 13`. Both factors are prime, both divide 143, and both lie outside the checked set, by `BSD_Ceiling_Theorem`. The file does not evaluate `E143_Finset` at 11 or 13. The ideal-equality names, `BSD_WilesTaylor_143_OPEN_prop`, and `BSD_Tier2B_ProvedFacts_prop` are `True`. `α_BSD_period` is not defined in this repository. Those equalities do not prove the ideal statements.
 
 ## Standing limit
 
-There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, the class-number lower bound, the squarefree divisor bound, and the degree-form equivalence on the 84 checked primes are citations of proofs that compile. The 450 assessed defs are not among them. The Hasse forall is not among them.
+There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, and the partial theorems for groups A through G are citations of proofs that compile. The 450 assessed defs are not among them. The Hasse forall, the Hasse–Weil derivative, the Euler product, the functional equation, the rank statements, and the ideal equalities are not among them.
