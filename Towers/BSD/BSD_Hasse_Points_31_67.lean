@@ -1,6 +1,20 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis738_CLOSED.lean — extracted 36 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+
+namespace Towers.BSD
+
+instance instFact_prime_31 : Fact (Nat.Prime 31) := ⟨by decide⟩
+instance instFact_prime_37 : Fact (Nat.Prime 37) := ⟨by decide⟩
+instance instFact_prime_41 : Fact (Nat.Prime 41) := ⟨by decide⟩
+instance instFact_prime_43 : Fact (Nat.Prime 43) := ⟨by decide⟩
+instance instFact_prime_47 : Fact (Nat.Prime 47) := ⟨by decide⟩
+instance instFact_prime_53 : Fact (Nat.Prime 53) := ⟨by decide⟩
+instance instFact_prime_59 : Fact (Nat.Prime 59) := ⟨by decide⟩
+instance instFact_prime_61 : Fact (Nat.Prime 61) := ⟨by decide⟩
+instance instFact_prime_67 : Fact (Nat.Prime 67) := ⟨by decide⟩
+
 
 theorem BSD_E143_card_p31 : (E143_Finset 31).card = 34 := by decide
 
@@ -27,22 +41,22 @@ theorem BSD_E143_card_p47 : (E143_Finset 47).card = 51 := by decide
 /-- **`BSD_E143_card_p53`** — 143a1 has exactly **51 affine 𝔽₅₃-points**.
     a₅₃ = 53−51 = +2.  Computed by `decide` over ZMod 53 × ZMod 53 (2809 pairs). -/
 
-theorem BSD_E143_card_p53 : (E143_Finset 53).card = 51 := by decide
+theorem BSD_E143_card_p53 : (E143_Finset 53).card = 51 := by native_decide
 
 /-- **`BSD_E143_card_p59`** — 143a1 has exactly **60 affine 𝔽₅₉-points**.
     a₅₉ = 59−60 = −1.  Computed by `decide` over ZMod 59 × ZMod 59 (3481 pairs). -/
 
-theorem BSD_E143_card_p59 : (E143_Finset 59).card = 60 := by decide
+theorem BSD_E143_card_p59 : (E143_Finset 59).card = 60 := by native_decide
 
 /-- **`BSD_E143_card_p61`** — 143a1 has exactly **63 affine 𝔽₆₁-points**.
     a₆₁ = 61−63 = −2.  Computed by `decide` over ZMod 61 × ZMod 61 (3721 pairs). -/
 
-theorem BSD_E143_card_p61 : (E143_Finset 61).card = 63 := by decide
+theorem BSD_E143_card_p61 : (E143_Finset 61).card = 63 := by native_decide
 
 /-- **`BSD_E143_card_p67`** — 143a1 has exactly **68 affine 𝔽₆₇-points**.
     a₆₇ = 67−68 = −1.  Computed by `decide` over ZMod 67 × ZMod 67 (4489 pairs). -/
 
-theorem BSD_E143_card_p67 : (E143_Finset 67).card = 68 := by decide
+theorem BSD_E143_card_p67 : (E143_Finset 67).card = 68 := by native_decide
 
 /-! ## §2. Exact a_p values -/
 

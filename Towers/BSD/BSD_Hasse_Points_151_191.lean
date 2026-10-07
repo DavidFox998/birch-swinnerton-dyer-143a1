@@ -1,44 +1,57 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis743_CLOSED.lean — extracted 32 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
 
-theorem BSD_E143_card_p151 : (E143_Finset 151).card = 147 := by decide
+namespace Towers.BSD
+
+instance instFact_prime_151 : Fact (Nat.Prime 151) := ⟨by native_decide⟩
+instance instFact_prime_157 : Fact (Nat.Prime 157) := ⟨by native_decide⟩
+instance instFact_prime_163 : Fact (Nat.Prime 163) := ⟨by native_decide⟩
+instance instFact_prime_167 : Fact (Nat.Prime 167) := ⟨by native_decide⟩
+instance instFact_prime_173 : Fact (Nat.Prime 173) := ⟨by native_decide⟩
+instance instFact_prime_179 : Fact (Nat.Prime 179) := ⟨by native_decide⟩
+instance instFact_prime_181 : Fact (Nat.Prime 181) := ⟨by native_decide⟩
+instance instFact_prime_191 : Fact (Nat.Prime 191) := ⟨by native_decide⟩
+
+
+theorem BSD_E143_card_p151 : (E143_Finset 151).card = 147 := by native_decide
 
 /-- **`BSD_E143_card_p157`** — 143a1 has exactly **152 affine 𝔽₁₅₇-points**.
     a₁₅₇ = 157−152 = +5.  Computed by `decide` over ZMod 157 × ZMod 157 (24649 pairs). -/
 
-theorem BSD_E143_card_p157 : (E143_Finset 157).card = 152 := by decide
+theorem BSD_E143_card_p157 : (E143_Finset 157).card = 152 := by native_decide
 
 /-- **`BSD_E143_card_p163`** — 143a1 has exactly **167 affine 𝔽₁₆₃-points**.
     a₁₆₃ = 163−167 = −4.  Computed by `decide` over ZMod 163 × ZMod 163 (26569 pairs). -/
 
-theorem BSD_E143_card_p163 : (E143_Finset 163).card = 167 := by decide
+theorem BSD_E143_card_p163 : (E143_Finset 163).card = 167 := by native_decide
 
 /-- **`BSD_E143_card_p167`** — 143a1 has exactly **163 affine 𝔽₁₆₇-points**.
     a₁₆₇ = 167−163 = +4.  Computed by `decide` over ZMod 167 × ZMod 167 (27889 pairs). -/
 
-theorem BSD_E143_card_p167 : (E143_Finset 167).card = 163 := by decide
+theorem BSD_E143_card_p167 : (E143_Finset 167).card = 163 := by native_decide
 
 /-- **`BSD_E143_card_p173`** — 143a1 has exactly **181 affine 𝔽₁₇₃-points**.
     a₁₇₃ = 173−181 = −8.  Computed by `decide` over ZMod 173 × ZMod 173 (29929 pairs). -/
 
-theorem BSD_E143_card_p173 : (E143_Finset 173).card = 181 := by decide
+theorem BSD_E143_card_p173 : (E143_Finset 173).card = 181 := by native_decide
 
 /-- **`BSD_E143_card_p179`** — 143a1 has exactly **194 affine 𝔽₁₇₉-points**.
     a₁₇₉ = 179−194 = −15.  Computed by `decide` over ZMod 179 × ZMod 179 (32041 pairs). -/
 
-theorem BSD_E143_card_p179 : (E143_Finset 179).card = 194 := by decide
+theorem BSD_E143_card_p179 : (E143_Finset 179).card = 194 := by native_decide
 
 /-- **`BSD_E143_card_p181`** — 143a1 has exactly **174 affine 𝔽₁₈₁-points**.
     a₁₈₁ = 181−174 = +7.  Computed by `decide` over ZMod 181 × ZMod 181 (32761 pairs). -/
 
-theorem BSD_E143_card_p181 : (E143_Finset 181).card = 174 := by decide
+theorem BSD_E143_card_p181 : (E143_Finset 181).card = 174 := by native_decide
 
 /-- **`BSD_E143_card_p191`** — 143a1 has exactly **206 affine 𝔽₁₉₁-points**.
     a₁₉₁ = 191−206 = −15.  Computed by `decide` over ZMod 191 × ZMod 191 (36481 pairs).
     S4 prime: a₁₉₁ = −15 matches LMFDB 143.2.a.a and BSD_ap191_card_EMPIRICAL. -/
 
-theorem BSD_E143_card_p191 : (E143_Finset 191).card = 206 := by decide
+theorem BSD_E143_card_p191 : (E143_Finset 191).card = 206 := by native_decide
 
 /-! ## §2. Exact a_p values -/
 

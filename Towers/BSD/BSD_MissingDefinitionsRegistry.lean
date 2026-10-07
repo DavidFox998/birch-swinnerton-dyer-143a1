@@ -97,6 +97,10 @@ def BSD_ap29_card_EMPIRICAL : Prop := True
 def BSD_finrank_CLOSED : Prop := True
 
 
+/-- Copied from hasseprimset/BSD_WeilDeligne_Closed.lean. Not proved. -/
+def BSD_WeilHasse_Weierstrass_OPEN : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime], ¬(p ∣ 143) → (_root_.a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ)
+
 def BSD_LFunctionIsLinFunc_OPEN : Prop := True
 def BSD_algNorm_gen_CLOSED : Prop := True
 def BSD_classGroup_gen_by_p2_hyp : Prop := True

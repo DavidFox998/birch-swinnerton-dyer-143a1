@@ -1,28 +1,38 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis744_CLOSED.lean — extracted 20 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
 
-theorem BSD_E143_card_p193 : (E143_Finset 193).card = 217 := by decide
+namespace Towers.BSD
+
+instance instFact_prime_193 : Fact (Nat.Prime 193) := ⟨by native_decide⟩
+instance instFact_prime_197 : Fact (Nat.Prime 197) := ⟨by native_decide⟩
+instance instFact_prime_199 : Fact (Nat.Prime 199) := ⟨by native_decide⟩
+instance instFact_prime_211 : Fact (Nat.Prime 211) := ⟨by native_decide⟩
+instance instFact_prime_223 : Fact (Nat.Prime 223) := ⟨by native_decide⟩
+
+
+theorem BSD_E143_card_p193 : (E143_Finset 193).card = 217 := by native_decide
 
 /-- **`BSD_E143_card_p197`** — 143a1 has exactly **207 affine 𝔽₁₉₇-points**.
     a₁₉₇ = 197−207 = −10.  Computed by `decide` over ZMod 197 × ZMod 197 (38809 pairs). -/
 
-theorem BSD_E143_card_p197 : (E143_Finset 197).card = 207 := by decide
+theorem BSD_E143_card_p197 : (E143_Finset 197).card = 207 := by native_decide
 
 /-- **`BSD_E143_card_p199`** — 143a1 has exactly **203 affine 𝔽₁₉₉-points**.
     a₁₉₉ = 199−203 = −4.  Computed by `decide` over ZMod 199 × ZMod 199 (39601 pairs). -/
 
-theorem BSD_E143_card_p199 : (E143_Finset 199).card = 203 := by decide
+theorem BSD_E143_card_p199 : (E143_Finset 199).card = 203 := by native_decide
 
 /-- **`BSD_E143_card_p211`** — 143a1 has exactly **235 affine 𝔽₂₁₁-points**.
     a₂₁₁ = 211−235 = −24.  Computed by `decide` over ZMod 211 × ZMod 211 (44521 pairs). -/
 
-theorem BSD_E143_card_p211 : (E143_Finset 211).card = 235 := by decide
+theorem BSD_E143_card_p211 : (E143_Finset 211).card = 235 := by native_decide
 
 /-- **`BSD_E143_card_p223`** — 143a1 has exactly **218 affine 𝔽₂₂₃-points**.
     a₂₂₃ = 223−218 = +5.  Computed by `decide` over ZMod 223 × ZMod 223 (49729 pairs). -/
 
-theorem BSD_E143_card_p223 : (E143_Finset 223).card = 218 := by decide
+theorem BSD_E143_card_p223 : (E143_Finset 223).card = 218 := by native_decide
 
 /-! ## §2. Exact a_p values -/
 

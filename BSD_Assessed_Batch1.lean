@@ -5,30 +5,63 @@
     Pattern: Beal conductor_86 — Prop, NOT proved. -/
 
 import Towers.BSD.BSD_MissingDefinitionsRegistry
+import Towers.BSD.BSD_NumberField
+import Mathlib.NumberTheory.NumberField.ClassNumber
 open BSD_MissingDefinitionsRegistry
 
+/-!
+Batch 1 mechanical repair. Proved only where the original file already has
+a proof and the dependencies build:
+- `BSD_minkowski_lt_8_prop` cites `Towers.BSD.minkowski_lt_eight_BSD`
+- `BSD_H1_decomp_verified_prop` is the original `True ∧ True ∧ True ∧ True`
+- `BSD_AP_surface_ledger_prop` is the original implication ledger
+Everything else is still an unproved `def` and is marked NEEDS_AUTHORING.
+No sorry. Registry `True` placeholders are not discharged.
+-/
+
 namespace Towers_BSD_B02_Modularity_Assessed
-  def BSD_L_Analytic_143_OPEN_prop : Prop := True -- BSD_L_Analytic_143_OPEN: Prop (trivial)
+  -- NEEDS_AUTHORING: original is AnalyticOn ℂ (BSDLFunction 143) Set.univ.
+  -- BSDLFunction is opaque in B01. Analytic continuation is not in Mathlib v4.12.0.
+  def BSD_L_Analytic_143_OPEN_prop : Prop := True -- was: AnalyticOn ℂ (BSDLFunction 143) Set.univ
 end Towers_BSD_B02_Modularity_Assessed
 
 namespace Towers_BSD_B02_Modularity_Closed_Assessed
-  def BSD_LFunctionIsLinFunc_OPEN_prop : Prop := True -- BSD_LFunctionIsLinFunc_OPEN: Prop (trivial)
+  -- NEEDS_AUTHORING: original rfl equates two L-function defs that are not in the clean build.
+  -- The registry name is `True`, and that placeholder is not the function equality.
+  def BSD_LFunctionIsLinFunc_OPEN_prop : Prop := True -- was: BSDLFunction_143a1_B02 = L_143a1_Dirichlet_B02
   def BSD_LFunctionIsLinFunc_CLOSED_prop : Prop := BSD_LFunctionIsLinFunc_OPEN
+  -- NEEDS_AUTHORING: second conjunct BSD_WeilHasse_Weierstrass_OPEN is not in the clean build.
   def BSD_143_Analytic_Gates_CLOSED_prop : Prop := BSD_LFunctionIsLinFunc_OPEN ∧ BSD_WeilHasse_Weierstrass_OPEN
 end Towers_BSD_B02_Modularity_Closed_Assessed
 
 namespace Towers_BSD_BSD_AP_Table_Assessed
-  def BSD_AP_surface_ledger_prop : Prop := (BSD_ap11_card_EMPIRICAL → False → False) ∧ (BSD_ap13_card_EMPIRICAL → False → False) ∧ (BSD_ap17_card_EMPIRICAL → False → False) ∧ (BSD_ap19_card_EMPIRICAL → False → False) ∧ (BSD_ap23_card_EMPIRICAL → False → False) ∧ (BSD_ap29_card_EMPIRICAL → False → False) ∧ (BSD_ap191_card_EMPIRICAL → False → False)
+  /-- Original proof in Towers/BSD/BSD_AP_Table.lean. Does not discharge the empirical props. -/
+  theorem BSD_AP_surface_ledger_prop :
+      (BSD_ap11_card_EMPIRICAL → False → False) ∧
+      (BSD_ap13_card_EMPIRICAL → False → False) ∧
+      (BSD_ap17_card_EMPIRICAL → False → False) ∧
+      (BSD_ap19_card_EMPIRICAL → False → False) ∧
+      (BSD_ap23_card_EMPIRICAL → False → False) ∧
+      (BSD_ap29_card_EMPIRICAL → False → False) ∧
+      (BSD_ap191_card_EMPIRICAL → False → False) :=
+    ⟨fun _ h => h, fun _ h => h, fun _ h => h, fun _ h => h,
+     fun _ h => h, fun _ h => h, fun _ h => h⟩
 end Towers_BSD_BSD_AP_Table_Assessed
 
 namespace Towers_BSD_BSD_AlgNorm_Assessed
+  -- NEEDS_AUTHORING: original proof is BSD_Tier3B_algNorm_cert, outside the clean build.
   def BSD_algNorm_gen_proof_prop : Prop := BSD_algNorm_gen_CLOSED
 end Towers_BSD_BSD_AlgNorm_Assessed
 
 namespace Towers_BSD_BSD_AnalyticCapstone_Assessed
+  -- NEEDS_AUTHORING: registry sets BSD_L143a1_DerivAtOne := 0, so this is 0 ≠ 0.
+  -- The original norm_num proof used a different constant. Not discharged.
   def BSD_L143a1_DerivAtOne_Nonzero_prop : Prop := BSD_L143a1_DerivAtOne ≠ 0
+  -- NEEDS_AUTHORING: registry sets BSD_LeadingCoeff := fun _ => 1.
+  -- Proving 1 ≠ 0 would not be the LMFDB leading coefficient.
   def BSD_LeadingCoeff_Nonzero_CLOSED_prop : Prop := BSD_LeadingCoeff 143 ≠ 0
-  def BSD_L143a1_HasDerivAt_OPEN_prop : Prop := True -- BSD_L143a1_HasDerivAt_OPEN: Prop (trivial)
+  -- NEEDS_AUTHORING: HasDerivAt for L_143a1 is not in the clean build.
+  def BSD_L143a1_HasDerivAt_OPEN_prop : Prop := True -- was: HasDerivAt L_143a1 (BSD_L143a1_DerivAtOne) 1
 end Towers_BSD_BSD_AnalyticCapstone_Assessed
 
 namespace Towers_BSD_BSD_AnalyticOn_L143a1_Assessed
@@ -37,8 +70,11 @@ namespace Towers_BSD_BSD_AnalyticOn_L143a1_Assessed
 end Towers_BSD_BSD_AnalyticOn_L143a1_Assessed
 
 namespace Towers_BSD_BSD_AnalyticRank_Assessed
-  def BSD_H1_decomp_verified_prop : Prop := True ∧ True ∧ True ∧ True
-  def BSD_analytic_rank_open_count_prop : Prop := True -- was: ℕ
+  /-- Original proof in Towers/BSD/BSD_AnalyticRank.lean. The conjunction is four `True`s. -/
+  theorem BSD_H1_decomp_verified_prop : True ∧ True ∧ True ∧ True :=
+    ⟨trivial, trivial, trivial, trivial⟩
+  -- NEEDS_AUTHORING: original is `def BSD_analytic_rank_open_count : ℕ := 4`, not a Prop.
+  def BSD_analytic_rank_open_count_prop : Prop := True -- was: ℕ := 4
 end Towers_BSD_BSD_AnalyticRank_Assessed
 
 namespace Towers_BSD_BSD_ArakelovHeight_Closed_Assessed
@@ -55,8 +91,12 @@ namespace Towers_BSD_BSD_ClassGroup_Generator_CLOSED_Assessed
 end Towers_BSD_BSD_ClassGroup_Generator_CLOSED_Assessed
 
 namespace Towers_BSD_BSD_ClassNum_Unconditional_CLOSED_Assessed
-  def BSD_ClassNum_Unconditional_prop : Prop := True -- was: NumberField.classNumber K ≤ 10
-  def BSD_classNumber_upper_gate_discharged_prop : Prop := True -- was: NumberField.classNumber K ≤ 10
+  -- NEEDS_AUTHORING: original proof calls BSD_classGroupCard_le_10_CLOSED and
+  -- BSD_small_norm_in_zpowers_CLOSED, outside the clean build. Statement restored.
+  def BSD_ClassNum_Unconditional_prop : Prop :=
+    NumberField.classNumber Towers.BSD.K ≤ 10
+  def BSD_classNumber_upper_gate_discharged_prop : Prop :=
+    NumberField.classNumber Towers.BSD.K ≤ 10
 end Towers_BSD_BSD_ClassNum_Unconditional_CLOSED_Assessed
 
 namespace Towers_BSD_BSD_ClassNum_Upper_CLOSED_Assessed
@@ -67,7 +107,9 @@ end Towers_BSD_BSD_ClassNum_Upper_CLOSED_Assessed
 namespace Towers_BSD_BSD_ClassNumberBounds_Assessed
   def BSD_orderOf_p2_OPEN_prop : Prop := True -- BSD_orderOf_p2_OPEN: Prop (trivial)
   def BSD_classGroupCard_le_10_OPEN_prop : Prop := True -- BSD_classGroupCard_le_10_OPEN: Prop (trivial)
-  def BSD_minkowski_lt_8_prop : Prop := 2 / Real.pi * Real.sqrt 143 < 8
+  theorem BSD_minkowski_lt_8_prop :
+      2 / Real.pi * Real.sqrt 143 < 8 :=
+    Towers.BSD.minkowski_lt_eight_BSD
 end Towers_BSD_BSD_ClassNumberBounds_Assessed
 
 namespace Towers_BSD_BSD_ClassNumber_Completion_CLOSED_Assessed
@@ -103,6 +145,9 @@ namespace Towers_BSD_BSD_Clay_Certificate_Assessed
 end Towers_BSD_BSD_Clay_Certificate_Assessed
 
 namespace Towers_BSD_BSD_Discriminant_Assessed
-  def BSD_finrank_proved_prop : Prop := BSD_finrank_CLOSED
+  -- NEEDS_AUTHORING: the proof is BSD_Discriminant.BSD_finrank_proved via PowerBasis.
+  -- That file is outside the clean build. The real statement is finrank ℚ K = 2,
+  -- not the registry `True` alias.
+  def BSD_finrank_proved_prop : Prop := Towers.BSD.BSD_finrank_CLOSED
 end Towers_BSD_BSD_Discriminant_Assessed
 

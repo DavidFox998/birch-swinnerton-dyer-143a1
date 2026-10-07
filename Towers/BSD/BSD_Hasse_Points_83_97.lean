@@ -1,18 +1,26 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis740_CLOSED.lean — extracted 12 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
 
-theorem BSD_E143_card_p83 : (E143_Finset 83).card = 83 := by decide
+namespace Towers.BSD
+
+instance instFact_prime_83 : Fact (Nat.Prime 83) := ⟨by native_decide⟩
+instance instFact_prime_89 : Fact (Nat.Prime 89) := ⟨by native_decide⟩
+instance instFact_prime_97 : Fact (Nat.Prime 97) := ⟨by native_decide⟩
+
+
+theorem BSD_E143_card_p83 : (E143_Finset 83).card = 83 := by native_decide
 
 /-- **`BSD_E143_card_p89`** — 143a1 has exactly **96 affine 𝔽₈₉-points**.
     a₈₉ = 89−96 = −7.  Computed by `decide` over ZMod 89 × ZMod 89 (7921 pairs). -/
 
-theorem BSD_E143_card_p89 : (E143_Finset 89).card = 96 := by decide
+theorem BSD_E143_card_p89 : (E143_Finset 89).card = 96 := by native_decide
 
 /-- **`BSD_E143_card_p97`** — 143a1 has exactly **110 affine 𝔽₉₇-points**.
     a₉₇ = 97−110 = −13.  Computed by `decide` over ZMod 97 × ZMod 97 (9409 pairs). -/
 
-theorem BSD_E143_card_p97 : (E143_Finset 97).card = 110 := by decide
+theorem BSD_E143_card_p97 : (E143_Finset 97).card = 110 := by native_decide
 
 /-! ## §2. Exact a_p values -/
 

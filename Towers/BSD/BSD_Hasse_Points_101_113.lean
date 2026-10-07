@@ -1,28 +1,38 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis741_CLOSED.lean — extracted 20 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
 
-theorem BSD_E143_card_p101 : (E143_Finset 101).card = 83 := by decide
+namespace Towers.BSD
+
+instance instFact_prime_101 : Fact (Nat.Prime 101) := ⟨by native_decide⟩
+instance instFact_prime_103 : Fact (Nat.Prime 103) := ⟨by native_decide⟩
+instance instFact_prime_107 : Fact (Nat.Prime 107) := ⟨by native_decide⟩
+instance instFact_prime_109 : Fact (Nat.Prime 109) := ⟨by native_decide⟩
+instance instFact_prime_113 : Fact (Nat.Prime 113) := ⟨by native_decide⟩
+
+
+theorem BSD_E143_card_p101 : (E143_Finset 101).card = 83 := by native_decide
 
 /-- **`BSD_E143_card_p103`** — 143a1 has exactly **95 affine 𝔽₁₀₃-points**.
     a₁₀₃ = 103−95 = +8.  Computed by `decide` over ZMod 103 × ZMod 103 (10609 pairs). -/
 
-theorem BSD_E143_card_p103 : (E143_Finset 103).card = 95 := by decide
+theorem BSD_E143_card_p103 : (E143_Finset 103).card = 95 := by native_decide
 
 /-- **`BSD_E143_card_p107`** — 143a1 has exactly **99 affine 𝔽₁₀₇-points**.
     a₁₀₇ = 107−99 = +8.  Computed by `decide` over ZMod 107 × ZMod 107 (11449 pairs). -/
 
-theorem BSD_E143_card_p107 : (E143_Finset 107).card = 99 := by decide
+theorem BSD_E143_card_p107 : (E143_Finset 107).card = 99 := by native_decide
 
 /-- **`BSD_E143_card_p109`** — 143a1 has exactly **105 affine 𝔽₁₀₉-points**.
     a₁₀₉ = 109−105 = +4.  Computed by `decide` over ZMod 109 × ZMod 109 (11881 pairs). -/
 
-theorem BSD_E143_card_p109 : (E143_Finset 109).card = 105 := by decide
+theorem BSD_E143_card_p109 : (E143_Finset 109).card = 105 := by native_decide
 
 /-- **`BSD_E143_card_p113`** — 143a1 has exactly **112 affine 𝔽₁₁₃-points**.
     a₁₁₃ = 113−112 = +1.  Computed by `decide` over ZMod 113 × ZMod 113 (12769 pairs). -/
 
-theorem BSD_E143_card_p113 : (E143_Finset 113).card = 112 := by decide
+theorem BSD_E143_card_p113 : (E143_Finset 113).card = 112 := by native_decide
 
 /-! ## §2. Exact a_p values -/
 
