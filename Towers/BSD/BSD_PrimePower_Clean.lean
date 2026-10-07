@@ -237,7 +237,7 @@ theorem BSD_an_checked_support_bound
   have h_an : a_n n = ∏ p in S, f p := by
     simpa [f, hS] using a_n_factor_prod n hn
   have hpoint : ∀ p ∈ S, (Int.cast (R := ℝ) |f p|) ≤
-      ((n.factorization p + 1 : ℕ) : ℝ) * sqrt (p : ℝ) ^ n.factorization p := by
+      ((n.factorization p : ℝ) + 1) * sqrt (p : ℝ) ^ n.factorization p := by
     intro p hp
     have hp_pf : p ∈ n.primeFactors :=
       (Nat.support_factorization n) ▸ (hS.symm ▸ hp)
@@ -255,21 +255,18 @@ theorem BSD_an_checked_support_bound
       map_prod (Int.castRingHom ℝ) (fun p => |f p|) S
     have hprod_le :
         ∏ p in S, Int.cast (R := ℝ) |f p| ≤
-          ∏ p in S, (((n.factorization p + 1 : ℕ) : ℝ) *
+          ∏ p in S, (((n.factorization p : ℝ) + 1) *
             sqrt (p : ℝ) ^ n.factorization p) :=
       Finset.prod_le_prod (fun _ _ => by positivity) hpoint
     have hsplit :
-        ∏ p in S, (((n.factorization p + 1 : ℕ) : ℝ) *
+        ∏ p in S, (((n.factorization p : ℝ) + 1) *
             sqrt (p : ℝ) ^ n.factorization p) =
-          (∏ p in S, ((n.factorization p + 1 : ℕ) : ℝ)) *
+          (∏ p in S, ((n.factorization p : ℝ) + 1)) *
             ∏ p in S, sqrt (p : ℝ) ^ n.factorization p :=
       Finset.prod_mul_distrib
-    have htau : ∏ p in S, ((n.factorization p + 1 : ℕ) : ℝ) =
+    have htau : ∏ p in S, ((n.factorization p : ℝ) + 1) =
         (n.divisors.card : ℝ) := by
       rw [divisors_card_factorization n hn, ← hS]
-      refine Finset.prod_congr rfl fun p _ => ?_
-      push_cast
-      rfl
     have hsqrt_prod : ∏ p in S, sqrt (p : ℝ) ^ n.factorization p = sqrt (n : ℝ) := by
       have hnat : ∏ p in S, p ^ n.factorization p = n := by
         have h := Nat.factorization_prod_pow_eq_self hn0
@@ -291,7 +288,10 @@ theorem BSD_an_checked_support_bound
         rw [← Real.rpow_natCast, ← Real.rpow_mul (Nat.cast_nonneg p)]
         congr 1
         ring
-      simp_rw [hterm]
+      have hrewrite : ∏ p in S, sqrt (p : ℝ) ^ n.factorization p =
+          ∏ p in S, ((p : ℝ) ^ n.factorization p) ^ ((1 : ℝ) / 2) :=
+        Finset.prod_congr rfl hterm
+      rw [hrewrite]
       rw [← finset_prod_rpow S (fun p => (p : ℝ) ^ n.factorization p)
         (fun p _ => pow_nonneg (Nat.cast_nonneg p) _) ((1 : ℝ) / 2), ← hcast]
       exact (Real.sqrt_eq_rpow (n : ℝ)).symm
@@ -300,7 +300,7 @@ theorem BSD_an_checked_support_bound
       _ = Int.cast (R := ℝ) |∏ p in S, f p| := by rw [h_an]
       _ = Int.cast (R := ℝ) (∏ p in S, |f p|) := by rw [habsZ]
       _ = ∏ p in S, Int.cast (R := ℝ) |f p| := hcast_prod
-      _ ≤ ∏ p in S, (((n.factorization p + 1 : ℕ) : ℝ) *
+      _ ≤ ∏ p in S, (((n.factorization p : ℝ) + 1) *
           sqrt (p : ℝ) ^ n.factorization p) := hprod_le
       _ = (n.divisors.card : ℝ) * sqrt (n : ℝ) := by rw [hsplit, htau, hsqrt_prod]
   have hmul : (n.divisors.card : ℝ) * sqrt (n : ℝ) ≤
