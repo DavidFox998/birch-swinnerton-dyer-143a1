@@ -17,6 +17,7 @@
 - Five corollaries are in `Towers/BSD/BSD_More_Theorems_From_54.lean` at `767d141`. `lake build Towers.BSD.BSD_More_Theorems_From_54` and `lake build BSD_Clean_Aggregation` both exit 0. They are not five more of the 504. The assessed tally stays 54 of 504. The other 450 stay NEEDS_AUTHORING.
 - `Towers/BSD/BSD_Final_Aggregate_84_54_450.lean` packages those citations in `BSD_84_54_450`. `lake build Towers.BSD.BSD_Final_Aggregate_84_54_450` and `lake build BSD_Clean_Aggregation` both exit 0. No new `E143_Finset` enumeration. The assessed tally stays 54 of 504. `84 ≠ 54`. `54 + 450 = 504` does not prove the 450.
 - `Towers/BSD/BSD_450_Gates_Documentation.lean` names each of the 450 and records its gate. It does not prove them. `lake build Towers.BSD.BSD_450_Gates_Documentation` and `lake build BSD_Clean_Aggregation` both exit 0. `FINAL_BSD_HANDOFF_54_84.md` is not in the repository.
+- Groups B and D, partial, at `56d569f`. `Towers/BSD/BSD_ClassNumber_Lower_Clean.lean` proves `10 ≤ NumberField.classNumber K` from non-principality of `p2_OK ^ k` for `k = 1..9`. The upper bound stays NEEDS_AUTHORING: Mathlib v4.12.0 has no `BinaryQuadraticForm.classGroupEquiv`. `Towers/BSD/BSD_TauBound_Clean.lean` proves `τ(n) ≤ D n^ε` for every `ε > 0`, and `|a_n| ≤ D n^{1/2+ε}` for squarefree `n` supported on the 84 checked primes. The Dirichlet series over that finite set is summable for `σ > 3/2` because the set is finite. Prime powers `p^k` with `k ≥ 2`, and `BSD_LSeriesSummable_OPEN`, stay NEEDS_AUTHORING. No Genesis781 import. No new `E143_Finset` enumeration. The assessed files were not edited, so the tally stays 54 of 504. `lake build Towers.BSD.BSD_ClassNumber_Lower_Clean`, `lake build Towers.BSD.BSD_TauBound_Clean`, and `lake build BSD_Clean_Aggregation` (`/tmp/bsd-turn-450.log`) all exit 0.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -214,7 +215,7 @@ For each `def <Name>_prop : Prop := True` (or real statement):
 
 1. **Batch 1-2** (81 props, 31 with real statements) — most likely to have mechanical fixes
 2. **Batch 3-4** (102 props, 12 with real statements) — mixed
-3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. The five corollaries, `BSD_84_54_450`, and the 450-gate audit do not add to the 54. Do not enumerate further primes. The 450 props stay NEEDS_AUTHORING. Their gates are in `BSD_450_Gates_Documentation.lean`.
+3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. The five corollaries, `BSD_84_54_450`, the 450-gate audit, the class-number lower bound, and the squarefree divisor bound do not add to the 54. The assessed defs were not rewritten. Do not enumerate further primes. The upper class-number bound, prime powers `k ≥ 2`, the full L-series, and groups A, C, E, F, and G stay NEEDS_AUTHORING. Their gates are in `BSD_450_Gates_Documentation.lean`.
 
 ## Verification
 
