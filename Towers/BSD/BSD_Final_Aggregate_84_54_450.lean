@@ -106,7 +106,7 @@ theorem BSD_84_54_450
       BSD_Tamagawa_OPEN = True ∧
       BSD_EulerConvergence_OPEN = True ∧
       BSD_HeegnerPoint_OPEN = True ∧
-      BSD_FuncEq_OPEN = True ∧
+      BSD_MissingDefinitionsRegistry.BSD_FuncEq_OPEN = True ∧
       hasseprimset_BSD_ANBound_Generator_Closed_Assessed.BSD_Regulator_OPEN_prop = True ∧
       hasseprimset_BSD_ANBound_Generator_Closed_Assessed.BSD_NeronTateHeight_OPEN_prop = True ∧
       hasseprimset_BSD_abs_prod_real_Assessed.BSD_TauBound_OPEN_prop = True ∧
