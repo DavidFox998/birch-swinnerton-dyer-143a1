@@ -76,6 +76,10 @@ import Towers.BSD.BSD_450_Gates_Documentation
 import Towers.BSD.BSD_ClassNumber_Lower_Clean
 import Towers.BSD.BSD_TauBound_Clean
 import Towers.BSD.BSD_Hasse_General_Clean
+import Towers.BSD.BSD_LFunction_Clean
+import Towers.BSD.BSD_Euler_FEq_Clean
+import Towers.BSD.BSD_Torsion_Rank_Clean
+import Towers.BSD.BSD_Ideal_Wiles_Clean
 
 /-- Clean build marker: true iff this aggregation compiles. -/
 def cleanBuilds : Bool := true
