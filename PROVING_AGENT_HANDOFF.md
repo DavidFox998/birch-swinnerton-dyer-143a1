@@ -15,6 +15,7 @@
 - There is no Batch 11. The ten assessed files are done. What remains is NEEDS_AUTHORING.
 - `Towers/BSD/BSD_Finite_Hasse_54_Theorem.lean` is at `66f0326`. It cites the 84 compiled finite checks. The assessed tally stays 54 of 504. The checked set is not every good prime.
 - Five corollaries are in `Towers/BSD/BSD_More_Theorems_From_54.lean` at `767d141`. `lake build Towers.BSD.BSD_More_Theorems_From_54` and `lake build BSD_Clean_Aggregation` both exit 0. They are not five more of the 504. The assessed tally stays 54 of 504. The other 450 stay NEEDS_AUTHORING.
+- `Towers/BSD/BSD_Final_Aggregate_84_54_450.lean` packages those citations in `BSD_84_54_450`. `lake build Towers.BSD.BSD_Final_Aggregate_84_54_450` and `lake build BSD_Clean_Aggregation` both exit 0. No new `E143_Finset` enumeration. The assessed tally stays 54 of 504. `84 ≠ 54`. `54 + 450 = 504` does not prove the 450.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -105,6 +106,20 @@ The compiled finite checks are collected in `Towers/BSD/BSD_Finite_Hasse_54_Theo
 
 5. `BSD_Coefficient_Bound_Implies_Summability_54`. Cites `BSD_isBigO_to_LSeries_close_prop`. A bound on every `a_n` implies summability for `Re(s) > 3/2`. Each checked prime satisfies `|a_p| ≤ 2√p`. Those 84 inequalities are not a bound for every `n`. Summability of the L-series is not discharged. There is no truncated L-series.
 
+## Final aggregate
+
+`Towers/BSD/BSD_Final_Aggregate_84_54_450.lean` imports `BSD_Finite_Hasse_54_Theorem`, `BSD_More_Theorems_From_54`, and Batches 1–10. `BSD_Clean_Aggregation` imports it. `BSD_84_54_450` is one conjunction, for each checked prime:
+
+- `BSD_Finite_Hasse_CheckedPrimes.card = 84`, and every checked prime is below 1000.
+- The degree form is nonnegative, so `|a_p| ≤ 2√p` and `a_p² ≤ 4p`. `a_p = p − (affine count)`, so the projective count `p + 1 − a_p` equals the affine count plus one.
+- `a_n (251 * 257) = a_n 251 * a_n 257`, with `a_n 251 = 21`, `a_n 257 = 18`, and `a_n 64507 = 378`.
+- Coefficients `(0, -1, 1, -1, -2)` by rfl. `(2, 0)` is a rational point, and `(2, 0) ∈ E143_Finset p` by `0 = 8 - 4 - 2 - 2` in `ZMod p`. Not non-torsion.
+- Minkowski `(2/π)·√143 < 8`, `True ∧ True ∧ True ∧ True`, and the AP implication ledger.
+- `(54 : ℕ) + 450 = 504`, `54 < 504`, and `84 ≠ 54`. The arithmetic does not prove the 450 props.
+- `BSD_Ceiling_Theorem`: 9973 is prime, does not divide 143, and is outside the checked set. 11 and 13 divide 143 and are outside. This does not evaluate `E143_Finset 9973`.
+- The coefficient-bound implication, still a hypothesis on every `n`. `BSD_LSeriesSummable_OPEN → True` is the existing sentinel and does not prove summability.
+- Registry placeholders, each definitionally `True` or the constant 0: `BSD_L143a1_DerivAtOne = 0`, `BSD_HasseBound_Discriminant_OPEN`, Gross–Zagier, Kolyvagin, Sha, Tamagawa, Euler convergence, Heegner, the registry `BSD_FuncEq_OPEN` (not the root declaration), the regulator placeholder, the Néron–Tate placeholder, the tau-bound placeholder, and `BSD_PrimePowBound_to_aNBound_OPEN_prop`. These equalities do not prove those conjectures. `BSD_WeilHasse_Weierstrass_OPEN` stays unproved. `BinaryQuadraticForm.classGroupEquiv` stays absent from Mathlib v4.12.0. No prime ≥ 1000 is enumerated.
+
 ## Where everything lives
 
 **Repo:** `DavidFox998/birch-swinnerton-dyer-143a1`
@@ -175,7 +190,7 @@ For each `def <Name>_prop : Prop := True` (or real statement):
 
 1. **Batch 1-2** (81 props, 31 with real statements) — most likely to have mechanical fixes
 2. **Batch 3-4** (102 props, 12 with real statements) — mixed
-3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. The five corollaries in `BSD_More_Theorems_From_54.lean` do not add to the 54. Do not enumerate further primes. The remaining 450 props stay NEEDS_AUTHORING until a general proof is in the clean build.
+3. **Done** — Batches 1 through 10 are assessed. There is no Batch 11. Authoring Phase 2 is recorded above. The five corollaries and `BSD_84_54_450` do not add to the 54. Do not enumerate further primes. The remaining 450 props stay NEEDS_AUTHORING until a general proof is in the clean build.
 
 ## Verification
 
