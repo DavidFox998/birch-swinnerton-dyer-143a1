@@ -3,9 +3,9 @@ import Towers.BSD.BSD_BQF_Bridge_Closed
 import Towers.BSD.BSD_HeegnerPoint_CLOSED
 import Towers.BSD.BSD_AP_Table_Closed
 import Towers.BSD.B01_EllipticCurve
-import Towers.BSD.MathlibGaps.Genus_X0_143
-import Towers.BSD.MathlibGaps.BostBound_143
-import Towers.BSD.MathlibGaps.BSD_TorsionSha_CLOSED
+import Towers.BSD.Genus_X0_143
+import Towers.BSD.BostBound_143
+import lean.BSD_TorsionSha_CLOSED
 import Towers.BSD.BSD_TorsionBound_P2P5_Closed
 import Towers.BSD.BSD_Hasse_Points_17_29
 import BSD_Regulator_RealPeriod_Closed
