@@ -21,7 +21,7 @@
 import Towers.BSD.BSD_ReducedForms
 import Towers.BSD.BSD_ClassNumber_Lower_Clean
 
-open NumberField
+open NumberField NumberField.InfinitePlace Real FiniteDimensional
 open scoped nonZeroDivisors
 
 namespace Towers.BSD
