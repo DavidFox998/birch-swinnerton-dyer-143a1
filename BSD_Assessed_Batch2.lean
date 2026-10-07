@@ -167,11 +167,11 @@ namespace Towers_BSD_BSD_L143a1_BSDLFunction_ID_PROVED_Assessed
     intro h
     have h1 : AnalyticAt ℂ (fun _ : ℂ => (1 : ℂ)) 0 := analyticAt_const
     have heq := h (fun _ => (1 : ℂ)) 0 h1
-    have hord : h1.order = 0 := by
+    have hord : h1.order = ↑(0 : ℕ) := by
       rw [h1.order_eq_nat_iff]
       refine ⟨fun _ => (1 : ℂ), analyticAt_const, by norm_num,
-              Filter.eventually_of_forall fun z => ?_⟩
-      norm_num
+              Filter.Eventually.of_forall fun _ => ?_⟩
+      simp [pow_zero, one_smul]
     have hv : (Towers.BSD.VanishingOrder (fun _ : ℂ => (1 : ℂ)) 0 : ℕ∞) = 1 := by norm_cast
     rw [hv, hord] at heq
     exact absurd heq one_ne_zero
