@@ -1,28 +1,42 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis742_CLOSED.lean — extracted 20 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Mathlib.Tactic
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+import Mathlib.Tactic
+import Towers.BSD.BSD_Targeted_Placeholders
 
-theorem BSD_E143_card_p127 : (E143_Finset 127).card = 135 := by decide
+set_option maxRecDepth 100000
+
+private instance instFactPrime127 : Fact (127 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime131 : Fact (131 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime137 : Fact (137 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime139 : Fact (139 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime149 : Fact (149 : ℕ).Prime := ⟨by norm_num⟩
+
+
+namespace Towers.BSD
+theorem BSD_E143_card_p127 : (E143_Finset 127).card = 135 := by native_decide
 
 /-- **`BSD_E143_card_p131`** — 143a1 has exactly **113 affine 𝔽₁₃₁-points**.
     a₁₃₁ = 131−113 = +18.  Computed by `decide` over ZMod 131 × ZMod 131 (17161 pairs). -/
 
-theorem BSD_E143_card_p131 : (E143_Finset 131).card = 113 := by decide
+theorem BSD_E143_card_p131 : (E143_Finset 131).card = 113 := by native_decide
 
 /-- **`BSD_E143_card_p137`** — 143a1 has exactly **154 affine 𝔽₁₃₇-points**.
     a₁₃₇ = 137−154 = −17.  Computed by `decide` over ZMod 137 × ZMod 137 (18769 pairs). -/
 
-theorem BSD_E143_card_p137 : (E143_Finset 137).card = 154 := by decide
+theorem BSD_E143_card_p137 : (E143_Finset 137).card = 154 := by native_decide
 
 /-- **`BSD_E143_card_p139`** — 143a1 has exactly **121 affine 𝔽₁₃₉-points**.
     a₁₃₉ = 139−121 = +18.  Computed by `decide` over ZMod 139 × ZMod 139 (19321 pairs). -/
 
-theorem BSD_E143_card_p139 : (E143_Finset 139).card = 121 := by decide
+theorem BSD_E143_card_p139 : (E143_Finset 139).card = 121 := by native_decide
 
 /-- **`BSD_E143_card_p149`** — 143a1 has exactly **135 affine 𝔽₁₄₉-points**.
     a₁₄₉ = 149−135 = +14.  Computed by `decide` over ZMod 149 × ZMod 149 (22201 pairs). -/
 
-theorem BSD_E143_card_p149 : (E143_Finset 149).card = 135 := by decide
+theorem BSD_E143_card_p149 : (E143_Finset 149).card = 135 := by native_decide
 
 /-! ## §2. Exact a_p values -/
 
