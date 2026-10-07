@@ -4,7 +4,8 @@
 
 - Batch 1 is done at `9474564`. Three theorems. The rest of Batch 1 is NEEDS_AUTHORING.
 - Batch 2 is done at `3c62767`. `lake build BSD_Assessed_Batch2` and `lake build BSD_Clean_Aggregation` both exit 0.
-- Next file is `BSD_Assessed_Batch3.lean`.
+- Batch 3 is done at `cd0eafc`. `lake build BSD_Assessed_Batch3` and `lake build BSD_Clean_Aggregation` both exit 0.
+- Next file is `BSD_Assessed_Batch4.lean`.
 - Do not treat a registry `True` as a proved conjecture. No `sorry`. No invented mathematics.
 
 Batch 2 theorems, and only these:
@@ -13,6 +14,12 @@ Batch 2 theorems, and only these:
 - `BSD_HeegnerPoint_CLOSED_prop` and `BSD_HeegnerPoint_surface_ledger_prop`: the affine point (2, 0). Not non-torsion, not rank 1, not BSD.
 - `BSD_VanishingOrder_APIBridge_RETRACTED_prop`: the B01 constant-function counterexample. Not `¬ True`.
 - Sentinels that do not discharge an open: `BSD_endeg_sentinel_prop`, `BSD_linFunc_sentinel_prop`, `BSD_modularityE143_is_open_prop`, `BSD_bsdFormula_is_open_prop`.
+
+Batch 3 theorems, and only these:
+
+- `BSD_HeckeMultiplicativity_143_CLOSED_prop`: `a_n (m * n) = a_n m * a_n n` when `Nat.Coprime m n`. Not modularity.
+- `BSD_RamanujanBound_iff_Discriminant_prop`: `|a_p| ≤ 2√p` if and only if `a_p² ≤ 4p`, for good primes. Neither side is proved for every prime.
+- Class number `10 ≤ h(K)` and `h(K) ≤ 10` are restored and not proved. Sha, Tamagawa, torsion injection, Gross–Zagier, Kolyvagin, and the ideal equalities stay NEEDS_AUTHORING.
 
 ## Where everything lives
 
