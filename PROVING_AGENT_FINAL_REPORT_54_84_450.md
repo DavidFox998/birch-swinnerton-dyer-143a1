@@ -2,6 +2,7 @@
 
 Repository-only audit of `DavidFox998/birch-swinnerton-dyer-143a1` on `bsd-clean-214-propositions-assessed`. This report does not prove a conjecture. It records what compiled.
 
+Tip of this report: `70b40e1` (`ebbd266` → `0792f0d` → `70b40e1`).
 Lean audit: `52eb949` (`Towers/BSD/BSD_450_Gates_Documentation.lean`).
 Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `FINAL_BSD_HANDOFF_54_84.md` is not in the repository. The gate list is Authoring Phase 2 in `PROVING_AGENT_HANDOFF.md`.
@@ -19,7 +20,7 @@ Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `lake build Towers.BSD.BSD_Euler_FEq_Clean` — EXIT:0 (`/tmp/bsd-euler-clean.log`).
 `lake build Towers.BSD.BSD_Torsion_Rank_Clean` — EXIT:0 (`/tmp/bsd-torsion-clean.log`).
 `lake build Towers.BSD.BSD_Ideal_Wiles_Clean` — EXIT:0 (`/tmp/bsd-ideal-clean.log`).
-`lake build BSD_Clean_Aggregation` — EXIT:0 again after the C, E, F, and G partial theorems (`/tmp/bsd-cefg.log`).
+`lake build BSD_Clean_Aggregation` — EXIT:0 again after the C, E, F, and G partial theorems (`/tmp/bsd-cefg.log`), and again for this report (`/tmp/bsd-final-70b40e1.log`).
 
 No `sorry`. The aggregation log has two warnings, both the old unused `r` variables in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321.
 
@@ -47,7 +48,7 @@ The checked set has card 84. Every prime in it is below 1000.
 
 Not 11. Not 13. Nothing at or above 1000.
 
-The assessed tally is 54 theorems out of 504 propositions. The other 450 stay NEEDS_AUTHORING. `84 ≠ 54`. `(54 : ℕ) + 450 = 504` does not prove the 450. The only theorem in the audit file is `BSD_450_audit_tally`, and that theorem is this arithmetic.
+The assessed tally is 54 theorems out of 504 propositions. The other 450 stay NEEDS_AUTHORING. `84 ≠ 54`. `(54 : ℕ) + 450 = 504` does not prove the 450. The only theorem in the audit file is `BSD_450_audit_tally`, and that theorem is this arithmetic. The partial theorems below are extra citations. They do not rewrite any of the 450 assessed definitions.
 
 `decide` hits the recursion limit at `p ≥ 53`. `native_decide` compiled through `p = 983` (966289 pairs). A count at `p = 9973` is about 99 million pairs and does not compile. Finite checks are not Hasse for every prime. `BSD_Ceiling_Theorem` shows 9973 is prime, does not divide 143, and is outside the checked set. 11 and 13 divide 143 and are outside the checked set. The ceiling does not evaluate `E143_Finset 9973`.
 
@@ -60,7 +61,9 @@ The assessed tally is 54 theorems out of 504 propositions. The other 450 stay NE
 | `Towers/BSD/BSD_Finite_Hasse_54_Theorem.lean` | The 84 compiled finite checks. Card 84. Not Hasse for every prime. |
 | `Towers/BSD/BSD_More_Theorems_From_54.lean` | Five corollaries of proofs that already compiled. Not five more of the 504. |
 | `Towers/BSD/BSD_Final_Aggregate_84_54_450.lean` | `BSD_84_54_450` cites those checks, the five corollaries, and the ceiling. |
-| `Towers/BSD/BSD_450_Gates_Documentation.lean` | `#check` of each of the 450, with its gate and original file. `#check` does not prove it. |
+| `Towers/BSD/BSD_450_Gates_Documentation.lean` | `#check` of each of the 450, with its gate and original file. `#check` does not prove it. The only theorem is `BSD_450_audit_tally`. |
+| `Towers/BSD/BSD_ClassNumber_Lower_Clean.lean` | `10 ≤ classNumber K`. The upper bound stays NEEDS_AUTHORING. |
+| `Towers/BSD/BSD_TauBound_Clean.lean` | Divisor bound, squarefree `|a_n|` on the 84, finite-set summability. |
 | `Towers/BSD/BSD_Hasse_General_Clean.lean` | Degree-form equivalence on the 84 checked primes. The forall stays NEEDS_AUTHORING. |
 | `Towers/BSD/BSD_LFunction_Clean.lean` | Linear-anchor derivative and the registry constant 0. Not a Hasse–Weil derivative. |
 | `Towers/BSD/BSD_Euler_FEq_Clean.lean` | Finite-support Dirichlet series. Not the Euler product. |
@@ -121,6 +124,18 @@ These are new theorems. They do not raise the assessed tally. The 450 assessed d
 `BSD_affine_point_in_E143_Finset_checked` cites `BSD_Weierstrass_Coeff_Affine_Point_Theorem`. The identity is `0 = 8 - 4 - 2 - 2` in `ZMod p`. `BSD_affine_not_proved_non_torsion` records the same membership together with the placeholders: Heegner, Gross–Zagier, Kolyvagin, Sha, and Tamagawa are `True`; `BSD_TorsCard = 1`; `BSD_TamagawaProd = 1`; `BSD_LeadingCoeff 143 = 1`; the regulator, Néron–Tate, and non-torsion assessed names are `True`. Those equalities do not prove non-torsion, a generator, rank 1, or BSD. The sentinels were not closed.
 
 `BSD_conductor_factors` is `143 = 11 * 13`. Both factors are prime, both divide 143, and both lie outside the checked set, by `BSD_Ceiling_Theorem`. The file does not evaluate `E143_Finset` at 11 or 13. The ideal-equality names, `BSD_WilesTaylor_143_OPEN_prop`, and `BSD_Tier2B_ProvedFacts_prop` are `True`. `α_BSD_period` is not defined in this repository. Those equalities do not prove the ideal statements.
+
+## Partial theorems B, D, A, C, E, F, G at `70b40e1`
+
+All of these are partial. None of them rewrites an assessed definition. The assessed tally stays 54 of 504. The 450 stay NEEDS_AUTHORING. `84 ≠ 54`. `(54 : ℕ) + 450 = 504` does not prove the 450. The only theorem in `Towers/BSD/BSD_450_Gates_Documentation.lean` is `BSD_450_audit_tally`, which is that arithmetic. The theorems in this section are the extra citations. No new `E143_Finset` enumeration. No prime at or above 1000.
+
+- **B.** `BSD_classNumber_lower_bound` is `10 ≤ NumberField.classNumber K`, from non-principality of `p2_OK ^ k` for `k = 1..9`. The upper bound stays NEEDS_AUTHORING. Mathlib v4.12.0 has no `BinaryQuadraticForm.classGroupEquiv`. The 26 assessed defs were not rewritten.
+- **D.** `BSD_tau_bound_of_divisors` is `τ(n) ≤ D n^ε` for every `ε > 0`, from `Nat.card_divisors`. `BSD_an_squarefree_checked_bound` is `|a_n| ≤ D n^{1/2+ε}` for squarefree `n` supported on the 84 checked primes. `BSD_squarefree_checked_dirichlet_summable` is summability for `σ > 3/2` because that set is finite: every such `n` divides the product of the 84 primes. Prime powers `k ≥ 2` and `BSD_LSeriesSummable_OPEN` stay NEEDS_AUTHORING. The 9 assessed defs were not rewritten.
+- **A.** `BSD_Hasse_degree_nonneg` is `a_p² ≤ 4p` on the 84 checked primes. `BSD_Hasse_for_checked_is_degree_form` is `|a_p| ≤ 2√p` if and only if `a_p² ≤ 4p` and `BSD_FrobeniusDegreeNonneg_OPEN p`, on that set. `BSD_Hasse_forall_needs_general` records card 84, every checked prime below 1000, `983` in the set with `983² = 966289`, and `9973² = 99460729`. 9973 is prime, does not divide 143, and is outside the set. 11 and 13 divide 143 and are outside. The file does not evaluate `E143_Finset 9973`. Mathlib v4.12.0 `AlgebraicGeometry/EllipticCurve` has Affine, DivisionPolynomial, Group, Jacobian, Projective, VariableChange, and Weierstrass, and no Hasse theorem and no Frobenius. The forall stays NEEDS_AUTHORING. The 328 assessed defs were not rewritten.
+- **C.** `BSD_linear_anchor_derivative` is the Batch 4 derivative `5759/10000` at 1. `BSD_registry_derivative_is_zero` is `BSD_L143a1_DerivAtOne = 0`, so `≠ 0` is `0 ≠ 0`. `BSD_linear_anchor_not_HasseWeil` records that the registry `L_143a1` is `True` and that `0 ≠ 5759/10000`. `Towers/BSD/BSD_LFunction.lean` does not define a Hasse–Weil L-function. There is no `hasseprimset/BSD_LFunction.lean`. The Hasse–Weil derivative stays NEEDS_AUTHORING. The 12 assessed defs were not rewritten.
+- **E.** `BSD_Euler_truncated_converges_checked` is `BSD_squarefree_checked_dirichlet_summable`: the series `|a_n| / n^σ` over squarefree `n` supported on the 84 checked primes, for `σ > 3/2`. The set is finite, and finiteness is why it converges. `BSD_Euler_full_needs_continuation` records that the registry Euler and functional-equation names are `True`. There is no `Towers/BSD/BSD_AnalyticContinuation` file. The Euler product and the functional equation stay NEEDS_AUTHORING. The 11 assessed defs were not rewritten.
+- **F.** `BSD_affine_point_in_E143_Finset_checked` cites `BSD_Weierstrass_Coeff_Affine_Point_Theorem`: `(2, 0) ∈ E143_Finset p` for each checked prime, by `0 = 8 - 4 - 2 - 2` in `ZMod p`. `BSD_affine_not_proved_non_torsion` records that membership together with the placeholders: Heegner, Gross–Zagier, Kolyvagin, Sha, and Tamagawa are `True`; `BSD_TorsCard = 1`; `BSD_TamagawaProd = 1`; `BSD_LeadingCoeff 143 = 1`. Those equalities do not prove non-torsion, a generator, rank 1, or BSD. The sentinels were not closed. The 54 assessed defs in this group were not rewritten.
+- **G.** `BSD_conductor_factors` is `143 = 11 * 13`. Both factors are prime, both divide 143, and both lie outside the checked set, by `BSD_Ceiling_Theorem`. The file does not evaluate `E143_Finset` at 11 or 13. The ideal-equality names, `BSD_WilesTaylor_143_OPEN_prop`, and `BSD_Tier2B_ProvedFacts_prop` are `True`. `α_BSD_period` is not defined in this repository. The ideal equalities, Wiles–Taylor, and the period stay NEEDS_AUTHORING. The 10 assessed defs were not rewritten.
 
 ## Standing limit
 
