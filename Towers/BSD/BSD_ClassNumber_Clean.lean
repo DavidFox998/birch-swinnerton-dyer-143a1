@@ -29,6 +29,7 @@ import Towers.BSD.BSD_Finite_Hasse_54_Theorem
 import Mathlib.Data.Fintype.Card
 
 open NumberField
+open scoped nonZeroDivisors
 
 namespace Towers.BSD
 
