@@ -483,7 +483,7 @@ theorem p3b_ne_top : p3b_OK ≠ ⊤ := by
   have hsplit := three_split
   rw [h, Ideal.mul_top] at hsplit
   have hgen : zLin 0 1 ∈ Ideal.span {(3 : 𝓞 K)} := by
-    rw [← hsplit, zLin_zero_one]
+    rw [← hsplit]
     exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton _))
   have hd := (zLin_mem_span_nat hgen).2
   norm_num at hd
@@ -511,112 +511,113 @@ theorem p7b_ne_top : p7b_OK ≠ ⊤ := by
 private lemma mul_eq_nine {x y : ℕ} (h : x * y = 9) (hx : x ≠ 1) (hy : y ≠ 1) :
     x = 3 ∧ y = 3 := by
   have hxle : x ≤ 9 := Nat.le_of_dvd (by decide) ⟨y, h.symm⟩
-  interval_cases x <;> first | (have hd : x ∣ 9 := ⟨y, h.symm⟩; norm_num at hd; done) | omega
+  interval_cases x <;> omega
 
 private lemma mul_eq_fortynine {x y : ℕ} (h : x * y = 49) (hx : x ≠ 1) (hy : y ≠ 1) :
     x = 7 ∧ y = 7 := by
   have hxle : x ≤ 49 := Nat.le_of_dvd (by decide) ⟨y, h.symm⟩
-  interval_cases x <;> first | (have hd : x ∣ 49 := ⟨y, h.symm⟩; norm_num at hd; done) | omega
+  interval_cases x <;> omega
+
+private theorem absNorm_span_int (n : ℤ) :
+    Ideal.absNorm (Ideal.span {((n : ℤ) : 𝓞 K)}) = (n ^ 2).natAbs := by
+  rw [← zLin_int, absNorm_span_zLin]
+  simp
 
 theorem absNorm_p2b : Ideal.absNorm p2b_OK = 2 := by
   have hmul : Ideal.absNorm p2_OK * Ideal.absNorm p2b_OK = 4 := by
-    rw [← map_mul Ideal.absNorm, two_split, Ideal.absNorm_span_singleton, ← zLin_int, norm_zLin]
+    rw [← map_mul Ideal.absNorm, two_split, absNorm_span_int 2]
     decide
   rw [absNorm_p2_eq_2] at hmul
   omega
 
 theorem absNorm_p3 : Ideal.absNorm p3_OK = 3 := by
   have hmul : Ideal.absNorm p3_OK * Ideal.absNorm p3b_OK = 9 := by
-    rw [← map_mul Ideal.absNorm, three_split, Ideal.absNorm_span_singleton, ← zLin_int, norm_zLin]
+    rw [← map_mul Ideal.absNorm, three_split, absNorm_span_int 3]
     decide
-  have hx : Ideal.absNorm p3_OK ≠ 1 := by rw [Ideal.absNorm_eq_one_iff]; exact p3_ne_top
-  have hy : Ideal.absNorm p3b_OK ≠ 1 := by rw [Ideal.absNorm_eq_one_iff]; exact p3b_ne_top
+  have hx : Ideal.absNorm p3_OK ≠ 1 := by
+    intro h; exact p3_ne_top (Ideal.absNorm_eq_one_iff.mp h)
+  have hy : Ideal.absNorm p3b_OK ≠ 1 := by
+    intro h; exact p3b_ne_top (Ideal.absNorm_eq_one_iff.mp h)
   exact (mul_eq_nine hmul hx hy).1
 
 theorem absNorm_p3b : Ideal.absNorm p3b_OK = 3 := by
   have hmul : Ideal.absNorm p3_OK * Ideal.absNorm p3b_OK = 9 := by
-    rw [← map_mul Ideal.absNorm, three_split, Ideal.absNorm_span_singleton, ← zLin_int, norm_zLin]
+    rw [← map_mul Ideal.absNorm, three_split, absNorm_span_int 3]
     decide
-  have hx : Ideal.absNorm p3_OK ≠ 1 := by rw [Ideal.absNorm_eq_one_iff]; exact p3_ne_top
-  have hy : Ideal.absNorm p3b_OK ≠ 1 := by rw [Ideal.absNorm_eq_one_iff]; exact p3b_ne_top
+  have hx : Ideal.absNorm p3_OK ≠ 1 := by
+    intro h; exact p3_ne_top (Ideal.absNorm_eq_one_iff.mp h)
+  have hy : Ideal.absNorm p3b_OK ≠ 1 := by
+    intro h; exact p3b_ne_top (Ideal.absNorm_eq_one_iff.mp h)
   exact (mul_eq_nine hmul hx hy).2
 
 theorem absNorm_p7 : Ideal.absNorm p7_OK = 7 := by
   have hmul : Ideal.absNorm p7_OK * Ideal.absNorm p7b_OK = 49 := by
-    rw [← map_mul Ideal.absNorm, seven_split, Ideal.absNorm_span_singleton, ← zLin_int, norm_zLin]
+    rw [← map_mul Ideal.absNorm, seven_split, absNorm_span_int 7]
     decide
-  have hx : Ideal.absNorm p7_OK ≠ 1 := by rw [Ideal.absNorm_eq_one_iff]; exact p7_ne_top
-  have hy : Ideal.absNorm p7b_OK ≠ 1 := by rw [Ideal.absNorm_eq_one_iff]; exact p7b_ne_top
+  have hx : Ideal.absNorm p7_OK ≠ 1 := by
+    intro h; exact p7_ne_top (Ideal.absNorm_eq_one_iff.mp h)
+  have hy : Ideal.absNorm p7b_OK ≠ 1 := by
+    intro h; exact p7b_ne_top (Ideal.absNorm_eq_one_iff.mp h)
   exact (mul_eq_fortynine hmul hx hy).1
 
 theorem absNorm_p7b : Ideal.absNorm p7b_OK = 7 := by
   have hmul : Ideal.absNorm p7_OK * Ideal.absNorm p7b_OK = 49 := by
-    rw [← map_mul Ideal.absNorm, seven_split, Ideal.absNorm_span_singleton, ← zLin_int, norm_zLin]
+    rw [← map_mul Ideal.absNorm, seven_split, absNorm_span_int 7]
     decide
-  have hx : Ideal.absNorm p7_OK ≠ 1 := by rw [Ideal.absNorm_eq_one_iff]; exact p7_ne_top
-  have hy : Ideal.absNorm p7b_OK ≠ 1 := by rw [Ideal.absNorm_eq_one_iff]; exact p7b_ne_top
+  have hx : Ideal.absNorm p7_OK ≠ 1 := by
+    intro h; exact p7_ne_top (Ideal.absNorm_eq_one_iff.mp h)
+  have hy : Ideal.absNorm p7b_OK ≠ 1 := by
+    intro h; exact p7b_ne_top (Ideal.absNorm_eq_one_iff.mp h)
   exact (mul_eq_fortynine hmul hx hy).2
 
 theorem p2_isPrime : p2_OK.IsPrime :=
-  Ideal.isPrime_of_irreducible_absNorm (by
-    rw [absNorm_p2_eq_2]
-    exact Nat.irreducible_iff_nat_prime.mpr Nat.prime_two)
+  Ideal.isPrime_of_irreducible_absNorm (by rw [absNorm_p2_eq_2]; exact Nat.prime_two)
 
 theorem p2b_isPrime : p2b_OK.IsPrime :=
-  Ideal.isPrime_of_irreducible_absNorm (by
-    rw [absNorm_p2b]
-    exact Nat.irreducible_iff_nat_prime.mpr Nat.prime_two)
+  Ideal.isPrime_of_irreducible_absNorm (by rw [absNorm_p2b]; exact Nat.prime_two)
 
 theorem p3_isPrime : p3_OK.IsPrime :=
-  Ideal.isPrime_of_irreducible_absNorm (by
-    rw [absNorm_p3]
-    exact Nat.irreducible_iff_nat_prime.mpr (by decide))
+  Ideal.isPrime_of_irreducible_absNorm (by rw [absNorm_p3]; exact (by decide : Nat.Prime 3))
 
 theorem p3b_isPrime : p3b_OK.IsPrime :=
-  Ideal.isPrime_of_irreducible_absNorm (by
-    rw [absNorm_p3b]
-    exact Nat.irreducible_iff_nat_prime.mpr (by decide))
+  Ideal.isPrime_of_irreducible_absNorm (by rw [absNorm_p3b]; exact (by decide : Nat.Prime 3))
 
 theorem p7_isPrime : p7_OK.IsPrime :=
-  Ideal.isPrime_of_irreducible_absNorm (by
-    rw [absNorm_p7]
-    exact Nat.irreducible_iff_nat_prime.mpr (by decide))
+  Ideal.isPrime_of_irreducible_absNorm (by rw [absNorm_p7]; exact (by decide : Nat.Prime 7))
 
 theorem p7b_isPrime : p7b_OK.IsPrime :=
-  Ideal.isPrime_of_irreducible_absNorm (by
-    rw [absNorm_p7b]
-    exact Nat.irreducible_iff_nat_prime.mpr (by decide))
+  Ideal.isPrime_of_irreducible_absNorm (by rw [absNorm_p7b]; exact (by decide : Nat.Prime 7))
 
 theorem p2_prime : Prime (p2_OK : Ideal (𝓞 K)) := Ideal.prime_of_isPrime p2_ne_bot p2_isPrime
 
 theorem p2b_ne_zero : p2b_OK ≠ 0 := by
   intro h
   have := absNorm_p2b
-  rw [h, Ideal.absNorm_bot] at this
+  rw [h, Ideal.zero_eq_bot, Ideal.absNorm_bot] at this
   norm_num at this
 
 theorem p3_ne_zero : p3_OK ≠ 0 := by
   intro h
   have := absNorm_p3
-  rw [h, Ideal.absNorm_bot] at this
+  rw [h, Ideal.zero_eq_bot, Ideal.absNorm_bot] at this
   norm_num at this
 
 theorem p3b_ne_zero : p3b_OK ≠ 0 := by
   intro h
   have := absNorm_p3b
-  rw [h, Ideal.absNorm_bot] at this
+  rw [h, Ideal.zero_eq_bot, Ideal.absNorm_bot] at this
   norm_num at this
 
 theorem p7_ne_zero : p7_OK ≠ 0 := by
   intro h
   have := absNorm_p7
-  rw [h, Ideal.absNorm_bot] at this
+  rw [h, Ideal.zero_eq_bot, Ideal.absNorm_bot] at this
   norm_num at this
 
 theorem p7b_ne_zero : p7b_OK ≠ 0 := by
   intro h
   have := absNorm_p7b
-  rw [h, Ideal.absNorm_bot] at this
+  rw [h, Ideal.zero_eq_bot, Ideal.absNorm_bot] at this
   norm_num at this
 
 theorem p2b_prime : Prime (p2b_OK : Ideal (𝓞 K)) := Ideal.prime_of_isPrime p2b_ne_zero p2b_isPrime
@@ -666,11 +667,11 @@ theorem zLin_ne_zero_of_norm {x y : ℤ} (h : x ^ 2 + x * y + 36 * y ^ 2 ≠ 0) 
   intro hz
   have hn := norm_zLin x y
   rw [hz, Algebra.norm_zero] at hn
-  exact h hn
+  exact h hn.symm
 
 private theorem inv_pow_p2 (k m : ℕ) (h : k + m = 10) : (p2_class ^ k)⁻¹ = p2_class ^ m := by
   apply inv_eq_of_mul_eq_one_left
-  rw [← pow_add, h, p2_class_pow_ten]
+  rw [← pow_add, add_comm, h, p2_class_pow_ten]
 
 theorem class_p2b (h : p2b_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p2b_OK h) = p2_class ^ 9 := by
   have htwo : (2 : 𝓞 K) ≠ 0 := by exact_mod_cast (by decide : (2 : ℤ) ≠ 0)
@@ -679,7 +680,8 @@ theorem class_p2b (h : p2b_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p2b_OK h) = p2_cl
     rw [ClassGroup.mk0_eq_mk0_inv_iff]
     refine ⟨(2 : 𝓞 K), htwo, ?_⟩
     simpa [nzIdeal, Submonoid.coe_mul, mul_comm] using two_split
-  simpa [p2_class, inv_pow_p2 1 9 (by decide)] using hinv
+  rw [hinv, p2_class, ← pow_one p2_class]
+  exact inv_pow_p2 1 9 (by decide)
 
 theorem class_p3 (h : p3_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p3_OK h) = p2_class ^ 4 := by
   have hα : zLin (-12) (-1) ≠ 0 := zLin_ne_zero_of_norm (by decide)
@@ -720,7 +722,7 @@ theorem class_p7b (h : p7b_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p7b_OK h) = p2_cl
 /-! ### No ideal of norm 5, and the prime factors of a small ideal -/
 
 theorem absNorm_ne_zero_of_ne_zero (I : Ideal (𝓞 K)) (hI : I ≠ 0) : Ideal.absNorm I ≠ 0 := by
-  rw [← Ideal.zero_eq_bot] at hI
+  rw [Ideal.zero_eq_bot] at hI
   haveI := Ideal.fintypeQuotientOfFreeOfNeBot I hI
   exact (Ideal.absNorm_ne_zero_iff I).2 (Finite.of_fintype _)
 
@@ -728,7 +730,7 @@ theorem no_absNorm_five (I : Ideal (𝓞 K)) : Ideal.absNorm I ≠ 5 := by
   intro h
   have hI : I ≠ 0 := by
     intro h0
-    rw [h0, Ideal.absNorm_bot] at h
+    rw [h0, Ideal.zero_eq_bot, Ideal.absNorm_bot] at h
     norm_num at h
   have hcardNat : Nat.card (𝓞 K ⧸ I) = 5 := by
     rw [← Submodule.cardQuot_apply, ← Ideal.absNorm_apply, h]
@@ -740,20 +742,22 @@ theorem no_absNorm_five (I : Ideal (𝓞 K)) : Ideal.absNorm I ≠ 5 := by
   have hz : nω_OK ^ 2 - nω_OK + 36 = 0 := by rw [nω_sq]; ring
   set q : 𝓞 K ⧸ I := Ideal.Quotient.mk I nω_OK
   have hq : q ^ 2 - q + 36 = 0 := by
-    rw [show q ^ 2 - q + 36 = Ideal.Quotient.mk I (nω_OK ^ 2 - nω_OK + 36) by
-      simp [q, map_pow, map_sub, map_add, map_ofNat]]
-    rw [hz, map_zero]
+    have h36 : (36 : 𝓞 K ⧸ I) = Ideal.Quotient.mk I (36 : 𝓞 K) :=
+      map_ofNat (Ideal.Quotient.mk I) 36
+    rw [h36]
+    unfold q
+    rw [← map_pow, ← map_sub, ← map_add, hz, map_zero]
   have hq' : (e q) ^ 2 - e q + 36 = 0 := by simpa using congrArg e hq
   have hno : ∀ a : ZMod 5, a ^ 2 - a + 36 ≠ 0 := by decide
   exact hno (e q) hq'
 
 theorem span_four : Ideal.span {(4 : 𝓞 K)} = p2_OK ^ 2 * p2b_OK ^ 2 := by
-  rw [show (4 : 𝓞 K) = (2 : 𝓞 K) * 2 by norm_num, Ideal.span_singleton_mul_span_singleton,
-    two_split.symm, mul_pow]
+  rw [show (4 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) * (2 : ℤ) by norm_num,
+    ← Ideal.span_singleton_mul_span_singleton, two_split.symm, mul_pow]
 
 theorem span_six : Ideal.span {(6 : 𝓞 K)} = p2_OK * p2b_OK * p3_OK * p3b_OK := by
-  rw [show (6 : 𝓞 K) = (2 : 𝓞 K) * 3 by norm_num, Ideal.span_singleton_mul_span_singleton,
-    two_split.symm, three_split.symm]
+  rw [show (6 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) * (3 : ℤ) by norm_num,
+    ← Ideal.span_singleton_mul_span_singleton, two_split.symm, three_split.symm]
   ac_rfl
 
 theorem span_seven : Ideal.span {(7 : 𝓞 K)} = p7_OK * p7b_OK := seven_split.symm
@@ -777,8 +781,9 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
   · -- norm 2
     have hdiv : P ∣ Ideal.span {(2 : 𝓞 K)} := by
       apply Ideal.dvd_span_singleton.mpr
-      have := Ideal.absNorm_mem P
-      simpa [hn] using this
+      have hmem := Ideal.absNorm_mem P
+      rw [← hn] at hmem
+      exact hmem
     rw [two_split.symm] at hdiv
     rcases hPrime.dvd_or_dvd hdiv with h | h
     · exact Or.inl (eq_of_prime_dvd hPrime p2_prime h)
@@ -786,8 +791,9 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
   · -- norm 3
     have hdiv : P ∣ Ideal.span {(3 : 𝓞 K)} := by
       apply Ideal.dvd_span_singleton.mpr
-      have := Ideal.absNorm_mem P
-      simpa [hn] using this
+      have hmem := Ideal.absNorm_mem P
+      rw [← hn] at hmem
+      exact hmem
     rw [three_split.symm] at hdiv
     rcases hPrime.dvd_or_dvd hdiv with h | h
     · exact Or.inr (Or.inr (Or.inl (eq_of_prime_dvd hPrime p3_prime h)))
@@ -795,10 +801,12 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
   · -- norm 4 cannot occur
     have hdiv : P ∣ Ideal.span {(4 : 𝓞 K)} := by
       apply Ideal.dvd_span_singleton.mpr
-      have := Ideal.absNorm_mem P
-      simpa [hn] using this
+      have hmem := Ideal.absNorm_mem P
+      rw [← hn] at hmem
+      exact hmem
     rw [span_four] at hdiv
     have hPQ : P ∣ p2_OK ∨ P ∣ p2b_OK := by
+      rw [pow_two, pow_two] at hdiv
       rcases hPrime.dvd_or_dvd hdiv with h | h
       · rcases hPrime.dvd_or_dvd h with h | h <;> exact Or.inl h
       · rcases hPrime.dvd_or_dvd h with h | h <;> exact Or.inr h
@@ -813,8 +821,9 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
   · -- norm 6 cannot occur
     have hdiv : P ∣ Ideal.span {(6 : 𝓞 K)} := by
       apply Ideal.dvd_span_singleton.mpr
-      have := Ideal.absNorm_mem P
-      simpa [hn] using this
+      have hmem := Ideal.absNorm_mem P
+      rw [← hn] at hmem
+      exact hmem
     rw [span_six] at hdiv
     have hPQ : P = p2_OK ∨ P = p2b_OK ∨ P = p3_OK ∨ P = p3b_OK := by
       rcases hPrime.dvd_or_dvd hdiv with h | h
@@ -832,8 +841,9 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
   · -- norm 7
     have hdiv : P ∣ Ideal.span {(7 : 𝓞 K)} := by
       apply Ideal.dvd_span_singleton.mpr
-      have := Ideal.absNorm_mem P
-      simpa [hn] using this
+      have hmem := Ideal.absNorm_mem P
+      rw [← hn] at hmem
+      exact hmem
     rw [span_seven] at hdiv
     rcases hPrime.dvd_or_dvd hdiv with h | h
     · exact Or.inr (Or.inr (Or.inr (Or.inr (Or.inl (eq_of_prime_dvd hPrime p7_prime h)))))
@@ -889,7 +899,7 @@ theorem class_of_factor_multiset (s : Multiset (Ideal (𝓞 K)))
     calc ClassGroup.mk0 (nzIdeal (P ::ₘ s).prod hs)
         = ClassGroup.mk0 (nzIdeal (P * s.prod) (mul_ne_zero hP0 hs0)) := by
             apply congrArg ClassGroup.mk0
-            exact Subtype.ext (by rw [hprod])
+            exact Subtype.ext hprod
       _ = ClassGroup.mk0 (nzIdeal P hP0) * ClassGroup.mk0 (nzIdeal s.prod hs0) := by
             rw [mk_mul]
       _ = p2_class ^ e * p2_class ^ k := by rw [he hP0, hk hs0]
@@ -907,7 +917,7 @@ theorem BSD_small_norm_class_is_p2_power (I : (Ideal (𝓞 K))⁰)
   obtain ⟨k, hk⟩ := class_of_factor_multiset s hp
   have hs0 : s.prod ≠ 0 := by simpa [hprod] using hI0
   have hclass : ClassGroup.mk0 I = p2_class ^ k := by
-    have hsub : (I : (Ideal (𝓞 K))⁰) = nzIdeal s.prod hs0 := Subtype.ext (by rw [hprod])
+    have hsub : (I : (Ideal (𝓞 K))⁰) = nzIdeal s.prod hs0 := Subtype.ext hprod.symm
     rw [hsub]
     exact hk hs0
   refine ⟨k % 10, Nat.mod_lt _ (by decide), ?_⟩
@@ -975,7 +985,8 @@ theorem two_OK_ne_zero : (2 : 𝓞 K) ≠ 0 := by
   exact_mod_cast (by decide : (2 : ℤ) ≠ 0)
 
 theorem span_two_ne_zero : Ideal.span {(2 : 𝓞 K)} ≠ 0 := by
-  simpa [Ideal.span_singleton_eq_bot] using two_OK_ne_zero
+  rw [Ideal.span_singleton_eq_bot]
+  exact two_OK_ne_zero
 
 /-- The fourteen lattices of index at most 7, written as the unit ideal,
     the six split primes, the principal ideal `(2)`, and the products
@@ -1007,34 +1018,25 @@ theorem BSD_fourteen_lattices_ten_classes :
     exact ⟨(1 : 𝓞 K), by simp [nzIdeal, Ideal.span_singleton_one]⟩
   · simp [p2_class, pow_one, nzIdeal]
   · exact p2_class_pow 2
-  · rw [ClassGroup.mk0_eq_one_iff, Submodule.isPrincipal_iff]
+  · rw [pow_zero, ClassGroup.mk0_eq_one_iff, Submodule.isPrincipal_iff]
     exact ⟨(2 : 𝓞 K), by simp [nzIdeal]⟩
   · have h := class_mul_pow p2b_ne_zero p2b_ne_zero (class_p2b p2b_ne_zero) (class_p2b p2b_ne_zero)
     have hsub : nzIdeal (p2b_OK ^ 2) (pow_ne_zero 2 p2b_ne_zero) =
-        nzIdeal (p2b_OK * p2b_OK) (mul_ne_zero p2b_ne_zero p2b_ne_zero) := by
-      apply Subtype.ext
-      rw [pow_two]
+        nzIdeal (p2b_OK * p2b_OK) (mul_ne_zero p2b_ne_zero p2b_ne_zero) :=
+      Subtype.ext (pow_two p2b_OK)
     rw [hsub, h]
-    congr 1
-    decide
-  · have h := class_mul_pow p2_ne_bot p3_ne_zero (by simp [p2_class, pow_one, nzIdeal])
-      (class_p3 p3_ne_zero)
+  · have hp2 : ClassGroup.mk0 (nzIdeal p2_OK p2_ne_bot) = p2_class ^ 1 := by
+      simp [p2_class, pow_one]
+    have h := class_mul_pow p2_ne_bot p3_ne_zero hp2 (class_p3 p3_ne_zero)
     rw [h]
-    congr 1
-    decide
-  · have h := class_mul_pow p2_ne_bot p3b_ne_zero (by simp [p2_class, pow_one, nzIdeal])
-      (class_p3b p3b_ne_zero)
+  · have hp2 : ClassGroup.mk0 (nzIdeal p2_OK p2_ne_bot) = p2_class ^ 1 := by
+      simp [p2_class, pow_one]
+    have h := class_mul_pow p2_ne_bot p3b_ne_zero hp2 (class_p3b p3b_ne_zero)
     rw [h]
-    congr 1
-    decide
   · have h := class_mul_pow p2b_ne_zero p3_ne_zero (class_p2b _) (class_p3 _)
     rw [h]
-    congr 1
-    decide
   · have h := class_mul_pow p2b_ne_zero p3b_ne_zero (class_p2b _) (class_p3b _)
     rw [h]
-    congr 1
-    decide
 
 /-- Order 10, the norm-7 classes inside that cyclic subgroup, and
     `classNumber K = 10`. The 26 assessed definitions stay untouched,
