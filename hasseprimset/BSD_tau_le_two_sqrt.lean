@@ -1,3 +1,6 @@
+import hasseprimset.BSD_Finsupp_prod_le_close
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
 /-!
 # BSD genesis-781: tau_le_two_sqrt and BSD_TauBound partial closure
 
@@ -53,8 +56,6 @@ Clay gate count: 2 (unchanged). BSD: OPEN. No Clay claim.
 0 sorry. Classical trio + Gate 1 hypothesis where noted.
 -/
 
-import hasseprimset.BSD_BSD_Finsupp_prod_le_close
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 open BigOperators Real Nat ArithmeticFunction
 
