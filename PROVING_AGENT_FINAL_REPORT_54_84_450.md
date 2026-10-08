@@ -2,7 +2,7 @@
 
 Repository-only audit of `DavidFox998/birch-swinnerton-dyer-143a1` on `bsd-clean-214-propositions-assessed`. This report does not prove a conjecture. It records what compiled.
 
-Tip of this report: `a88e62d` (continued from `e77c29c`; the sections at `70b40e1` and `6d21d82` are the earlier record).
+Tip of this report: `2ec969d` (class-number collapse). The section at `24282f3` is the clean-name rewrite. The sections at `a88e62d`, `70b40e1`, and `6d21d82` are the earlier record.
 Lean audit: `52eb949` (`Towers/BSD/BSD_450_Gates_Documentation.lean`).
 Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `FINAL_BSD_HANDOFF_54_84.md` is not in the repository. The gate list is Authoring Phase 2 in `PROVING_AGENT_HANDOFF.md`.
@@ -32,6 +32,8 @@ Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `lake build Towers.BSD.BSD_WilesTaylor_Period_Clean` — EXIT:0 (`/tmp/bsd-wtp.log`).
 `lake build Towers.BSD.BSD_TorsionOrder_Clean` — EXIT:0 (`/tmp/bsd-tors.log`).
 `lake build BSD_Clean_Aggregation` — EXIT:0 again after C, E, G, and F (`/tmp/bsd-keep-proving-ceg.log`).
+`lake build Towers.BSD.BSD_ClassNumber_Collapse_Clean` — EXIT:0 (`/tmp/bsd-b-collapse-target.log`).
+`lake build BSD_Clean_Aggregation` — EXIT:0 again after the class-number collapse (`/tmp/bsd-b-collapse.log`).
 
 No `sorry`. The aggregation log has two warnings, both the old unused `r` variables in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321.
 
@@ -110,7 +112,7 @@ All 450 remain NEEDS_AUTHORING. No sentinel was closed. `trivial` on `True`, `rf
 | Group | Props | Gate |
 |------:|------:|------|
 | A | 328 | Partial: `BSD_Hasse_for_checked_is_degree_form` is `|a_p| ≤ 2√p` iff `a_p² ≤ 4p` and the degree form, on the 84 checked primes. The forall stays NEEDS_AUTHORING. Mathlib v4.12.0 has no Hasse theorem. 11 assessed defs are the degree and Hasse names at primes ≥ 9721, including both at 9973. The 328 assessed defs were not rewritten. |
-| B | 26 | The lower bound `10 ≤ classNumber K` is now `BSD_classNumber_lower_bound` in the clean build. The upper bound still needs `BinaryQuadraticForm.classGroupEquiv`, which has zero declarations in Mathlib v4.12.0. The 26 assessed defs were not rewritten. |
+| B | 26 | New theorem `BSD_classNumber_eq_ten_collapse` is `NumberField.classNumber K = 10`. `classGroupEquiv` was not defined. The 26 assessed defs were not rewritten and stay NEEDS_AUTHORING. |
 | C | 12 | Partial: `BSD_linear_anchor_derivative` cites Batch 4. `BSD_L143a1_DerivAtOne = 0`, so `≠ 0` is `0 ≠ 0`. The registry `L_143a1` is the Prop `True`. The Hasse–Weil derivative stays NEEDS_AUTHORING. The 12 assessed defs were not rewritten. |
 | D | 9 | `BSD_tau_bound_of_divisors` is `τ(n) ≤ D n^ε` with no Genesis781 import. `|a_n| ≤ D n^{1/2+ε}` holds for squarefree `n` on the 84 checked primes. The series over that finite set is summable. Prime powers `k ≥ 2` and `BSD_LSeriesSummable_OPEN` stay open. The 9 assessed defs were not rewritten. |
 | E | 11 | Partial: `BSD_Euler_truncated_converges_checked` cites the finite-support series for `σ > 3/2`. The Euler product and the functional equation stay NEEDS_AUTHORING. There is no analytic-continuation file. The 11 assessed defs were not rewritten. |
@@ -241,6 +243,20 @@ The compiled mathematics is restated in new files. The assessed definitions were
 
 `lake build Towers.BSD.BSD_ClassNumber_Clean` and `lake build Towers.BSD.BSD_Torsion_Rank_Unconditional_Clean` (`/tmp/bsd-rewrite-targets.log`) exit 0. `lake build BSD_Clean_Aggregation` (`/tmp/bsd-rewrite-new-structure.log`) exits 0. Two warnings, both the old unused `r` in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321. No `sorry`.
 
+## Class-number collapse 14 → 10 at `2ec969d`
+
+`Towers/BSD/BSD_ClassNumber_Collapse_Clean.lean` discharges the surjection that `BSD_classNumber_eq_ten` left as a hypothesis. `BSD_classNumber_eq_ten_collapse` is `NumberField.classNumber K = 10`. `BSD_Clean_Aggregation` imports this file. The 26 assessed Group B definitions were not rewritten. The tally stays 54 of 504. The 450 stay NEEDS_AUTHORING. `84 ≠ 54`.
+
+`orderOf p2_class = 10`. The element `-28 + 3ω` has norm `1024` and generates `p2_OK ^ 10`, and `master_not_principal_1_to_9` keeps the powers `1` through `9` non-principal. The rational primes `2`, `3`, and `7` split as conjugate prime ideals `p2_OK`, `p2b_OK`, `p3_OK`, `p3b_OK`, `p7_OK`, and `p7b_OK`. There is no ideal of absolute norm `5`, because `ω` would be a root of `x² − x + 36` in `ZMod 5`. Every normalized prime factor of an ideal of absolute norm at most `7` is one of those six primes, and each of those six classes is a power of `[p2_OK]`. Exponents reduce modulo `10`.
+
+`BSD_every_class_has_norm_le_seven` supplies a representative of absolute norm at most `7` in every class. `BSD_small_norm_class_is_p2_power` puts that representative in the cyclic subgroup, so `BSD_class_pow_surjective` is a surjection `Fin 10 → ClassGroup (𝓞 K)`. With `10 ≤ classNumber K`, `le_antisymm` gives equality. `BinaryQuadraticForm.classGroupEquiv` was not defined. The argument does not go through binary quadratic forms.
+
+`BSD_fourteen_lattices_ten_classes` names fourteen ideals and shows their classes are the ten powers of `[p2_OK]`: the unit ideal and `(2)` are `g^0`, `p2_OK` is `g`, `p2_OK ^ 2` is `g^2`, `p2b_OK * p3_OK` and `p7_OK` are `g^3`, `p3_OK` is `g^4`, `p2_OK * p3_OK` and `p2b_OK * p3b_OK` are `g^5`, `p3b_OK` is `g^6`, `p2_OK * p3b_OK` and `p7b_OK` are `g^7`, `p2b_OK ^ 2` is `g^8`, and `p2b_OK` is `g^9`. The external statement that `ℤ[ω]` contains exactly 14 ideals of index at most `7` is still not a Lean theorem.
+
+`BSD_classNumber_collapse_record` packages `orderOf p2_class = 10`, `classNumber K = 10`, the norm-at-most-`7` classes, and `(84 : ℕ) ≠ 54`.
+
+`lake build Towers.BSD.BSD_ClassNumber_Collapse_Clean` (`/tmp/bsd-b-collapse-target.log`) exits 0. `lake build BSD_Clean_Aggregation` (`/tmp/bsd-b-collapse.log`) exits 0. Two warnings, both the old unused `r` in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321. No `sorry`.
+
 ## Standing limit
 
-There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, the partial theorems for groups A through G, the norm bound of 7, the degree-form implication, the checked-support coefficient bound, the local factor `2/3`, the half-plane asymmetry, the primality of `p2_OK`, `2 • (2, 0) ≠ 0`, the discriminant `-1859`, the conditional embedding `BSD_rank_ge_one`, the identifications `Nat.card (Point (E143Fp 3)) = 5` and `Nat.card (Point (E143Fp 5)) = 7`, the non-identity reduction of `(2, 0)`, the secant identities for integral points, and the failure of injectivity of `Int.castRingHom (ZMod p)` are citations of proofs that compile. The 450 assessed defs are outside that list. `classNumber K = 10`, the Hasse forall, `BSD_LSeriesSummable_OPEN`, the Hasse–Weil derivative, modularity, analytic continuation, the functional equation, unconditional infinite order, rank exactly 1, Gross–Zagier, Kolyvagin, Wiles–Taylor, the period, and the ideal equalities for 3 and 7 stay NEEDS_AUTHORING.
+There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, the partial theorems for groups A through G, the norm bound of 7, the degree-form implication, the checked-support coefficient bound, the local factor `2/3`, the half-plane asymmetry, the primality of `p2_OK`, `2 • (2, 0) ≠ 0`, the discriminant `-1859`, the conditional embedding `BSD_rank_ge_one`, the identifications `Nat.card (Point (E143Fp 3)) = 5` and `Nat.card (Point (E143Fp 5)) = 7`, the non-identity reduction of `(2, 0)`, the secant identities for integral points, and the failure of injectivity of `Int.castRingHom (ZMod p)` are citations of proofs that compile. The 450 assessed defs are outside that list. `NumberField.classNumber K = 10` is the extra theorem `BSD_classNumber_eq_ten_collapse` and does not rewrite the 26 assessed Group B definitions. The Hasse forall, `BSD_LSeriesSummable_OPEN`, the Hasse–Weil derivative, modularity, analytic continuation, the functional equation, unconditional infinite order, rank exactly 1, Gross–Zagier, Kolyvagin, Wiles–Taylor, the period, and the ideal equalities for 3 and 7 stay NEEDS_AUTHORING.
