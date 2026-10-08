@@ -32,7 +32,7 @@ theorem BSD_intCast_not_injective (p : ℕ) [Fact p.Prime] :
     ¬ Function.Injective (Int.castRingHom (ZMod p)) := by
   intro hinj
   have h0 : (Int.castRingHom (ZMod p)) (p : ℤ) = (Int.castRingHom (ZMod p)) 0 := by
-    simp only [Int.coe_castRingHom]
+    simp only [Int.coe_castRingHom, Int.cast_zero, Int.cast_natCast]
     exact (ZMod.natCast_zmod_eq_zero_iff_dvd p p).mpr (dvd_refl p)
   have hp0 : (p : ℤ) = 0 := hinj h0
   have : p = 0 := by exact_mod_cast hp0
@@ -46,7 +46,7 @@ theorem BSD_rat_div_reduces (p : ℕ) [Fact p.Prime] (a b : ℤ)
   have hb0 : b ≠ 0 := by
     rintro rfl
     exact hb (by simp)
-  have hq : (a : ℚ) / (b : ℚ) = a /. b := (Rat.divInt_eq_div a b).symm
+  have hq : (a : ℚ) / (b : ℚ) = Rat.divInt a b := (Rat.divInt_eq_div a b).symm
   obtain ⟨c, ha, hd⟩ := Rat.num_den_mk hb0 hq
   have hden : (((a : ℚ) / (b : ℚ)).den : ZMod p) ≠ 0 := by
     intro h0
@@ -59,13 +59,17 @@ theorem BSD_rat_div_reduces (p : ℕ) [Fact p.Prime] (a b : ℤ)
       = a * (((a : ℚ) / (b : ℚ)).den : ℤ) := by
     rw [ha, hd]
     ring
-  rw [div_eq_div_iff hden hb]
+  rw [← div_eq_mul_inv, ← div_eq_mul_inv, div_eq_div_iff hden hb]
   exact_mod_cast hcross
 
 theorem BSD_negY_reduces (p : ℕ) [Fact p.Prime] (x y : ℤ) :
     negY (E143Fp p) (x : ZMod p) (y : ZMod p) = (negY E143Z x y : ZMod p) := by
-  simpa [E143Fp, Int.coe_castRingHom] using
-    map_negY E143Z (Int.castRingHom (ZMod p)) x y
+  have hZ : negY E143Z x y = -y - 1 := by
+    simp [negY, E143Z]
+  rw [hZ]
+  simp only [negY, E143Fp, E143Z, map_a₁, map_a₃, map_zero, map_one,
+    Int.cast_neg, Int.cast_sub, Int.cast_one]
+  ring
 
 /-- Secant slope. The hypothesis is that the `x`-coordinates stay distinct
     modulo `p`, so the case split does not change under reduction. -/
