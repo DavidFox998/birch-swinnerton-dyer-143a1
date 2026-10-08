@@ -87,6 +87,7 @@ import Towers.BSD.BSD_LFunction_HasseWeil_Clean
 import Towers.BSD.BSD_AnalyticContinuation_Clean
 import Towers.BSD.BSD_WilesTaylor_Period_Clean
 import Towers.BSD.BSD_TorsionOrder_Clean
+import Towers.BSD.BSD_RankAtLeastOne_Clean
 
 /-- Clean build marker: true iff this aggregation compiles. -/
 def cleanBuilds : Bool := true
