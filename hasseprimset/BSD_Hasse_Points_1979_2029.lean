@@ -1,3 +1,8 @@
+import Mathlib.Tactic
+import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+import Towers.BSD.BSD_Frobenius_Fact_Instances
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis796_CLOSED  (genesis-796)
@@ -22,8 +27,17 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_TauBound_small_proved
-import Mathlib.Tactic
+
+private instance instFactPrime1979 : Fact (1979 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1987 : Fact (1987 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1993 : Fact (1993 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1997 : Fact (1997 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1999 : Fact (1999 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime2003 : Fact (2003 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime2011 : Fact (2011 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime2017 : Fact (2017 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime2027 : Fact (2027 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime2029 : Fact (2029 : ℕ).Prime := ⟨by norm_num⟩
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -49,16 +63,16 @@ private instance i796_p2029 : Fact (2029 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p1979 : (E143_Finset 1979).card = 1944 := by native_decide
-theorem BSD_E143_card_p1987 : (E143_Finset 1987).card = 1986 := by native_decide
-theorem BSD_E143_card_p1993 : (E143_Finset 1993).card = 2054 := by native_decide
-theorem BSD_E143_card_p1997 : (E143_Finset 1997).card = 1962 := by native_decide
-theorem BSD_E143_card_p1999 : (E143_Finset 1999).card = 2022 := by native_decide
-theorem BSD_E143_card_p2003 : (E143_Finset 2003).card = 2000 := by native_decide
-theorem BSD_E143_card_p2011 : (E143_Finset 2011).card = 2017 := by native_decide
-theorem BSD_E143_card_p2017 : (E143_Finset 2017).card = 2033 := by native_decide
-theorem BSD_E143_card_p2027 : (E143_Finset 2027).card = 1961 := by native_decide
-theorem BSD_E143_card_p2029 : (E143_Finset 2029).card = 2085 := by native_decide
+theorem BSD_E143_card_p1979 : (E143_Finset 1979).card = 1943 := by native_decide
+theorem BSD_E143_card_p1987 : (E143_Finset 1987).card = 1985 := by native_decide
+theorem BSD_E143_card_p1993 : (E143_Finset 1993).card = 2053 := by native_decide
+theorem BSD_E143_card_p1997 : (E143_Finset 1997).card = 1961 := by native_decide
+theorem BSD_E143_card_p1999 : (E143_Finset 1999).card = 2021 := by native_decide
+theorem BSD_E143_card_p2003 : (E143_Finset 2003).card = 1999 := by native_decide
+theorem BSD_E143_card_p2011 : (E143_Finset 2011).card = 2016 := by native_decide
+theorem BSD_E143_card_p2017 : (E143_Finset 2017).card = 2032 := by native_decide
+theorem BSD_E143_card_p2027 : (E143_Finset 2027).card = 1960 := by native_decide
+theorem BSD_E143_card_p2029 : (E143_Finset 2029).card = 2084 := by native_decide
 
 /-! ## §3. Exact a_p values -/
 
