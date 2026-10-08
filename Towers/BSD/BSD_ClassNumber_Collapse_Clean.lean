@@ -34,6 +34,7 @@ set_option maxHeartbeats 2000000
 namespace Towers.BSD
 
 open NumberField UniqueFactorizationMonoid
+open scoped nonZeroDivisors
 
 /-! ### Coordinates on ℤ[ω] -/
 
@@ -43,8 +44,8 @@ theorem zLin_coe (x y : ℤ) : (zLin x y : K) = (x : K) + (y : K) * ω := by
   simp [zLin, map_add, map_mul, map_intCast, nω_OK_coe]
 
 theorem nω_sq : nω_OK ^ 2 = nω_OK - 36 := by
-  apply Subtype.val_injective
-  simp only [map_sub, map_pow, map_ofNat, nω_OK_coe]
+  apply RingOfIntegers.ext
+  simp only [map_pow, map_sub, map_ofNat, nω_OK_coe]
   linear_combination ω_sq_eq_BSD
 
 theorem zLin_int (a : ℤ) : zLin a 0 = (a : 𝓞 K) := by
@@ -56,15 +57,15 @@ theorem zLin_zero_one : zLin 0 1 = nω_OK := by
 theorem zLin_mul (x1 y1 x2 y2 : ℤ) :
     zLin x1 y1 * zLin x2 y2 =
       zLin (x1 * x2 - 36 * y1 * y2) (x1 * y2 + y1 * x2 + y1 * y2) := by
-  apply Subtype.val_injective
-  simp only [zLin_coe]
+  apply RingOfIntegers.ext
+  simp only [map_mul, zLin_coe]
   have hω : ω ^ 2 = ω - 36 := by linear_combination ω_sq_eq_BSD
   push_cast
   linear_combination (y1 * y2 : K) * hω
 
 theorem zLin_mul_nat (n x y : ℤ) : (n : 𝓞 K) * zLin x y = zLin (n * x) (n * y) := by
-  apply Subtype.val_injective
-  simp only [zLin_coe, map_mul, map_intCast]
+  apply RingOfIntegers.ext
+  simp only [map_mul, map_intCast, zLin_coe]
   push_cast
   ring
 
@@ -73,8 +74,8 @@ theorem zLin_zsmul (c x y : ℤ) : c • zLin x y = zLin (c * x) (c * y) := by
 
 theorem zLin_add (x1 y1 x2 y2 : ℤ) :
     zLin x1 y1 + zLin x2 y2 = zLin (x1 + x2) (y1 + y2) := by
-  apply Subtype.val_injective
-  simp only [zLin_coe, map_add, map_intCast]
+  apply RingOfIntegers.ext
+  simp only [map_add, zLin_coe]
   push_cast
   ring
 
@@ -85,13 +86,13 @@ theorem zLin_combo4 (c0 c1 c2 c3 x0 y0 x1 y1 x2 y2 x3 y3 : ℤ) :
   rw [zLin_zsmul, zLin_zsmul, zLin_zsmul, zLin_zsmul, zLin_add, zLin_add, zLin_add]
 
 theorem basis_zero_eq_one : BSD_intBasis 0 = (1 : 𝓞 K) := by
-  apply Subtype.val_injective
+  apply RingOfIntegers.ext
   simp [BSD_intBasis_zero_coe]
 
 theorem zLin_eq_basis (x y : ℤ) :
     zLin x y = x • BSD_intBasis 0 + y • BSD_intBasis 1 := by
-  rw [basis_zero_eq_one, nω_eq_b1.symm]
-  simp [zLin, zsmul_eq_mul]
+  rw [basis_zero_eq_one, nω_eq_b1.symm, zLin]
+  simp [zsmul_eq_mul]
 
 theorem zLin_repr (x y : ℤ) :
     BSD_intBasis.repr (zLin x y) = Finsupp.single 0 x + Finsupp.single 1 y := by
@@ -110,10 +111,8 @@ theorem zLin_repr1 (x y : ℤ) : BSD_intBasis.repr (zLin x y) 1 = y := by
 
 theorem zLin_of_repr (r : 𝓞 K) :
     r = zLin (BSD_intBasis.repr r 0) (BSD_intBasis.repr r 1) := by
-  have h := BSD_intBasis.sum_repr r
-  simp only [Fin.sum_univ_two] at h
-  rw [← h, basis_zero_eq_one, nω_eq_b1.symm]
-  simp [zLin, zsmul_eq_mul]
+  apply RingOfIntegers.ext
+  rw [intBasis_repr_K, zLin_coe]
 
 theorem norm_zLin (x y : ℤ) :
     Algebra.norm ℤ (zLin x y) = x ^ 2 + x * y + 36 * y ^ 2 := by
@@ -130,14 +129,16 @@ theorem zLin_mem_span_nat {n x y : ℤ} (h : zLin x y ∈ Ideal.span {(n : 𝓞 
     n ∣ x ∧ n ∣ y := by
   rw [Ideal.mem_span_singleton'] at h
   obtain ⟨r, hr⟩ := h
-  rw [zLin_of_repr r, zLin_mul_nat] at hr
+  rw [zLin_of_repr r, mul_comm, zLin_mul_nat] at hr
   constructor
-  · exact ⟨BSD_intBasis.repr r 0, by
-      have h0 := congrArg (fun z => BSD_intBasis.repr z 0) hr
-      simpa [zLin_repr0] using h0⟩
-  · exact ⟨BSD_intBasis.repr r 1, by
-      have h1 := congrArg (fun z => BSD_intBasis.repr z 1) hr
-      simpa [zLin_repr1] using h1⟩
+  · refine ⟨BSD_intBasis.repr r 0, ?_⟩
+    have h0 := congrArg (fun z => BSD_intBasis.repr z 0) hr
+    have hx : n * BSD_intBasis.repr r 0 = x := by simpa [zLin_repr0] using h0
+    exact hx.symm
+  · refine ⟨BSD_intBasis.repr r 1, ?_⟩
+    have h1 := congrArg (fun z => BSD_intBasis.repr z 1) hr
+    have hy : n * BSD_intBasis.repr r 1 = y := by simpa [zLin_repr1] using h1
+    exact hy.symm
 
 /-! ### Ideals with Hermite basis `(a, b + ω)` -/
 
@@ -151,12 +152,12 @@ theorem zLin_mem_pairSpan {a b x y : ℤ} (h : a ∣ x - b * y) : zLin x y ∈ p
   obtain ⟨q, hq⟩ := h
   rw [pairSpan, Ideal.mem_span_pair]
   refine ⟨(q : 𝓞 K), (y : 𝓞 K), ?_⟩
-  apply Subtype.val_injective
-  simp only [zLin_coe, map_add, map_mul, map_intCast]
-  have hx : x = a * q + b * y := by linear_combination hq
-  calc (x : K) + (y : K) * ω
-      = ((a * q + b * y : ℤ) : K) + (y : K) * ω := by rw [hx]
-    _ = (q : K) * (a : K) + (y : K) * ((b : K) + ω) := by push_cast; ring
+  apply RingOfIntegers.ext
+  simp only [map_add, map_mul, map_intCast, zLin_coe]
+  have hx : (x : ℤ) = a * q + b * y := by linear_combination hq
+  calc (q : K) * (a : K) + (y : K) * ((b : K) + (1 : K) * ω)
+      = (q : K) * (a : K) + (y : K) * ((b : K) + ω) := by ring
+    _ = (x : K) + (y : K) * ω := by rw [hx]; push_cast; ring
 
 theorem combo4_mem (c0 c1 c2 c3 : ℤ) (g0 g1 g2 g3 : 𝓞 K) :
     c0 • g0 + c1 • g1 + c2 • g2 + c3 • g3 ∈
@@ -170,7 +171,7 @@ theorem combo4_mem (c0 c1 c2 c3 : ℤ) (g0 g1 g2 g3 : 𝓞 K) :
       (Set.mem_insert_of_mem _ (Set.mem_insert_of_mem _ (Set.mem_insert _ _)))
   have h3 : g3 ∈ Ideal.span ({g0, g1, g2, g3} : Set (𝓞 K)) :=
     Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_insert_of_mem _
-      (Set.mem_insert_of_mem _ (Set.mem_singleton_self _))))
+      (Set.mem_insert_of_mem _ (Set.mem_singleton _))))
   refine Ideal.add_mem _ (Ideal.add_mem _ (Ideal.add_mem _ ?_ ?_) ?_) ?_
   · rw [zsmul_eq_mul]; exact Ideal.mul_mem_left _ _ h0
   · rw [zsmul_eq_mul]; exact Ideal.mul_mem_left _ _ h1
@@ -182,8 +183,7 @@ theorem pair_prod_span (a b c d : ℤ) :
       Ideal.span
         {zLin (a * c) 0, zLin (a * d) a, zLin (b * c) c,
           zLin (b * d - 36) (b + d + 1)} := by
-  simp only [pairSpan, zLin_int]
-  rw [Ideal.span_pair_mul_span_pair]
+  rw [pairSpan, pairSpan, Ideal.span_pair_mul_span_pair]
   have e0 : (a : 𝓞 K) * (c : 𝓞 K) = zLin (a * c) 0 := by
     rw [← zLin_int, ← zLin_int, zLin_mul]
     simp
@@ -239,8 +239,8 @@ theorem pairSpan_mul_eq (a b c d a' b' u0 u1 u2 u3 v0 v1 v2 v3 : ℤ)
     · exact zLin_combo_mem_prod hvX hvY
 
 theorem zLin_eq_nat_mul {n x y q r : ℤ} (hx : x = n * q) (hy : y = n * r) :
-    zLin x y = (n : 𝓞 K) * zLin q r := by
-  rw [zLin_mul_nat, hx, hy]
+    zLin x y = zLin q r * (n : 𝓞 K) := by
+  rw [mul_comm, zLin_mul_nat, hx, hy]
 
 theorem pairSpan_mul_eq_span_nat (a b c d n u0 u1 u2 u3 : ℤ)
     (huX : u0 * (a * c) + u1 * (a * d) + u2 * (b * c) + u3 * (b * d - 36) = n)
@@ -275,14 +275,14 @@ theorem eq_span_of_mem {I : Ideal (𝓞 K)} {α : 𝓞 K} (hmem : α ∈ I)
     exact hmem
   obtain ⟨Kideal, hK⟩ := Ideal.dvd_iff_le.mpr hle
   have hmul : Ideal.absNorm I * Ideal.absNorm Kideal = Ideal.absNorm I := by
-    rw [← map_mul Ideal.absNorm, hK, hN]
+    rw [← map_mul Ideal.absNorm, ← hK, hN]
   have hK1 : Ideal.absNorm Kideal = 1 := by
     have hpos : 0 < Ideal.absNorm I := Nat.pos_of_ne_zero hI
     have : Ideal.absNorm I * Ideal.absNorm Kideal = Ideal.absNorm I * 1 := by
       rw [mul_one, hmul]
     exact Nat.eq_of_mul_eq_mul_left hpos this
   rw [Ideal.absNorm_eq_one_iff.mp hK1, Ideal.mul_top] at hK
-  exact hK
+  exact hK.symm
 
 theorem mul_eq_span_of_combo (a b c d x y u0 u1 u2 u3 : ℤ)
     (huX : u0 * (a * c) + u1 * (a * d) + u2 * (b * c) + u3 * (b * d - 36) = x)
@@ -303,58 +303,67 @@ theorem mul_eq_span_of_combo (a b c d x y u0 u1 u2 u3 : ℤ)
 /-! ### Powers of `p2_OK` -/
 
 theorem p2_pow_hnf_2 : p2_OK ^ 2 = pairSpan 4 0 := by
-  rw [pow_two, pairSpan_p2.symm, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 2 0 2 0 4 0 1 (-12) 12 0 (-9) (-11) 12 (-1)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 2 0 * pairSpan 2 0 = pairSpan 4 0 :=
+    pairSpan_mul_eq 2 0 2 0 4 0 1 (-12) 12 0 (-9) (-11) 12 (-1)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [pow_two, pairSpan_p2] using hmul
 
 theorem p2_pow_hnf_3 : p2_OK ^ 3 = pairSpan 8 4 := by
-  rw [pow_succ, p2_pow_hnf_2, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 4 0 2 0 8 4 (-8) (-5) 11 (-2) (-4) (-5) 11 (-1)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 4 0 * pairSpan 2 0 = pairSpan 8 4 :=
+    pairSpan_mul_eq 4 0 2 0 8 4 (-8) (-5) 11 (-2) (-4) (-5) 11 (-1)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [← p2_pow_hnf_2, pairSpan_p2, ← pow_succ] using hmul
 
 theorem p2_pow_hnf_4 : p2_OK ^ 4 = pairSpan 16 12 := by
-  rw [pow_succ, p2_pow_hnf_3, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 8 4 2 0 16 12 (-12) 4 (-1) (-6) (-12) (-1) 12 (-3)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 8 4 * pairSpan 2 0 = pairSpan 16 12 :=
+    pairSpan_mul_eq 8 4 2 0 16 12 (-12) 4 (-1) (-6) (-12) (-1) 12 (-3)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [← p2_pow_hnf_3, pairSpan_p2, ← pow_succ] using hmul
 
 theorem p2_pow_hnf_5 : p2_OK ^ 5 = pairSpan 32 12 := by
-  rw [pow_succ, p2_pow_hnf_4, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 16 12 2 0 32 12 (-11) 2 10 (-4) (-12) 1 12 (-3)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 16 12 * pairSpan 2 0 = pairSpan 32 12 :=
+    pairSpan_mul_eq 16 12 2 0 32 12 (-11) 2 10 (-4) (-12) 1 12 (-3)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [← p2_pow_hnf_4, pairSpan_p2, ← pow_succ] using hmul
 
 theorem p2_pow_hnf_6 : p2_OK ^ 6 = pairSpan 64 12 := by
-  rw [pow_succ, p2_pow_hnf_5, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 32 12 2 0 64 12 (-5) 1 10 (-4) (-9) 3 11 (-9)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 32 12 * pairSpan 2 0 = pairSpan 64 12 :=
+    pairSpan_mul_eq 32 12 2 0 64 12 (-5) 1 10 (-4) (-9) 3 11 (-9)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [← p2_pow_hnf_5, pairSpan_p2, ← pow_succ] using hmul
 
 theorem p2_pow_hnf_7 : p2_OK ^ 7 = pairSpan 128 76 := by
-  rw [pow_succ, p2_pow_hnf_6, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 64 12 2 0 128 76 (-2) 1 7 (-6) (-4) 2 8 (-11)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 64 12 * pairSpan 2 0 = pairSpan 128 76 :=
+    pairSpan_mul_eq 64 12 2 0 128 76 (-2) 1 7 (-6) (-4) 2 8 (-11)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [← p2_pow_hnf_6, pairSpan_p2, ← pow_succ] using hmul
 
 theorem p2_pow_hnf_8 : p2_OK ^ 8 = pairSpan 256 76 := by
-  rw [pow_succ, p2_pow_hnf_7, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 128 76 2 0 256 76 (-5) (-5) 12 8 (-1) 3 1 (-5)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 128 76 * pairSpan 2 0 = pairSpan 256 76 :=
+    pairSpan_mul_eq 128 76 2 0 256 76 (-5) (-5) 12 8 (-1) 3 1 (-5)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [← p2_pow_hnf_7, pairSpan_p2, ← pow_succ] using hmul
 
 theorem p2_pow_hnf_9 : p2_OK ^ 9 = pairSpan 512 332 := by
-  rw [pow_succ, p2_pow_hnf_8, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 256 76 2 0 512 332 0 3 1 (-10) 4 1 (-12) (-3)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 256 76 * pairSpan 2 0 = pairSpan 512 332 :=
+    pairSpan_mul_eq 256 76 2 0 512 332 0 3 1 (-10) 4 1 (-12) (-3)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [← p2_pow_hnf_8, pairSpan_p2, ← pow_succ] using hmul
 
 theorem p2_pow_hnf_10 : p2_OK ^ 10 = pairSpan 1024 332 := by
-  rw [pow_succ, p2_pow_hnf_9, pairSpan_p2.symm]
-  exact pairSpan_mul_eq 512 332 2 0 1024 332 1 0 0 0 8 2 (-12) (-3)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 512 332 * pairSpan 2 0 = pairSpan 1024 332 :=
+    pairSpan_mul_eq 512 332 2 0 1024 332 1 0 0 0 8 2 (-12) (-3)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [← p2_pow_hnf_9, pairSpan_p2, ← pow_succ] using hmul
 
 theorem gen10_mem : zLin (-28) 3 ∈ p2_OK ^ 10 := by
   rw [p2_pow_hnf_10]
@@ -420,7 +429,8 @@ theorem mk_mul {I J : Ideal (𝓞 K)} (hI : I ≠ 0) (hJ : J ≠ 0) :
     ClassGroup.mk0 (nzIdeal I hI) * ClassGroup.mk0 (nzIdeal J hJ) =
       ClassGroup.mk0 (nzIdeal (I * J) (mul_ne_zero hI hJ)) := by
   have hsub : nzIdeal I hI * nzIdeal J hJ = nzIdeal (I * J) (mul_ne_zero hI hJ) := by
-    exact Subtype.ext rfl
+    apply Subtype.ext
+    simp [nzIdeal, Submonoid.coe_mul]
   rw [← map_mul (ClassGroup.mk0 (R := 𝓞 K)), hsub]
 
 /-! ### The split primes above 2, 3 and 7 -/
@@ -432,10 +442,11 @@ noncomputable def p7_OK : Ideal (𝓞 K) := pairSpan 7 2
 noncomputable def p7b_OK : Ideal (𝓞 K) := pairSpan 7 4
 
 theorem two_split : p2_OK * p2b_OK = Ideal.span {(2 : 𝓞 K)} := by
-  rw [pairSpan_p2.symm]
-  exact pairSpan_mul_eq_span_nat 2 0 2 1 2 (-15) (-5) 7 (-2)
-    (by decide) (by decide) (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul :=
+    pairSpan_mul_eq_span_nat 2 0 2 1 2 (-15) (-5) 7 (-2)
+      (by decide) (by decide) (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [pairSpan_p2, p2b_OK] using hmul
 
 theorem three_split : p3_OK * p3b_OK = Ideal.span {(3 : 𝓞 K)} := by
   exact pairSpan_mul_eq_span_nat 3 0 3 2 3 (-15) (-7) 12 (-5)
@@ -463,7 +474,7 @@ theorem p3_ne_top : p3_OK ≠ ⊤ := by
   rw [h, Ideal.top_mul] at hsplit
   have hgen : zLin 2 1 ∈ Ideal.span {(3 : 𝓞 K)} := by
     rw [← hsplit]
-    exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton_self _))
+    exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton _))
   have hd := (zLin_mem_span_nat hgen).2
   norm_num at hd
 
@@ -473,7 +484,7 @@ theorem p3b_ne_top : p3b_OK ≠ ⊤ := by
   rw [h, Ideal.mul_top] at hsplit
   have hgen : zLin 0 1 ∈ Ideal.span {(3 : 𝓞 K)} := by
     rw [← hsplit, zLin_zero_one]
-    exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton_self _))
+    exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton _))
   have hd := (zLin_mem_span_nat hgen).2
   norm_num at hd
 
@@ -483,7 +494,7 @@ theorem p7_ne_top : p7_OK ≠ ⊤ := by
   rw [h, Ideal.top_mul] at hsplit
   have hgen : zLin 4 1 ∈ Ideal.span {(7 : 𝓞 K)} := by
     rw [← hsplit]
-    exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton_self _))
+    exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton _))
   have hd := (zLin_mem_span_nat hgen).2
   norm_num at hd
 
@@ -493,7 +504,7 @@ theorem p7b_ne_top : p7b_OK ≠ ⊤ := by
   rw [h, Ideal.mul_top] at hsplit
   have hgen : zLin 2 1 ∈ Ideal.span {(7 : 𝓞 K)} := by
     rw [← hsplit]
-    exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton_self _))
+    exact Ideal.subset_span (Set.mem_insert_of_mem _ (Set.mem_singleton _))
   have hd := (zLin_mem_span_nat hgen).2
   norm_num at hd
 
@@ -919,21 +930,25 @@ theorem BSD_classNumber_eq_ten_collapse : NumberField.classNumber K = 10 :=
 /-! ### The fourteen Hermite lattices -/
 
 theorem lattice_p2b_sq : p2b_OK ^ 2 = pairSpan 4 3 := by
-  exact pairSpan_mul_eq 2 1 2 1 4 3 1 (-12) 12 0 (-9) (-10) 12 (-1)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul : pairSpan 2 1 * pairSpan 2 1 = pairSpan 4 3 :=
+    pairSpan_mul_eq 2 1 2 1 4 3 1 (-12) 12 0 (-9) (-10) 12 (-1)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [pow_two, p2b_OK] using hmul
 
 theorem lattice_p2_p3 : p2_OK * p3_OK = pairSpan 6 0 := by
-  rw [pairSpan_p2.symm]
-  exact pairSpan_mul_eq 2 0 3 0 6 0 (-11) (-11) 8 (-2) (-12) (-12) 9 (-2)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul :=
+    pairSpan_mul_eq 2 0 3 0 6 0 (-11) (-11) 8 (-2) (-12) (-12) 9 (-2)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [pairSpan_p2, p3_OK] using hmul
 
 theorem lattice_p2_p3b : p2_OK * p3b_OK = pairSpan 6 2 := by
-  rw [pairSpan_p2.symm]
-  exact pairSpan_mul_eq 2 0 3 2 6 2 (-11) (-9) 9 (-3) (-11) (-10) 10 (-3)
-    (by decide) (by decide) (by decide) (by decide)
-    (by decide) (by decide) (by decide) (by decide)
+  have hmul :=
+    pairSpan_mul_eq 2 0 3 2 6 2 (-11) (-9) 9 (-3) (-11) (-10) 10 (-3)
+      (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by decide)
+  simpa [pairSpan_p2, p3b_OK] using hmul
 
 theorem lattice_p2b_p3 : p2b_OK * p3_OK = pairSpan 6 3 := by
   exact pairSpan_mul_eq 2 1 3 0 6 3 (-12) (-1) 2 (-2) (-12) 1 1 (-2)
