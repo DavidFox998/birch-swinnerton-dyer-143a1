@@ -1,3 +1,8 @@
+import Mathlib.Tactic
+import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+import Towers.BSD.BSD_Frobenius_Fact_Instances
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis824_CLOSED  (genesis-824)
@@ -22,8 +27,17 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_TauBound_small_proved
-import Mathlib.Tactic
+
+private instance instFactPrime4229 : Fact (4229 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4231 : Fact (4231 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4241 : Fact (4241 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4243 : Fact (4243 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4253 : Fact (4253 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4259 : Fact (4259 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4261 : Fact (4261 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4271 : Fact (4271 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4273 : Fact (4273 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime4283 : Fact (4283 : ℕ).Prime := ⟨by norm_num⟩
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -49,16 +63,16 @@ private instance i824_p4283 : Fact (4283 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p4229 : (E143_Finset 4229).card = 4245 := by native_decide
-theorem BSD_E143_card_p4231 : (E143_Finset 4231).card = 4334 := by native_decide
-theorem BSD_E143_card_p4241 : (E143_Finset 4241).card = 4300 := by native_decide
-theorem BSD_E143_card_p4243 : (E143_Finset 4243).card = 4218 := by native_decide
-theorem BSD_E143_card_p4253 : (E143_Finset 4253).card = 4308 := by native_decide
-theorem BSD_E143_card_p4259 : (E143_Finset 4259).card = 4188 := by native_decide
-theorem BSD_E143_card_p4261 : (E143_Finset 4261).card = 4231 := by native_decide
-theorem BSD_E143_card_p4271 : (E143_Finset 4271).card = 4347 := by native_decide
-theorem BSD_E143_card_p4273 : (E143_Finset 4273).card = 4223 := by native_decide
-theorem BSD_E143_card_p4283 : (E143_Finset 4283).card = 4271 := by native_decide
+theorem BSD_E143_card_p4229 : (E143_Finset 4229).card = 4244 := by native_decide
+theorem BSD_E143_card_p4231 : (E143_Finset 4231).card = 4333 := by native_decide
+theorem BSD_E143_card_p4241 : (E143_Finset 4241).card = 4299 := by native_decide
+theorem BSD_E143_card_p4243 : (E143_Finset 4243).card = 4217 := by native_decide
+theorem BSD_E143_card_p4253 : (E143_Finset 4253).card = 4307 := by native_decide
+theorem BSD_E143_card_p4259 : (E143_Finset 4259).card = 4187 := by native_decide
+theorem BSD_E143_card_p4261 : (E143_Finset 4261).card = 4230 := by native_decide
+theorem BSD_E143_card_p4271 : (E143_Finset 4271).card = 4346 := by native_decide
+theorem BSD_E143_card_p4273 : (E143_Finset 4273).card = 4222 := by native_decide
+theorem BSD_E143_card_p4283 : (E143_Finset 4283).card = 4270 := by native_decide
 
 /-! ## §3. Exact a_p values -/
 
