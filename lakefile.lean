@@ -32,3 +32,6 @@ lean_lib Towers where
 -- Assessed batch 5: Frobenius quadratics at the listed primes
 lean_lib BSD_Assessed_Batch5 where
   srcDir := "."
+
+lean_lib BSD_Assessed_Batch6 where
+  srcDir := "."
