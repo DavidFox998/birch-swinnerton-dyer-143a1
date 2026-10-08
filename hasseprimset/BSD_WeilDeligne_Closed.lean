@@ -1,3 +1,6 @@
+import hasseprimset.BSD_Hasse_Points_971_997
+import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis775_CLOSED  (genesis-775)
@@ -60,8 +63,6 @@ NOT a brick.  BSD: OPEN (Clay).  No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_Hasse_Points_971_997
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
 
 set_option maxRecDepth 10000
 
