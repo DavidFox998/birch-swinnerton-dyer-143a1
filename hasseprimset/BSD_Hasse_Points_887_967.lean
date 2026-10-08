@@ -1,3 +1,5 @@
+import hasseprimset.BSD_Hasse_Points_827_883
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis773_CLOSED  (genesis-773)
@@ -23,7 +25,17 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_Hasse_Points_827_883
+
+private instance instFactPrime887 : Fact (887 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime907 : Fact (907 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime911 : Fact (911 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime919 : Fact (919 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime929 : Fact (929 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime937 : Fact (937 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime941 : Fact (941 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime947 : Fact (947 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime953 : Fact (953 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime967 : Fact (967 : ℕ).Prime := ⟨by norm_num⟩
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
