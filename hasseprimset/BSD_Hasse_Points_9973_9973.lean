@@ -1,3 +1,8 @@
+import Mathlib.Tactic
+import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+import Towers.BSD.BSD_Frobenius_Fact_Instances
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis889_CLOSED  (genesis-889)
@@ -13,8 +18,8 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_TauBound_small_proved
-import Mathlib.Tactic
+
+private instance instFactPrime9973 : Fact (9973 : ℕ).Prime := ⟨by norm_num⟩
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
@@ -31,7 +36,7 @@ private instance i889_p9973 : Fact (9973 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p9973 : (E143_Finset 9973).card = 10022 := by native_decide
+theorem BSD_E143_card_p9973 : (E143_Finset 9973).card = 10021 := by native_decide
 
 /-! ## §3. Exact a_p values -/
 
