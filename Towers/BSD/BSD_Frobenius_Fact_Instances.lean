@@ -6,6 +6,9 @@
 import Mathlib.Tactic
 
 instance : Fact (Nat.Prime 2) := ⟨by norm_num⟩
+instance : Fact (Nat.Prime 3) := ⟨by norm_num⟩
+instance : Fact (Nat.Prime 5) := ⟨by norm_num⟩
+instance : Fact (Nat.Prime 7) := ⟨by norm_num⟩
 instance : Fact (Nat.Prime 251) := ⟨by norm_num⟩
 instance : Fact (Nat.Prime 257) := ⟨by norm_num⟩
 instance : Fact (Nat.Prime 263) := ⟨by norm_num⟩
