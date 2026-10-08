@@ -2,7 +2,7 @@
 
 Repository-only audit of `DavidFox998/birch-swinnerton-dyer-143a1` on `bsd-clean-214-propositions-assessed`. This report does not prove a conjecture. It records what compiled.
 
-Tip of this report: `2aea6db` (geometric Frobenius endomorphism). The section at `2ec969d` is the class-number collapse. The section at `24282f3` is the clean-name rewrite. The sections at `a88e62d`, `70b40e1`, and `6d21d82` are the earlier record.
+Tip of this report: `66112d3` (function-field degree of Frobenius). The section at `2aea6db` is the geometric Frobenius endomorphism. The section at `2ec969d` is the class-number collapse. The section at `24282f3` is the clean-name rewrite. The sections at `a88e62d`, `70b40e1`, and `6d21d82` are the earlier record.
 Lean audit: `52eb949` (`Towers/BSD/BSD_450_Gates_Documentation.lean`).
 Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `FINAL_BSD_HANDOFF_54_84.md` is not in the repository. The gate list is Authoring Phase 2 in `PROVING_AGENT_HANDOFF.md`.
@@ -36,6 +36,8 @@ Handoff: `4edd25a` (`PROVING_AGENT_HANDOFF.md`).
 `lake build BSD_Clean_Aggregation` — EXIT:0 again after the class-number collapse (`/tmp/bsd-b-collapse.log`).
 `lake build Towers.BSD.BSD_Frobenius_Degree_Actual_Clean` — EXIT:0 (`/tmp/bsd-a-forall-target.log`).
 `lake build BSD_Clean_Aggregation` — EXIT:0 again after the geometric Frobenius endomorphism (`/tmp/bsd-a-forall.log`).
+`lake build Towers.BSD.BSD_Degree_Clean` — EXIT:0 (`/tmp/bsd-degree-target.log`).
+`lake build BSD_Clean_Aggregation` — EXIT:0 again after `degree_frobenius` (`/tmp/bsd-degree.log`).
 
 No `sorry`. The aggregation log has two warnings, both the old unused `r` variables in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321.
 
@@ -66,6 +68,7 @@ No `sorry`. The aggregation log has two warnings, both the old unused `r` variab
 - `Towers.BSD.BSD_ClassNumber_Collapse_Clean`
 - `Towers.BSD.BSD_Hasse_Forall_Clean`
 - `Towers.BSD.BSD_Frobenius_Degree_Actual_Clean`
+- `Towers.BSD.BSD_Degree_Clean`
 - `Towers.BSD.BSD_Torsion_Rank_Unconditional_Clean`
 - `Towers.BSD.BSD_LFunction_HasseWeil_New`
 - `Towers.BSD.BSD_AnalyticContinuation_New`
@@ -105,6 +108,7 @@ The assessed tally is 54 theorems out of 504 propositions. The other 450 stay NE
 | `Towers/BSD/BSD_ClassGroupEquiv_Clean.lean` | Ten reduced forms, and every class has an ideal of norm at most 7. `classNumber = 10` stays NEEDS_AUTHORING. |
 | `Towers/BSD/BSD_Frobenius_Clean.lean` | The degree form implies `a_p² ≤ 4p` for an arbitrary prime. The forall stays NEEDS_AUTHORING. |
 | `Towers/BSD/BSD_Frobenius_Degree_Actual_Clean.lean` | Geometric Frobenius is an additive endomorphism over the algebraic closure. The `𝔽_p` formula is the identity. `degree_frobenius` is not defined. The forall stays NEEDS_AUTHORING. |
+| `Towers/BSD/BSD_Degree_Clean.lean` | `degree_frobenius p` is `[k(E) : k(x^p, y^p)]`, and `BSD_Frobenius_degree_eq_p` proves it equals `p`. Nonnegativity is `Int.ofNat_nonneg`. The quadratic form and the Hasse forall stay NEEDS_AUTHORING. |
 | `Towers/BSD/BSD_PrimePower_Clean.lean` | `|a_{p^k}| ≤ (k+1) p^{k/2}` on the 84, and `|a_n| ≤ D n^{1/2+ε}` when every prime factor of `n` is in that set. |
 | `Towers/BSD/BSD_LFunction_HasseWeil_Clean.lean` | Finite Euler product over the 84. The factor at 2 and `s = 1` equals `2/3`. |
 | `Towers/BSD/BSD_AnalyticContinuation_Clean.lean` | `Re(s) > 3/2` implies `Re(2-s) < 1/2`. Continuation stays NEEDS_AUTHORING. |
@@ -125,7 +129,7 @@ All 450 remain NEEDS_AUTHORING. No sentinel was closed. `trivial` on `True`, `rf
 
 | Group | Props | Gate |
 |------:|------:|------|
-| A | 328 | Partial: `BSD_geometric_frobenius_hom` is an additive endomorphism of `Point (E143K p)` for every prime not dividing `1859`. The same formula on `E(𝔽_p)` is the identity. `degree_frobenius` was not defined. `BSD_Hasse_for_checked_is_degree_form` is `|a_p| ≤ 2√p` iff `a_p² ≤ 4p` and the degree form, on the 84 checked primes. The forall `a_p² ≤ 4p` stays NEEDS_AUTHORING. Mathlib v4.12.0 has no isogeny degree. 11 assessed defs are the degree and Hasse names at primes ≥ 9721, including both at 9973. The 328 assessed defs were not rewritten. |
+| A | 328 | Partial: `BSD_geometric_frobenius_hom` is an additive endomorphism of `Point (E143K p)` for every prime not dividing `1859`. The same formula on `E(𝔽_p)` is the identity. `degree_frobenius p = p` is `[k(E) : k(x^p, y^p)]`. That equality does not prove `deg(n − m φ) = n² − a_p n m + m² p`. `BSD_Hasse_for_checked_is_degree_form` is `|a_p| ≤ 2√p` iff `a_p² ≤ 4p` and the degree form, on the 84 checked primes. The forall `a_p² ≤ 4p` stays NEEDS_AUTHORING. Mathlib v4.12.0 has no isogeny degree. 11 assessed defs are the degree and Hasse names at primes ≥ 9721, including both at 9973. The 328 assessed defs were not rewritten. |
 | B | 26 | New theorem `BSD_classNumber_eq_ten_collapse` is `NumberField.classNumber K = 10`. `classGroupEquiv` was not defined. The 26 assessed defs were not rewritten and stay NEEDS_AUTHORING. |
 | C | 12 | Partial: `BSD_linear_anchor_derivative` cites Batch 4. `BSD_L143a1_DerivAtOne = 0`, so `≠ 0` is `0 ≠ 0`. The registry `L_143a1` is the Prop `True`. The Hasse–Weil derivative stays NEEDS_AUTHORING. The 12 assessed defs were not rewritten. |
 | D | 9 | `BSD_tau_bound_of_divisors` is `τ(n) ≤ D n^ε` with no Genesis781 import. `|a_n| ≤ D n^{1/2+ε}` holds for squarefree `n` on the 84 checked primes. The series over that finite set is summable. Prime powers `k ≥ 2` and `BSD_LSeriesSummable_OPEN` stay open. The 9 assessed defs were not rewritten. |
@@ -283,6 +287,18 @@ Mathlib v4.12.0 has no degree of an elliptic endomorphism and no isogeny. The id
 
 `lake build Towers.BSD.BSD_Frobenius_Degree_Actual_Clean` (`/tmp/bsd-a-forall-target.log`) exits 0. `lake build BSD_Clean_Aggregation` (`/tmp/bsd-a-forall.log`) exits 0. Two warnings, both the old unused `r` in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321. No `sorry`.
 
+## Function-field degree at `66112d3`
+
+`Towers/BSD/BSD_Degree_Clean.lean` is imported by `BSD_Clean_Aggregation`. The 328 assessed Group A definitions were not rewritten. The tally stays 54 of 504. The 450 stay NEEDS_AUTHORING. `84 ≠ 54`.
+
+`degree_frobenius p` is `finrank (Kpy p) (FE p)`. Here `k = ZMod p`, `k(E)` is the root adjunction of `T² + T − (X³ − X² − X − 2)` over the rational function field `k(X)`, `Kxp p` is the image of `f ↦ f(X^p)`, `Kx p = k(x)` has degree `p` over that image, and `Kpy p = k(x^p, y^p)` has degree `2` over it. The tower `[k(E) : k(x^p)] = 2p` divided by `[k(x^p, y^p) : k(x^p)] = 2` is `BSD_Frobenius_degree_eq_p`: `degree_frobenius p = p` for every prime. This is the degree of the pullback on the function field. It is not `def degree_frobenius := p` by `rfl`.
+
+`BSD_Frobenius_degree_nonneg_actual` is `0 ≤ (degree_frobenius p : ℤ)`, by `Int.ofNat_nonneg`. It is not nonnegativity of `n² − a_p n m + m² p`. `BSD_degree_frobenius_not_hasse` is `degree_frobenius p = p` together with `BSD_Finite_Hasse_CheckedPrimes.card = 84` and `(84 : ℕ) ≠ 54`. It does not state `a_p² ≤ 4p`.
+
+Mathlib v4.12.0 has no degree of a general elliptic endomorphism. The identity `deg(n − m φ) = n² − a_p n m + m² p` is not a theorem. `a_p² ≤ 4p` for every prime outside `1859` stays NEEDS_AUTHORING. No new point count. No prime at or above 1000.
+
+`lake build Towers.BSD.BSD_Degree_Clean` (`/tmp/bsd-degree-target.log`) exits 0. `lake build BSD_Clean_Aggregation` (`/tmp/bsd-degree.log`) exits 0. Two warnings, both the old unused `r` in `Towers/BSD/BSD_LFunction.lean` at lines 293 and 321. No `sorry`.
+
 ## Standing limit
 
-There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, the partial theorems for groups A through G, the norm bound of 7, the degree-form implication, the checked-support coefficient bound, the local factor `2/3`, the half-plane asymmetry, the primality of `p2_OK`, `2 • (2, 0) ≠ 0`, the discriminant `-1859`, the conditional embedding `BSD_rank_ge_one`, the identifications `Nat.card (Point (E143Fp 3)) = 5` and `Nat.card (Point (E143Fp 5)) = 7`, the non-identity reduction of `(2, 0)`, the secant identities for integral points, and the failure of injectivity of `Int.castRingHom (ZMod p)` are citations of proofs that compile. The 450 assessed defs are outside that list. `NumberField.classNumber K = 10` is the extra theorem `BSD_classNumber_eq_ten_collapse` and does not rewrite the 26 assessed Group B definitions. `BSD_geometric_frobenius_hom` is an additive endomorphism of the base change to an algebraic closure, and the same formula on `E(𝔽_p)` is the identity. `degree_frobenius` was not defined. The Hasse forall, `BSD_LSeriesSummable_OPEN`, the Hasse–Weil derivative, modularity, analytic continuation, the functional equation, unconditional infinite order, rank exactly 1, Gross–Zagier, Kolyvagin, Wiles–Taylor, the period, and the ideal equalities for 3 and 7 stay NEEDS_AUTHORING.
+There is no Batch 11. Do not `native_decide` `E143_Finset p` for `p ≥ 1000`. Do not treat a registry `True` as a proved conjecture. Do not change `BSD_L143a1_DerivAtOne`. The 54 assessed theorems, the 84 compiled checks, the five corollaries, the aggregate, the partial theorems for groups A through G, the norm bound of 7, the degree-form implication, the checked-support coefficient bound, the local factor `2/3`, the half-plane asymmetry, the primality of `p2_OK`, `2 • (2, 0) ≠ 0`, the discriminant `-1859`, the conditional embedding `BSD_rank_ge_one`, the identifications `Nat.card (Point (E143Fp 3)) = 5` and `Nat.card (Point (E143Fp 5)) = 7`, the non-identity reduction of `(2, 0)`, the secant identities for integral points, and the failure of injectivity of `Int.castRingHom (ZMod p)` are citations of proofs that compile. The 450 assessed defs are outside that list. `NumberField.classNumber K = 10` is the extra theorem `BSD_classNumber_eq_ten_collapse` and does not rewrite the 26 assessed Group B definitions. `BSD_geometric_frobenius_hom` is an additive endomorphism of the base change to an algebraic closure, and the same formula on `E(𝔽_p)` is the identity. `degree_frobenius p = p` is the extra theorem `BSD_Frobenius_degree_eq_p`, the function-field degree `[k(E) : k(x^p, y^p)]`. It does not prove `deg(n − m φ) = n² − a_p n m + m² p`. The Hasse forall, `BSD_LSeriesSummable_OPEN`, the Hasse–Weil derivative, modularity, analytic continuation, the functional equation, unconditional infinite order, rank exactly 1, Gross–Zagier, Kolyvagin, Wiles–Taylor, the period, and the ideal equalities for 3 and 7 stay NEEDS_AUTHORING.
