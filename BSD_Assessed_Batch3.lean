@@ -11,7 +11,7 @@ open BSD_MissingDefinitionsRegistry
 
 namespace Towers_BSD_BSD_MasterProof_Assessed
   def BSD_classNumber_lower_bound_prop : Prop := True -- was: 10 ≤ NumberField.classNumber K
-  def BSD_classNumber_upper_OPEN_prop : Prop := True -- BSD_classNumber_upper_OPEN: Prop (trivial)
+  def BSD_classNumber_upper_OPEN_prop : Prop := BSD_classNumber_upper_OPEN
 end Towers_BSD_BSD_MasterProof_Assessed
 
 namespace Towers_BSD_BSD_Multiplicativity_Closed_Assessed
@@ -24,7 +24,7 @@ namespace Towers_BSD_BSD_NonTorsion_P20_Closed_Assessed
 end Towers_BSD_BSD_NonTorsion_P20_Closed_Assessed
 
 namespace Towers_BSD_BSD_NormBridge_Assessed
-  def BSD_algNorm_gen_CLOSED_prop : Prop := True -- BSD_algNorm_gen_CLOSED: Prop (trivial)
+  def BSD_algNorm_gen_CLOSED_prop : Prop := BSD_algNorm_gen_CLOSED
 end Towers_BSD_BSD_NormBridge_Assessed
 
 namespace Towers_BSD_BSD_NormFormBounds_Assessed
