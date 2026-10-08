@@ -15,14 +15,14 @@
 import Mathlib.AlgebraicGeometry.EllipticCurve.Group
 import Towers.BSD.BSD_Torsion_Rank_Clean
 
-open WeierstrassCurve WeierstrassCurve.Affine
+open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point
 
 namespace Towers.BSD
 
 def E143Q : WeierstrassCurve ℚ :=
   { a₁ := 0, a₂ := -1, a₃ := 1, a₄ := -1, a₆ := -2 }
 
-theorem E143Q_nonsingular_two_zero : E143Q.Nonsingular (2 : ℚ) 0 := by
+theorem E143Q_nonsingular_two_zero : Nonsingular E143Q (2 : ℚ) 0 := by
   rw [nonsingular_iff]
   constructor
   · rw [equation_iff]
@@ -30,14 +30,14 @@ theorem E143Q_nonsingular_two_zero : E143Q.Nonsingular (2 : ℚ) 0 := by
   · right
     norm_num
 
-theorem E143Q_negY_two_zero : E143Q.negY 2 0 = -1 := by
+theorem E143Q_negY_two_zero : negY E143Q 2 0 = -1 := by
   simp [negY]
   norm_num
 
-def E143Q_P20 : E143Q.Point :=
+def E143Q_P20 : Point E143Q :=
   Point.some E143Q_nonsingular_two_zero
 
-private def yCoord : E143Q.Point → Option ℚ
+private def yCoord : Point E143Q → Option ℚ
   | .zero => none
   | @Point.some _ _ y _ => some y
 

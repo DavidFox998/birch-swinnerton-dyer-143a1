@@ -21,6 +21,8 @@ import Mathlib.RingTheory.Ideal.Quotient
 import Towers.BSD.BSD_ClassNumber_Lower_Clean
 import Towers.BSD.BSD_Ideal_Wiles_Clean
 
+open NumberField
+
 namespace Towers.BSD
 
 theorem BSD_p2_OK_isPrime : p2_OK.IsPrime := by
