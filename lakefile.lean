@@ -44,3 +44,6 @@ lean_lib BSD_Assessed_Batch8 where
 
 lean_lib BSD_Assessed_Batch9 where
   srcDir := "."
+
+lean_lib BSD_Assessed_Batch4 where
+  srcDir := "."
