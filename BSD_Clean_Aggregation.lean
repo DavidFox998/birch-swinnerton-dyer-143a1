@@ -91,6 +91,7 @@ import Towers.BSD.BSD_RankAtLeastOne_Clean
 import Towers.BSD.BSD_Reduction_Clean
 import Towers.BSD.BSD_ReductionHom_Clean
 import Towers.BSD.BSD_ClassNumber_Clean
+import Towers.BSD.BSD_ClassNumber_Collapse_Clean
 import Towers.BSD.BSD_Hasse_Forall_Clean
 import Towers.BSD.BSD_Torsion_Rank_Unconditional_Clean
 import Towers.BSD.BSD_LFunction_HasseWeil_New
