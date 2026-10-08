@@ -69,7 +69,7 @@ theorem BSD_rat_div_reduces (p : ℕ) [Fact p.Prime] (a b : ℤ)
   exact hZ
 
 theorem BSD_negY_reduces (p : ℕ) [Fact p.Prime] (x y : ℤ) :
-    (E143Fp p).negY (x : ZMod p) (y : ZMod p) = ((-y - 1 : ℤ) : ZMod p) := by
+    negY (E143Fp p) (x : ZMod p) (y : ZMod p) = ((-y - 1 : ℤ) : ZMod p) := by
   simp only [negY, E143Fp, E143Z, map_a₁, map_a₃, map_zero, map_one,
     Int.cast_neg, Int.cast_sub, Int.cast_one]
   ring
@@ -121,7 +121,7 @@ theorem BSD_negAddY_secant_reduces (p : ℕ) [Fact p.Prime] (x₁ x₂ y₁ y₂
 
 /-- `(2, 0)` and its negative `(2, -1)` reduce to negatives of one another. -/
 theorem BSD_neg_two_zero_reduces (p : ℕ) [Fact p.Prime] :
-    (E143Fp p).negY (2 : ZMod p) 0 = (-1 : ZMod p) := by
+    negY (E143Fp p) (2 : ZMod p) 0 = (-1 : ZMod p) := by
   have h := BSD_negY_reduces p 2 0
   simpa using h
 
