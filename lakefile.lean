@@ -28,3 +28,7 @@ lean_lib hasseprimset where
 -- Towers/BSD/ — Genesis 762, 763 honest point counts via E143_Finset by decide
 lean_lib Towers where
   srcDir := "."
+
+-- Assessed batch 5: Frobenius quadratics at the listed primes
+lean_lib BSD_Assessed_Batch5 where
+  srcDir := "."
