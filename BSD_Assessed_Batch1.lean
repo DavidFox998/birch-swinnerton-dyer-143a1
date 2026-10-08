@@ -14,7 +14,7 @@ namespace Towers_BSD_B02_Modularity_Assessed
 end Towers_BSD_B02_Modularity_Assessed
 
 namespace Towers_BSD_B02_Modularity_Closed_Assessed
-  def BSD_LFunctionIsLinFunc_OPEN_prop : Prop := True -- BSD_LFunctionIsLinFunc_OPEN: Prop (trivial)
+  def BSD_LFunctionIsLinFunc_OPEN_prop : Prop := BSD_LFunctionIsLinFunc_OPEN
   def BSD_LFunctionIsLinFunc_CLOSED_prop : Prop := BSD_LFunctionIsLinFunc_OPEN
   def BSD_143_Analytic_Gates_CLOSED_prop : Prop := BSD_LFunctionIsLinFunc_OPEN ∧ BSD_WeilHasse_Weierstrass_OPEN
 end Towers_BSD_B02_Modularity_Closed_Assessed
@@ -63,7 +63,7 @@ end Towers_BSD_BSD_ClassNum_Unconditional_CLOSED_Assessed
 
 namespace Towers_BSD_BSD_ClassNum_Upper_CLOSED_Assessed
   def BSD_BQF_ClassNumber_bridge_prop : Prop := True -- BSD_BQF_ClassNumber_bridge: Prop (trivial)
-  def BSD_classGroup_gen_by_p2_hyp_prop : Prop := True -- BSD_classGroup_gen_by_p2_hyp: Prop (trivial)
+  def BSD_classGroup_gen_by_p2_hyp_prop : Prop := BSD_classGroup_gen_by_p2_hyp
 end Towers_BSD_BSD_ClassNum_Upper_CLOSED_Assessed
 
 namespace Towers_BSD_BSD_ClassNumberBounds_Assessed
