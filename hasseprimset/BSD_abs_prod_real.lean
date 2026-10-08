@@ -1,3 +1,5 @@
+import hasseprimset.BSD_ANBound_Generator_Closed
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis778_CLOSED  (genesis-778)
@@ -27,7 +29,6 @@ BSD: OPEN.  No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_ANBound_Generator_Closed
 
 namespace Towers.BSD
 
