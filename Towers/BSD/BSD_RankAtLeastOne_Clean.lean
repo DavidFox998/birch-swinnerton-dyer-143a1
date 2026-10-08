@@ -99,8 +99,9 @@ theorem BSD_Z_embedding_of_infinite_order
     (hinf : ∀ n : ℕ, 0 < n → n • E143Q_P20 ≠ 0) :
     Function.Injective (fun k : ℤ => k • E143Q_P20) := by
   intro a b hab
+  have hab' : a • E143Q_P20 = b • E143Q_P20 := hab
   have hdiff : (a - b) • E143Q_P20 = 0 := by
-    rw [sub_zsmul, hab, add_neg_cancel]
+    rw [sub_zsmul, hab', add_neg_cancel]
   by_contra hne
   have hsub : a - b ≠ 0 := sub_ne_zero.mpr hne
   rcases lt_trichotomy (a - b) 0 with hlt | heq | hgt
