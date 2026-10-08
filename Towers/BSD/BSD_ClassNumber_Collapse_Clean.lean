@@ -818,7 +818,7 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
     rw [span_four] at hdiv
     have hPQ : P ∣ p2_OK ∨ P ∣ p2b_OK := by
       have hsq : p2_OK ^ 2 * p2b_OK ^ 2 = (p2_OK * p2_OK) * (p2b_OK * p2b_OK) := by
-        rw [pow_two, pow_two]
+        rw [pow_two p2_OK, pow_two p2b_OK]
       rcases hdiv with ⟨C, hC⟩
       have hdiv' : P ∣ (p2_OK * p2_OK) * (p2b_OK * p2b_OK) := ⟨C, by rw [← hsq]; exact hC⟩
       rcases hPrime.dvd_or_dvd hdiv' with h | h
