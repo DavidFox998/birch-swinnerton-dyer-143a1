@@ -525,14 +525,16 @@ private theorem absNorm_span_int (n : ℤ) :
 
 theorem absNorm_p2b : Ideal.absNorm p2b_OK = 2 := by
   have hmul : Ideal.absNorm p2_OK * Ideal.absNorm p2b_OK = 4 := by
-    rw [← map_mul Ideal.absNorm, two_split, absNorm_span_int 2]
+    rw [← map_mul Ideal.absNorm, two_split,
+      show (2 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) by norm_cast, absNorm_span_int 2]
     decide
   rw [absNorm_p2_eq_2] at hmul
   omega
 
 theorem absNorm_p3 : Ideal.absNorm p3_OK = 3 := by
   have hmul : Ideal.absNorm p3_OK * Ideal.absNorm p3b_OK = 9 := by
-    rw [← map_mul Ideal.absNorm, three_split, absNorm_span_int 3]
+    rw [← map_mul Ideal.absNorm, three_split,
+      show (3 : 𝓞 K) = ((3 : ℤ) : 𝓞 K) by norm_cast, absNorm_span_int 3]
     decide
   have hx : Ideal.absNorm p3_OK ≠ 1 := by
     intro h; exact p3_ne_top (Ideal.absNorm_eq_one_iff.mp h)
@@ -542,7 +544,8 @@ theorem absNorm_p3 : Ideal.absNorm p3_OK = 3 := by
 
 theorem absNorm_p3b : Ideal.absNorm p3b_OK = 3 := by
   have hmul : Ideal.absNorm p3_OK * Ideal.absNorm p3b_OK = 9 := by
-    rw [← map_mul Ideal.absNorm, three_split, absNorm_span_int 3]
+    rw [← map_mul Ideal.absNorm, three_split,
+      show (3 : 𝓞 K) = ((3 : ℤ) : 𝓞 K) by norm_cast, absNorm_span_int 3]
     decide
   have hx : Ideal.absNorm p3_OK ≠ 1 := by
     intro h; exact p3_ne_top (Ideal.absNorm_eq_one_iff.mp h)
@@ -552,7 +555,8 @@ theorem absNorm_p3b : Ideal.absNorm p3b_OK = 3 := by
 
 theorem absNorm_p7 : Ideal.absNorm p7_OK = 7 := by
   have hmul : Ideal.absNorm p7_OK * Ideal.absNorm p7b_OK = 49 := by
-    rw [← map_mul Ideal.absNorm, seven_split, absNorm_span_int 7]
+    rw [← map_mul Ideal.absNorm, seven_split,
+      show (7 : 𝓞 K) = ((7 : ℤ) : 𝓞 K) by norm_cast, absNorm_span_int 7]
     decide
   have hx : Ideal.absNorm p7_OK ≠ 1 := by
     intro h; exact p7_ne_top (Ideal.absNorm_eq_one_iff.mp h)
@@ -562,7 +566,8 @@ theorem absNorm_p7 : Ideal.absNorm p7_OK = 7 := by
 
 theorem absNorm_p7b : Ideal.absNorm p7b_OK = 7 := by
   have hmul : Ideal.absNorm p7_OK * Ideal.absNorm p7b_OK = 49 := by
-    rw [← map_mul Ideal.absNorm, seven_split, absNorm_span_int 7]
+    rw [← map_mul Ideal.absNorm, seven_split,
+      show (7 : 𝓞 K) = ((7 : ℤ) : 𝓞 K) by norm_cast, absNorm_span_int 7]
     decide
   have hx : Ideal.absNorm p7_OK ≠ 1 := by
     intro h; exact p7_ne_top (Ideal.absNorm_eq_one_iff.mp h)
@@ -670,8 +675,9 @@ theorem zLin_ne_zero_of_norm {x y : ℤ} (h : x ^ 2 + x * y + 36 * y ^ 2 ≠ 0) 
   exact h hn.symm
 
 private theorem inv_pow_p2 (k m : ℕ) (h : k + m = 10) : (p2_class ^ k)⁻¹ = p2_class ^ m := by
-  apply inv_eq_of_mul_eq_one_left
-  rw [← pow_add, add_comm, h, p2_class_pow_ten]
+  have hmul : p2_class ^ k * p2_class ^ m = 1 := by
+    rw [← pow_add, h, p2_class_pow_ten]
+  exact inv_eq_of_mul_eq_one_left hmul
 
 theorem class_p2b (h : p2b_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p2b_OK h) = p2_class ^ 9 := by
   have htwo : (2 : 𝓞 K) ≠ 0 := by exact_mod_cast (by decide : (2 : ℤ) ≠ 0)
@@ -680,7 +686,9 @@ theorem class_p2b (h : p2b_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p2b_OK h) = p2_cl
     rw [ClassGroup.mk0_eq_mk0_inv_iff]
     refine ⟨(2 : 𝓞 K), htwo, ?_⟩
     simpa [nzIdeal, Submonoid.coe_mul, mul_comm] using two_split
-  rw [hinv, p2_class, ← pow_one p2_class]
+  rw [hinv]
+  change (p2_class)⁻¹ = p2_class ^ 9
+  rw [← pow_one p2_class]
   exact inv_pow_p2 1 9 (by decide)
 
 theorem class_p3 (h : p3_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p3_OK h) = p2_class ^ 4 := by
@@ -726,6 +734,7 @@ theorem absNorm_ne_zero_of_ne_zero (I : Ideal (𝓞 K)) (hI : I ≠ 0) : Ideal.a
   haveI := Ideal.fintypeQuotientOfFreeOfNeBot I hI
   exact (Ideal.absNorm_ne_zero_iff I).2 (Finite.of_fintype _)
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem no_absNorm_five (I : Ideal (𝓞 K)) : Ideal.absNorm I ≠ 5 := by
   intro h
   have hI : I ≠ 0 := by
@@ -742,22 +751,27 @@ theorem no_absNorm_five (I : Ideal (𝓞 K)) : Ideal.absNorm I ≠ 5 := by
   have hz : nω_OK ^ 2 - nω_OK + 36 = 0 := by rw [nω_sq]; ring
   set q : 𝓞 K ⧸ I := Ideal.Quotient.mk I nω_OK
   have hq : q ^ 2 - q + 36 = 0 := by
-    have h36 : (36 : 𝓞 K ⧸ I) = Ideal.Quotient.mk I (36 : 𝓞 K) :=
-      map_ofNat (Ideal.Quotient.mk I) 36
-    rw [h36]
-    unfold q
+    change Ideal.Quotient.mk I nω_OK ^ 2 - Ideal.Quotient.mk I nω_OK + 36 = 0
+    rw [← map_ofNat (Ideal.Quotient.mk I) 36]
     rw [← map_pow, ← map_sub, ← map_add, hz, map_zero]
-  have hq' : (e q) ^ 2 - e q + 36 = 0 := by simpa using congrArg e hq
+  have hq' : (e q) ^ 2 - e q + 36 = 0 := by
+    have hmap := congrArg (RingEquiv.toRingHom e) hq
+    simp only [map_add, map_sub, map_pow, map_ofNat, map_zero] at hmap
+    exact hmap
   have hno : ∀ a : ZMod 5, a ^ 2 - a + 36 ≠ 0 := by decide
   exact hno (e q) hq'
 
 theorem span_four : Ideal.span {(4 : 𝓞 K)} = p2_OK ^ 2 * p2b_OK ^ 2 := by
-  rw [show (4 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) * (2 : ℤ) by norm_num,
-    ← Ideal.span_singleton_mul_span_singleton, two_split.symm, mul_pow]
+  rw [show (4 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) * ((2 : ℤ) : 𝓞 K) by norm_num,
+    ← Ideal.span_singleton_mul_span_singleton,
+    show ((2 : ℤ) : 𝓞 K) = (2 : 𝓞 K) by norm_cast, two_split.symm, mul_pow]
 
 theorem span_six : Ideal.span {(6 : 𝓞 K)} = p2_OK * p2b_OK * p3_OK * p3b_OK := by
-  rw [show (6 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) * (3 : ℤ) by norm_num,
-    ← Ideal.span_singleton_mul_span_singleton, two_split.symm, three_split.symm]
+  rw [show (6 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) * ((3 : ℤ) : 𝓞 K) by norm_num,
+    ← Ideal.span_singleton_mul_span_singleton,
+    show ((2 : ℤ) : 𝓞 K) = (2 : 𝓞 K) by norm_cast,
+    show ((3 : ℤ) : 𝓞 K) = (3 : 𝓞 K) by norm_cast,
+    two_split.symm, three_split.symm]
   ac_rfl
 
 theorem span_seven : Ideal.span {(7 : 𝓞 K)} = p7_OK * p7b_OK := seven_split.symm
@@ -806,7 +820,9 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
       exact hmem
     rw [span_four] at hdiv
     have hPQ : P ∣ p2_OK ∨ P ∣ p2b_OK := by
-      rw [pow_two, pow_two] at hdiv
+      have hsq : p2_OK ^ 2 * p2b_OK ^ 2 = (p2_OK * p2_OK) * (p2b_OK * p2b_OK) := by
+        rw [pow_two, pow_two]
+      rw [hsq] at hdiv
       rcases hPrime.dvd_or_dvd hdiv with h | h
       · rcases hPrime.dvd_or_dvd h with h | h <;> exact Or.inl h
       · rcases hPrime.dvd_or_dvd h with h | h <;> exact Or.inr h
@@ -985,8 +1001,9 @@ theorem two_OK_ne_zero : (2 : 𝓞 K) ≠ 0 := by
   exact_mod_cast (by decide : (2 : ℤ) ≠ 0)
 
 theorem span_two_ne_zero : Ideal.span {(2 : 𝓞 K)} ≠ 0 := by
-  rw [Ideal.span_singleton_eq_bot]
-  exact two_OK_ne_zero
+  intro h
+  rw [Ideal.zero_eq_bot, Ideal.span_singleton_eq_bot] at h
+  exact two_OK_ne_zero h
 
 /-- The fourteen lattices of index at most 7, written as the unit ideal,
     the six split primes, the principal ideal `(2)`, and the products
