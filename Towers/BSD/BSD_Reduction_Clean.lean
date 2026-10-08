@@ -27,7 +27,7 @@ import Mathlib.GroupTheory.Coset.Card
 import Mathlib.GroupTheory.Torsion
 import Towers.BSD.BSD_RankAtLeastOne_Clean
 
-open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point
+open WeierstrassCurve WeierstrassCurve.Affine
 
 namespace Towers.BSD
 
@@ -55,10 +55,10 @@ theorem E143Fp_Δ_ne_zero_of_not_dvd (p : ℕ) [Fact p.Prime] (hp : ¬ p ∣ 185
   exact neg_eq_zero.mp h
 
 theorem E143Fp_equation_iff (p : ℕ) [Fact p.Prime] (x y : ZMod p) :
-    (E143Fp p).Equation x y ↔ E143_point p x y := by
+    Equation (E143Fp p) x y ↔ E143_point p x y := by
   rw [equation_iff, E143_point]
   simp only [E143Fp, E143Z, map_a₁, map_a₂, map_a₃, map_a₄, map_a₆, map_zero, map_one,
-    map_neg, map_ofNat, Int.cast_ofNat]
+    map_neg, map_ofNat]
   constructor
   · intro h
     convert h using 1 <;> ring
@@ -66,23 +66,23 @@ theorem E143Fp_equation_iff (p : ℕ) [Fact p.Prime] (x y : ZMod p) :
     convert h using 1 <;> ring
 
 theorem E143Fp_nonsingular_iff (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠ 0)
-    (x y : ZMod p) : (E143Fp p).Nonsingular x y ↔ E143_point p x y := by
+    (x y : ZMod p) : Nonsingular (E143Fp p) x y ↔ E143_point p x y := by
   constructor
   · intro h
     exact (E143Fp_equation_iff p x y).mp h.1
   · intro h
-    exact (E143Fp p).nonsingular_of_Δ_ne_zero ((E143Fp_equation_iff p x y).mpr h) hΔ
+    exact nonsingular_of_Δ_ne_zero (E143Fp p) ((E143Fp_equation_iff p x y).mpr h) hΔ
 
 /-- Integral model of `(2, 0)`. -/
-theorem E143Z_equation_two_zero : E143Z.Equation 2 0 := by
+theorem E143Z_equation_two_zero : Equation E143Z 2 0 := by
   rw [equation_iff]
   dsimp [E143Z]
   norm_num
 
 theorem E143Fp_nonsingular_two_zero (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠ 0) :
-    (E143Fp p).Nonsingular (2 : ZMod p) 0 :=
-  (E143Fp p).nonsingular_of_Δ_ne_zero
-    (Equation.map (f := Int.castRingHom (ZMod p)) E143Z_equation_two_zero) hΔ
+    Nonsingular (E143Fp p) (2 : ZMod p) 0 :=
+  nonsingular_of_Δ_ne_zero (E143Fp p)
+    (Equation.map E143Z (Int.castRingHom (ZMod p)) E143Z_equation_two_zero) hΔ
 
 /-- Reduction of the integral point `(2, 0)`. Not a map on `E(ℚ)`. -/
 def BSD_reduce_two_zero (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠ 0) :
@@ -98,24 +98,24 @@ abbrev E143Sol (p : ℕ) [Fact p.Prime] := {xy : ZMod p × ZMod p // xy ∈ E143
 def BSD_pointEquiv (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠ 0) :
     Point (E143Fp p) ≃ Option (E143Sol p) where
   toFun
-    | .zero => none
-    | @some _ _ _ x y h =>
-        some ⟨(x, y), by
+    | Point.zero => none
+    | @Point.some _ _ _ x y h =>
+        Option.some ⟨(x, y), by
           simp only [E143_Finset, Finset.mem_filter, Finset.mem_univ, true_and]
           exact (E143Fp_nonsingular_iff p hΔ x y).mp h⟩
   invFun
-    | none => .zero
-    | some ⟨(x, y), hm⟩ =>
+    | none => Point.zero
+    | Option.some ⟨(x, y), hm⟩ =>
         Point.some ((E143Fp_nonsingular_iff p hΔ x y).mpr <| by
           simpa [E143_Finset] using hm)
   left_inv
-    | .zero => rfl
-    | @some _ _ _ x y h =>
+    | Point.zero => rfl
+    | @Point.some _ _ _ x y h =>
         congr_arg (@Point.some (ZMod p) _ (E143Fp p) x y) (Subsingleton.elim _ _)
   right_inv
     | none => rfl
-    | some ⟨(x, y), hm⟩ => by
-        apply congr_arg some
+    | Option.some ⟨(x, y), hm⟩ => by
+        apply congr_arg Option.some
         exact Subtype.ext rfl
 
 theorem BSD_point_card_eq_affine_succ (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠ 0) :
