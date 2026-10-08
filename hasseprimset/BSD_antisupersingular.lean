@@ -1,3 +1,5 @@
+import hasseprimset.BSD_WeilDeligne_Closed
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis776_CLOSED  (genesis-776)
@@ -31,7 +33,6 @@ BSD: OPEN.  NOT a brick.  No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_WeilDeligne_Closed
 
 namespace Towers.BSD
 
