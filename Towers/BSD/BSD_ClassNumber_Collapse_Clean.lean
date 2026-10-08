@@ -675,8 +675,8 @@ theorem zLin_ne_zero_of_norm {x y : ℤ} (h : x ^ 2 + x * y + 36 * y ^ 2 ≠ 0) 
   exact h hn.symm
 
 private theorem inv_pow_p2 (k m : ℕ) (h : k + m = 10) : (p2_class ^ k)⁻¹ = p2_class ^ m := by
-  have hmul : p2_class ^ k * p2_class ^ m = 1 := by
-    rw [← pow_add, h, p2_class_pow_ten]
+  have hmul : p2_class ^ m * p2_class ^ k = 1 := by
+    rw [mul_comm, ← pow_add, h, p2_class_pow_ten]
   exact inv_eq_of_mul_eq_one_left hmul
 
 theorem class_p2b (h : p2b_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p2b_OK h) = p2_class ^ 9 := by
@@ -688,8 +688,9 @@ theorem class_p2b (h : p2b_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p2b_OK h) = p2_cl
     simpa [nzIdeal, Submonoid.coe_mul, mul_comm] using two_split
   rw [hinv]
   change (p2_class)⁻¹ = p2_class ^ 9
-  rw [← pow_one p2_class]
-  exact inv_pow_p2 1 9 (by decide)
+  have hpow : (p2_class ^ 1)⁻¹ = p2_class ^ 9 := inv_pow_p2 1 9 (by decide)
+  rw [pow_one] at hpow
+  exact hpow
 
 theorem class_p3 (h : p3_OK ≠ 0) : ClassGroup.mk0 (nzIdeal p3_OK h) = p2_class ^ 4 := by
   have hα : zLin (-12) (-1) ≠ 0 := zLin_ne_zero_of_norm (by decide)
@@ -737,10 +738,6 @@ theorem absNorm_ne_zero_of_ne_zero (I : Ideal (𝓞 K)) (hI : I ≠ 0) : Ideal.a
 set_option synthInstance.maxHeartbeats 400000 in
 theorem no_absNorm_five (I : Ideal (𝓞 K)) : Ideal.absNorm I ≠ 5 := by
   intro h
-  have hI : I ≠ 0 := by
-    intro h0
-    rw [h0, Ideal.zero_eq_bot, Ideal.absNorm_bot] at h
-    norm_num at h
   have hcardNat : Nat.card (𝓞 K ⧸ I) = 5 := by
     rw [← Submodule.cardQuot_apply, ← Ideal.absNorm_apply, h]
   have hpos : 0 < Nat.card (𝓞 K ⧸ I) := by rw [hcardNat]; decide
@@ -764,7 +761,7 @@ theorem no_absNorm_five (I : Ideal (𝓞 K)) : Ideal.absNorm I ≠ 5 := by
 theorem span_four : Ideal.span {(4 : 𝓞 K)} = p2_OK ^ 2 * p2b_OK ^ 2 := by
   rw [show (4 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) * ((2 : ℤ) : 𝓞 K) by norm_num,
     ← Ideal.span_singleton_mul_span_singleton,
-    show ((2 : ℤ) : 𝓞 K) = (2 : 𝓞 K) by norm_cast, two_split.symm, mul_pow]
+    show ((2 : ℤ) : 𝓞 K) = (2 : 𝓞 K) by norm_cast, two_split.symm, ← pow_two, mul_pow]
 
 theorem span_six : Ideal.span {(6 : 𝓞 K)} = p2_OK * p2b_OK * p3_OK * p3b_OK := by
   rw [show (6 : 𝓞 K) = ((2 : ℤ) : 𝓞 K) * ((3 : ℤ) : 𝓞 K) by norm_num,
@@ -822,8 +819,9 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
     have hPQ : P ∣ p2_OK ∨ P ∣ p2b_OK := by
       have hsq : p2_OK ^ 2 * p2b_OK ^ 2 = (p2_OK * p2_OK) * (p2b_OK * p2b_OK) := by
         rw [pow_two, pow_two]
-      rw [hsq] at hdiv
-      rcases hPrime.dvd_or_dvd hdiv with h | h
+      rcases hdiv with ⟨C, hC⟩
+      have hdiv' : P ∣ (p2_OK * p2_OK) * (p2b_OK * p2b_OK) := ⟨C, by rw [← hsq]; exact hC⟩
+      rcases hPrime.dvd_or_dvd hdiv' with h | h
       · rcases hPrime.dvd_or_dvd h with h | h <;> exact Or.inl h
       · rcases hPrime.dvd_or_dvd h with h | h <;> exact Or.inr h
     rcases hPQ with h | h
@@ -848,7 +846,7 @@ theorem factor_is_split (I : Ideal (𝓞 K)) (hI : I ≠ 0) (hN : Ideal.absNorm 
           · exact Or.inl (eq_of_prime_dvd hPrime p2_prime h)
           · exact Or.inr (Or.inl (eq_of_prime_dvd hPrime p2b_prime h))
         · exact Or.inr (Or.inr (Or.inl (eq_of_prime_dvd hPrime p3_prime h)))
-      · exact Or.inr (Or.inr (Or.inr (Or.inl (eq_of_prime_dvd hPrime p3b_prime h))))
+      · exact Or.inr (Or.inr (Or.inr (eq_of_prime_dvd hPrime p3b_prime h)))
     rcases hPQ with h | h | h | h
     · rw [h, absNorm_p2_eq_2] at hn; norm_num at hn
     · rw [h, absNorm_p2b] at hn; norm_num at hn
