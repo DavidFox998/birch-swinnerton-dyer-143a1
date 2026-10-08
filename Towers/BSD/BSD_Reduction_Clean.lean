@@ -44,7 +44,7 @@ def E143Fp (p : ℕ) [Fact p.Prime] : WeierstrassCurve (ZMod p) :=
 
 theorem E143Fp_Δ (p : ℕ) [Fact p.Prime] : (E143Fp p).Δ = (-1859 : ZMod p) := by
   rw [E143Fp, map_Δ, E143Z_Δ]
-  rfl
+  simp [Int.coe_castRingHom]
 
 theorem E143Fp_Δ_ne_zero_of_not_dvd (p : ℕ) [Fact p.Prime] (hp : ¬ p ∣ 1859) :
     (E143Fp p).Δ ≠ 0 := by
@@ -77,12 +77,11 @@ theorem E143Fp_nonsingular_iff (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠
 theorem E143Z_equation_two_zero : Equation E143Z 2 0 := by
   rw [equation_iff]
   dsimp [E143Z]
-  norm_num
 
 theorem E143Fp_nonsingular_two_zero (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠ 0) :
     Nonsingular (E143Fp p) (2 : ZMod p) 0 :=
   nonsingular_of_Δ_ne_zero (E143Fp p)
-    (Equation.map E143Z (Int.castRingHom (ZMod p)) E143Z_equation_two_zero) hΔ
+    (Equation.map (Int.castRingHom (ZMod p)) E143Z_equation_two_zero) hΔ
 
 /-- Reduction of the integral point `(2, 0)`. Not a map on `E(ℚ)`. -/
 def BSD_reduce_two_zero (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠ 0) :
