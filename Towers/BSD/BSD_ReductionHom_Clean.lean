@@ -46,27 +46,30 @@ theorem BSD_rat_div_reduces (p : ℕ) [Fact p.Prime] (a b : ℤ)
   have hb0 : b ≠ 0 := by
     rintro rfl
     exact hb (by simp)
-  have hq : (a : ℚ) / (b : ℚ) = Rat.divInt a b := (Rat.divInt_eq_div a b).symm
+  generalize hqg : (a : ℚ) / (b : ℚ) = q
+  have hq : q = Rat.divInt a b := by
+    rw [← hqg]
+    exact (Rat.divInt_eq_div a b).symm
   obtain ⟨c, ha, hd⟩ := Rat.num_den_mk hb0 hq
-  have hden : (((a : ℚ) / (b : ℚ)).den : ZMod p) ≠ 0 := by
+  have hden : (q.den : ZMod p) ≠ 0 := by
     intro h0
     apply hb
-    have hd' : (b : ZMod p) = (c : ZMod p) * (((a : ℚ) / (b : ℚ)).den : ZMod p) := by
-      have hcast := congrArg (fun t : ℤ => (t : ZMod p)) hd
-      simpa [Int.cast_mul, Int.cast_natCast] using hcast
-    rw [hd', h0, mul_zero]
-  have hcross : (((a : ℚ) / (b : ℚ)).num : ℤ) * b
-      = a * (((a : ℚ) / (b : ℚ)).den : ℤ) := by
-    rw [ha, hd]
-    ring
+    have hd' : (b : ZMod p) = (c : ZMod p) * (q.den : ZMod p) := by
+      simpa [Int.cast_mul, Int.cast_natCast] using congrArg (fun t : ℤ => (t : ZMod p)) hd
+    simp [hd', h0]
+  have hcross : (q.num : ℤ) * b = a * (q.den : ℤ) := by
+    calc
+      (q.num : ℤ) * b = (q.num : ℤ) * (c * (q.den : ℤ)) := by rw [hd]
+      _ = (c * (q.num : ℤ)) * (q.den : ℤ) := by ring
+      _ = a * (q.den : ℤ) := by rw [← ha]
+  have hZ : (((q.num : ℤ) * b : ℤ) : ZMod p) = ((a * (q.den : ℤ) : ℤ) : ZMod p) :=
+    congrArg (fun t : ℤ => (t : ZMod p)) hcross
+  rw [Int.cast_mul, Int.cast_mul, Int.cast_natCast] at hZ
   rw [← div_eq_mul_inv, ← div_eq_mul_inv, div_eq_div_iff hden hb]
-  exact_mod_cast hcross
+  exact hZ
 
 theorem BSD_negY_reduces (p : ℕ) [Fact p.Prime] (x y : ℤ) :
-    negY (E143Fp p) (x : ZMod p) (y : ZMod p) = (negY E143Z x y : ZMod p) := by
-  have hZ : negY E143Z x y = -y - 1 := by
-    simp [negY, E143Z]
-  rw [hZ]
+    (E143Fp p).negY (x : ZMod p) (y : ZMod p) = ((-y - 1 : ℤ) : ZMod p) := by
   simp only [negY, E143Fp, E143Z, map_a₁, map_a₃, map_zero, map_one,
     Int.cast_neg, Int.cast_sub, Int.cast_one]
   ring
@@ -118,11 +121,9 @@ theorem BSD_negAddY_secant_reduces (p : ℕ) [Fact p.Prime] (x₁ x₂ y₁ y₂
 
 /-- `(2, 0)` and its negative `(2, -1)` reduce to negatives of one another. -/
 theorem BSD_neg_two_zero_reduces (p : ℕ) [Fact p.Prime] :
-    negY (E143Fp p) (2 : ZMod p) 0 = (-1 : ZMod p) := by
+    (E143Fp p).negY (2 : ZMod p) 0 = (-1 : ZMod p) := by
   have h := BSD_negY_reduces p 2 0
-  have hZ : negY E143Z 2 0 = -1 := by
-    simp [negY, E143Z]
-  simpa [hZ] using h
+  simpa using h
 
 /-- The secant identities and the failure of injectivity. They do not give a
     homomorphism `E(ℚ) → E(𝔽_p)`, trivial torsion, or rank at least 1.
