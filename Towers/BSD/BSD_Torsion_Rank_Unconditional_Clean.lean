@@ -29,16 +29,36 @@ open WeierstrassCurve WeierstrassCurve.Affine
 namespace Towers.BSD
 
 /-- Secant slope for integral points whose `x`-coordinates stay distinct modulo `p`. -/
-theorem BSD_reduction_hom_secant :=
-  BSD_secant_slope_reduces
+theorem BSD_reduction_hom_secant
+    (p : ℕ) [Fact p.Prime] (x₁ x₂ y₁ y₂ : ℤ)
+    (hx : ((x₁ : ℤ) : ZMod p) ≠ x₂) :
+    let s : ℚ := ((y₁ - y₂ : ℤ) : ℚ) / ((x₁ - x₂ : ℤ) : ℚ)
+    ((s.num : ZMod p) * (s.den : ZMod p)⁻¹)
+      = slope (E143Fp p) (x₁ : ZMod p) x₂ (y₁ : ZMod p) y₂ := by
+  exact BSD_secant_slope_reduces p x₁ x₂ y₁ y₂ hx
 
 /-- The chord formula for the third intersection, under the same hypothesis. -/
-theorem BSD_reduction_hom_secant_addX :=
-  BSD_addX_secant_reduces
+theorem BSD_reduction_hom_secant_addX
+    (p : ℕ) [Fact p.Prime] (x₁ x₂ y₁ y₂ : ℤ)
+    (hx : ((x₁ : ℤ) : ZMod p) ≠ x₂) :
+    let s : ℚ := ((y₁ - y₂ : ℤ) : ℚ) / ((x₁ - x₂ : ℤ) : ℚ)
+    let L : ZMod p := (s.num : ZMod p) * (s.den : ZMod p)⁻¹
+    L ^ 2 + 1 - (x₁ : ZMod p) - x₂
+      = addX (E143Fp p) (x₁ : ZMod p) x₂
+          (slope (E143Fp p) (x₁ : ZMod p) x₂ (y₁ : ZMod p) y₂) := by
+  exact BSD_addX_secant_reduces p x₁ x₂ y₁ y₂ hx
 
 /-- `negAddY` on that chord. -/
-theorem BSD_reduction_hom_secant_negAddY :=
-  BSD_negAddY_secant_reduces
+theorem BSD_reduction_hom_secant_negAddY
+    (p : ℕ) [Fact p.Prime] (x₁ x₂ y₁ y₂ : ℤ)
+    (hx : ((x₁ : ℤ) : ZMod p) ≠ x₂) :
+    let s : ℚ := ((y₁ - y₂ : ℤ) : ℚ) / ((x₁ - x₂ : ℤ) : ℚ)
+    let L : ZMod p := (s.num : ZMod p) * (s.den : ZMod p)⁻¹
+    let X : ZMod p := L ^ 2 + 1 - x₁ - x₂
+    L * (X - x₁) + y₁
+      = negAddY (E143Fp p) (x₁ : ZMod p) x₂ (y₁ : ZMod p)
+          (slope (E143Fp p) (x₁ : ZMod p) x₂ (y₁ : ZMod p) y₂) := by
+  exact BSD_negAddY_secant_reduces p x₁ x₂ y₁ y₂ hx
 
 /-- Negation on the reduced curve is the polynomial `-y - 1`. -/
 theorem BSD_negY_on_reduction (p : ℕ) [Fact p.Prime] (x y : ℤ) :
