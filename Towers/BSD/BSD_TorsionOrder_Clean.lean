@@ -23,28 +23,30 @@ def E143Q : WeierstrassCurve ℚ :=
   { a₁ := 0, a₂ := -1, a₃ := 1, a₄ := -1, a₆ := -2 }
 
 theorem E143Q_nonsingular_two_zero : Nonsingular E143Q (2 : ℚ) 0 := by
-  rw [nonsingular_iff]
+  rw [nonsingular_iff, equation_iff]
+  dsimp [E143Q]
   constructor
-  · rw [equation_iff]
-    norm_num
+  · norm_num
   · right
     norm_num
 
 theorem E143Q_negY_two_zero : negY E143Q 2 0 = -1 := by
-  simp [negY]
+  dsimp [negY, E143Q]
   norm_num
 
 def E143Q_P20 : Point E143Q :=
   Point.some E143Q_nonsingular_two_zero
 
-private def yCoord : Point E143Q → Option ℚ
-  | .zero => none
-  | @Point.some _ _ y _ => some y
+private def yCoord (P : Point E143Q) : Option ℚ :=
+  Point.casesOn P none (fun {_x y} _ => some y)
 
 theorem E143Q_P20_ne_neg : E143Q_P20 ≠ -E143Q_P20 := by
   intro h
   have hy : yCoord E143Q_P20 = yCoord (-E143Q_P20) := congrArg yCoord h
-  simp [E143Q_P20, yCoord, neg_some, E143Q_negY_two_zero] at hy
+  rw [E143Q_P20, neg_some] at hy
+  dsimp [yCoord] at hy
+  rw [E143Q_negY_two_zero] at hy
+  injection hy
 
 /-- `2 • (2, 0) ≠ 0` in the Mathlib affine group. Not infinite order,
     not a generator, not rank 1, not BSD. -/
