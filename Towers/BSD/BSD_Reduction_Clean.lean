@@ -81,7 +81,7 @@ theorem E143Z_equation_two_zero : Equation E143Z 2 0 := by
 theorem E143Fp_nonsingular_two_zero (p : ℕ) [Fact p.Prime] (hΔ : (E143Fp p).Δ ≠ 0) :
     Nonsingular (E143Fp p) (2 : ZMod p) 0 := by
   have hEq := Equation.map (Int.castRingHom (ZMod p)) E143Z_equation_two_zero
-  simp only [Int.coe_castRingHom] at hEq
+  simp only [Int.coe_castRingHom, Int.cast_ofNat, Int.cast_zero] at hEq
   exact nonsingular_of_Δ_ne_zero (E143Fp p) hEq hΔ
 
 /-- Reduction of the integral point `(2, 0)`. Not a map on `E(ℚ)`. -/
