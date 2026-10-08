@@ -44,9 +44,9 @@ theorem E143Q_P20_ne_neg : E143Q_P20 ≠ -E143Q_P20 := by
   intro h
   have hy : yCoord E143Q_P20 = yCoord (-E143Q_P20) := congrArg yCoord h
   rw [E143Q_P20, neg_some] at hy
-  dsimp [yCoord] at hy
-  rw [E143Q_negY_two_zero] at hy
-  injection hy
+  dsimp [yCoord, E143Q] at hy
+  injection hy with hy
+  norm_num at hy
 
 /-- `2 • (2, 0) ≠ 0` in the Mathlib affine group. Not infinite order,
     not a generator, not rank 1, not BSD. -/
