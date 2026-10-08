@@ -94,6 +94,7 @@ import Towers.BSD.BSD_ClassNumber_Clean
 import Towers.BSD.BSD_ClassNumber_Collapse_Clean
 import Towers.BSD.BSD_Hasse_Forall_Clean
 import Towers.BSD.BSD_Frobenius_Degree_Actual_Clean
+import Towers.BSD.BSD_Degree_Clean
 import Towers.BSD.BSD_Torsion_Rank_Unconditional_Clean
 import Towers.BSD.BSD_LFunction_HasseWeil_New
 import Towers.BSD.BSD_AnalyticContinuation_New
