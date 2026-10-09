@@ -1,34 +1,57 @@
-/- BSD_Assessed_Batch10.lean — Individual proposition assessment (batch 10).
-    Honest Prop placeholders with original statements preserved.
-    - Where the type elaborates: def is the actual proposition (NOT proved).
-    - Where it doesn't: def is True with original statement documented.
-    Pattern: Beal conductor_86 — Prop, NOT proved. -/
+/- BSD_Assessed_Batch10.lean — Batch 10.
+    The 10 Frobenius props are theorems: `∀ r, r^2 - a_p r + p ≥ 0` at that prime,
+    citing `Towers.BSD.BSD_DegreeNonneg_pN`. Not Hasse for every prime.
+    The other props in this file stay unproved placeholders. -/
 
 import Towers.BSD.BSD_MissingDefinitionsRegistry
 import Towers.BSD.BSD_Frobenius_Certificate_Clean
 import Towers.BSD.BSD_Frobenius_Fact_Instances
+import hasseprimset.BSD_Hasse_Points_9721_9791
+import hasseprimset.BSD_Hasse_Points_9803_9871
+import hasseprimset.BSD_Hasse_Points_9883_9967
+import hasseprimset.BSD_Hasse_Points_9973_9973
 open BSD_MissingDefinitionsRegistry
 
 namespace hasseprimset_BSD_Hasse_Points_9721_9791_Assessed
-  def BSD_DegreeNonneg_p9721_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9721
-  def BSD_DegreeNonneg_p9733_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9733
-  def BSD_DegreeNonneg_p9739_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9739
+  theorem BSD_DegreeNonneg_p9721_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9721 :=
+    Towers.BSD.BSD_DegreeNonneg_p9721
+  theorem BSD_DegreeNonneg_p9733_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9733 :=
+    Towers.BSD.BSD_DegreeNonneg_p9733
+  theorem BSD_DegreeNonneg_p9739_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9739 :=
+    Towers.BSD.BSD_DegreeNonneg_p9739
 end hasseprimset_BSD_Hasse_Points_9721_9791_Assessed
 
 namespace hasseprimset_BSD_Hasse_Points_9803_9871_Assessed
-  def BSD_DegreeNonneg_p9803_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9803
-  def BSD_DegreeNonneg_p9811_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9811
-  def BSD_DegreeNonneg_p9817_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9817
+  theorem BSD_DegreeNonneg_p9803_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9803 :=
+    Towers.BSD.BSD_DegreeNonneg_p9803
+  theorem BSD_DegreeNonneg_p9811_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9811 :=
+    Towers.BSD.BSD_DegreeNonneg_p9811
+  theorem BSD_DegreeNonneg_p9817_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9817 :=
+    Towers.BSD.BSD_DegreeNonneg_p9817
 end hasseprimset_BSD_Hasse_Points_9803_9871_Assessed
 
 namespace hasseprimset_BSD_Hasse_Points_9883_9967_Assessed
-  def BSD_DegreeNonneg_p9883_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9883
-  def BSD_DegreeNonneg_p9887_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9887
-  def BSD_DegreeNonneg_p9901_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9901
+  theorem BSD_DegreeNonneg_p9883_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9883 :=
+    Towers.BSD.BSD_DegreeNonneg_p9883
+  theorem BSD_DegreeNonneg_p9887_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9887 :=
+    Towers.BSD.BSD_DegreeNonneg_p9887
+  theorem BSD_DegreeNonneg_p9901_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9901 :=
+    Towers.BSD.BSD_DegreeNonneg_p9901
 end hasseprimset_BSD_Hasse_Points_9883_9967_Assessed
 
 namespace hasseprimset_BSD_Hasse_Points_9973_9973_Assessed
-  def BSD_DegreeNonneg_p9973_prop : Prop := BSD_FrobeniusDegreeNonneg_OPEN 9973
+  theorem BSD_DegreeNonneg_p9973_prop :
+      Towers.BSD.BSD_FrobeniusDegreeNonneg_OPEN 9973 :=
+    Towers.BSD.BSD_DegreeNonneg_p9973
   def BSD_Hasse_OPEN_p9973_prop : Prop := True -- was: BSD_Hasse_OPEN 9973
 end hasseprimset_BSD_Hasse_Points_9973_9973_Assessed
 
