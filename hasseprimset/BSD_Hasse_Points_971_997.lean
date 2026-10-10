@@ -155,12 +155,4 @@ theorem BSD_HasseBound_Discriminant_TierA_Batch12 (p : ℕ) [Fact p.Prime]
   · exact BSD_HasseBound_Disc_p991
   · exact BSD_HasseBound_Disc_p997
 
-/-! ## §7. Combinator -/
-
-theorem BSD_Genesis774_Combinator
-    (h_disc   : BSD_HasseBound_Discriminant_OPEN)
-    (h_anchor : BSD_LFunctionIsLinFunc_OPEN) :
-    BSD_143_OPEN :=
-  BSD_Genesis773_Combinator h_disc h_anchor
-
 end Towers.BSD

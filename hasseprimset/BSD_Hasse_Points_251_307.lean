@@ -297,16 +297,4 @@ theorem BSD_HasseBound_Discriminant_TierA_Batch1 (p : ℕ) [Fact p.Prime]
   · exact BSD_HasseBound_Disc_p293
   · exact BSD_HasseBound_Disc_p307
 
-/-! ## §7. Genesis-763 combinator -/
-
-/-- **`BSD_Genesis763_Combinator`** — reuses genesis-762 combinator.
-    BSD_143_OPEN from (Gate 1 ALL + Gate 2) at LMFDB-anchor level.
-    61 primes now proved for Gate 1 Tier A.  Gates themselves unchanged (OPEN).
-    NOT a Clay brick.  BSD: OPEN. -/
-theorem BSD_Genesis763_Combinator
-    (h_disc   : BSD_HasseBound_Discriminant_OPEN)
-    (h_anchor : BSD_LFunctionIsLinFunc_OPEN) :
-    BSD_143_OPEN :=
-  BSD_Genesis762_Combinator h_disc h_anchor
-
 end Towers.BSD
