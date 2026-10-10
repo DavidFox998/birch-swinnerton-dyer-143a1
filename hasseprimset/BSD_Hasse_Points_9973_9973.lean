@@ -36,7 +36,9 @@ private instance i889_p9973 : Fact (9973 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p9973 : (E143_Finset 9973).card = 10021 := by native_decide
+theorem BSD_E143_card_p9973 : (E143_Finset 9973).card = 10021 := by
+  rw [card_affine_eq_sum_eulerChi 9973 (by decide)]
+  native_decide
 
 /-! ## §3. Exact a_p values -/
 

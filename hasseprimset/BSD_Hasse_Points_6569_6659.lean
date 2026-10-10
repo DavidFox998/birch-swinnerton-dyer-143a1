@@ -44,7 +44,7 @@ set_option maxHeartbeats 0
 
 namespace Towers.BSD
 
-private lemma BSD_disc_from_deg_851 {p : ℕ}
+private lemma BSD_disc_from_deg_851 {p : ℕ} [Fact p.Prime]
     (h : BSD_FrobeniusDegreeNonneg_OPEN p) : (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ) := by
   have hspec := h ((a_p p : ℝ) / 2); nlinarith [hspec]
 
@@ -63,16 +63,36 @@ private instance i851_p6659 : Fact (6659 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p6569 : (E143_Finset 6569).card = 6551 := by native_decide
-theorem BSD_E143_card_p6571 : (E143_Finset 6571).card = 6551 := by native_decide
-theorem BSD_E143_card_p6577 : (E143_Finset 6577).card = 6659 := by native_decide
-theorem BSD_E143_card_p6581 : (E143_Finset 6581).card = 6710 := by native_decide
-theorem BSD_E143_card_p6599 : (E143_Finset 6599).card = 6637 := by native_decide
-theorem BSD_E143_card_p6607 : (E143_Finset 6607).card = 6509 := by native_decide
-theorem BSD_E143_card_p6619 : (E143_Finset 6619).card = 6729 := by native_decide
-theorem BSD_E143_card_p6637 : (E143_Finset 6637).card = 6755 := by native_decide
-theorem BSD_E143_card_p6653 : (E143_Finset 6653).card = 6588 := by native_decide
-theorem BSD_E143_card_p6659 : (E143_Finset 6659).card = 6590 := by native_decide
+theorem BSD_E143_card_p6569 : (E143_Finset 6569).card = 6551 := by
+  rw [card_affine_eq_sum_eulerChi 6569 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6571 : (E143_Finset 6571).card = 6551 := by
+  rw [card_affine_eq_sum_eulerChi 6571 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6577 : (E143_Finset 6577).card = 6659 := by
+  rw [card_affine_eq_sum_eulerChi 6577 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6581 : (E143_Finset 6581).card = 6710 := by
+  rw [card_affine_eq_sum_eulerChi 6581 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6599 : (E143_Finset 6599).card = 6637 := by
+  rw [card_affine_eq_sum_eulerChi 6599 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6607 : (E143_Finset 6607).card = 6509 := by
+  rw [card_affine_eq_sum_eulerChi 6607 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6619 : (E143_Finset 6619).card = 6729 := by
+  rw [card_affine_eq_sum_eulerChi 6619 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6637 : (E143_Finset 6637).card = 6755 := by
+  rw [card_affine_eq_sum_eulerChi 6637 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6653 : (E143_Finset 6653).card = 6588 := by
+  rw [card_affine_eq_sum_eulerChi 6653 (by decide)]
+  native_decide
+theorem BSD_E143_card_p6659 : (E143_Finset 6659).card = 6590 := by
+  rw [card_affine_eq_sum_eulerChi 6659 (by decide)]
+  native_decide
 
 /-! ## §3. Exact a_p values -/
 

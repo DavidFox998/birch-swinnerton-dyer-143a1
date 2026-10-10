@@ -63,16 +63,36 @@ private instance i888_p9967 : Fact (9967 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p9883 : (E143_Finset 9883).card = 9832 := by native_decide
-theorem BSD_E143_card_p9887 : (E143_Finset 9887).card = 9914 := by native_decide
-theorem BSD_E143_card_p9901 : (E143_Finset 9901).card = 10019 := by native_decide
-theorem BSD_E143_card_p9907 : (E143_Finset 9907).card = 9845 := by native_decide
-theorem BSD_E143_card_p9923 : (E143_Finset 9923).card = 9794 := by native_decide
-theorem BSD_E143_card_p9929 : (E143_Finset 9929).card = 10075 := by native_decide
-theorem BSD_E143_card_p9931 : (E143_Finset 9931).card = 10014 := by native_decide
-theorem BSD_E143_card_p9941 : (E143_Finset 9941).card = 9869 := by native_decide
-theorem BSD_E143_card_p9949 : (E143_Finset 9949).card = 9847 := by native_decide
-theorem BSD_E143_card_p9967 : (E143_Finset 9967).card = 9864 := by native_decide
+theorem BSD_E143_card_p9883 : (E143_Finset 9883).card = 9832 := by
+  rw [card_affine_eq_sum_eulerChi 9883 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9887 : (E143_Finset 9887).card = 9914 := by
+  rw [card_affine_eq_sum_eulerChi 9887 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9901 : (E143_Finset 9901).card = 10019 := by
+  rw [card_affine_eq_sum_eulerChi 9901 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9907 : (E143_Finset 9907).card = 9845 := by
+  rw [card_affine_eq_sum_eulerChi 9907 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9923 : (E143_Finset 9923).card = 9794 := by
+  rw [card_affine_eq_sum_eulerChi 9923 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9929 : (E143_Finset 9929).card = 10075 := by
+  rw [card_affine_eq_sum_eulerChi 9929 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9931 : (E143_Finset 9931).card = 10014 := by
+  rw [card_affine_eq_sum_eulerChi 9931 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9941 : (E143_Finset 9941).card = 9869 := by
+  rw [card_affine_eq_sum_eulerChi 9941 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9949 : (E143_Finset 9949).card = 9847 := by
+  rw [card_affine_eq_sum_eulerChi 9949 (by decide)]
+  native_decide
+theorem BSD_E143_card_p9967 : (E143_Finset 9967).card = 9864 := by
+  rw [card_affine_eq_sum_eulerChi 9967 (by decide)]
+  native_decide
 
 /-! ## §3. Exact a_p values -/
 

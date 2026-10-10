@@ -1,4 +1,5 @@
 import hasseprimset.BSD_Hasse_Points_887_967
+import Towers.BSD.BSD_FiberCount
 
 /-
 ================================================================
@@ -32,7 +33,7 @@ set_option maxHeartbeats 0
 
 namespace Towers.BSD
 
-private lemma BSD_disc_from_deg_774 {p : ℕ}
+private lemma BSD_disc_from_deg_774 {p : ℕ} [Fact p.Prime]
     (h : BSD_FrobeniusDegreeNonneg_OPEN p) : (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ) := by
   have hspec := h ((a_p p : ℝ) / 2)
   nlinarith [hspec]
@@ -47,11 +48,21 @@ private instance i774_p997 : Fact (997 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §1. Point counts (by decide) -/
 
-theorem BSD_E143_card_p971 : (E143_Finset 971).card = 1020 := by decide
-theorem BSD_E143_card_p977 : (E143_Finset 977).card = 986 := by decide
-theorem BSD_E143_card_p983 : (E143_Finset 983).card = 1014 := by decide
-theorem BSD_E143_card_p991 : (E143_Finset 991).card = 959 := by decide
-theorem BSD_E143_card_p997 : (E143_Finset 997).card = 1015 := by decide
+theorem BSD_E143_card_p971 : (E143_Finset 971).card = 1020 := by
+  rw [card_affine_eq_sum_eulerChi 971 (by decide)]
+  native_decide
+theorem BSD_E143_card_p977 : (E143_Finset 977).card = 986 := by
+  rw [card_affine_eq_sum_eulerChi 977 (by decide)]
+  native_decide
+theorem BSD_E143_card_p983 : (E143_Finset 983).card = 1014 := by
+  rw [card_affine_eq_sum_eulerChi 983 (by decide)]
+  native_decide
+theorem BSD_E143_card_p991 : (E143_Finset 991).card = 959 := by
+  rw [card_affine_eq_sum_eulerChi 991 (by decide)]
+  native_decide
+theorem BSD_E143_card_p997 : (E143_Finset 997).card = 1015 := by
+  rw [card_affine_eq_sum_eulerChi 997 (by decide)]
+  native_decide
 
 /-! ## §2. Exact a_p values -/
 

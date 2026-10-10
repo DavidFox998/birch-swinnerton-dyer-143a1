@@ -44,7 +44,7 @@ set_option maxHeartbeats 0
 
 namespace Towers.BSD
 
-private lemma BSD_disc_from_deg_796 {p : ℕ}
+private lemma BSD_disc_from_deg_796 {p : ℕ} [Fact p.Prime]
     (h : BSD_FrobeniusDegreeNonneg_OPEN p) : (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ) := by
   have hspec := h ((a_p p : ℝ) / 2); nlinarith [hspec]
 
@@ -63,16 +63,36 @@ private instance i796_p2029 : Fact (2029 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p1979 : (E143_Finset 1979).card = 1943 := by native_decide
-theorem BSD_E143_card_p1987 : (E143_Finset 1987).card = 1985 := by native_decide
-theorem BSD_E143_card_p1993 : (E143_Finset 1993).card = 2053 := by native_decide
-theorem BSD_E143_card_p1997 : (E143_Finset 1997).card = 1961 := by native_decide
-theorem BSD_E143_card_p1999 : (E143_Finset 1999).card = 2021 := by native_decide
-theorem BSD_E143_card_p2003 : (E143_Finset 2003).card = 1999 := by native_decide
-theorem BSD_E143_card_p2011 : (E143_Finset 2011).card = 2016 := by native_decide
-theorem BSD_E143_card_p2017 : (E143_Finset 2017).card = 2032 := by native_decide
-theorem BSD_E143_card_p2027 : (E143_Finset 2027).card = 1960 := by native_decide
-theorem BSD_E143_card_p2029 : (E143_Finset 2029).card = 2084 := by native_decide
+theorem BSD_E143_card_p1979 : (E143_Finset 1979).card = 1943 := by
+  rw [card_affine_eq_sum_eulerChi 1979 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1987 : (E143_Finset 1987).card = 1985 := by
+  rw [card_affine_eq_sum_eulerChi 1987 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1993 : (E143_Finset 1993).card = 2053 := by
+  rw [card_affine_eq_sum_eulerChi 1993 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1997 : (E143_Finset 1997).card = 1961 := by
+  rw [card_affine_eq_sum_eulerChi 1997 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1999 : (E143_Finset 1999).card = 2021 := by
+  rw [card_affine_eq_sum_eulerChi 1999 (by decide)]
+  native_decide
+theorem BSD_E143_card_p2003 : (E143_Finset 2003).card = 1999 := by
+  rw [card_affine_eq_sum_eulerChi 2003 (by decide)]
+  native_decide
+theorem BSD_E143_card_p2011 : (E143_Finset 2011).card = 2016 := by
+  rw [card_affine_eq_sum_eulerChi 2011 (by decide)]
+  native_decide
+theorem BSD_E143_card_p2017 : (E143_Finset 2017).card = 2032 := by
+  rw [card_affine_eq_sum_eulerChi 2017 (by decide)]
+  native_decide
+theorem BSD_E143_card_p2027 : (E143_Finset 2027).card = 1960 := by
+  rw [card_affine_eq_sum_eulerChi 2027 (by decide)]
+  native_decide
+theorem BSD_E143_card_p2029 : (E143_Finset 2029).card = 2084 := by
+  rw [card_affine_eq_sum_eulerChi 2029 (by decide)]
+  native_decide
 
 /-! ## §3. Exact a_p values -/
 
