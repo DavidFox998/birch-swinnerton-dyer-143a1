@@ -69,6 +69,8 @@ set_option maxRecDepth 10000
 
 namespace Towers.BSD
 
+open BSD_MissingDefinitionsRegistry
+
 /-! ## §1. E₁₄₃ as a WeierstrassCurve over ℤ -/
 
 /-- **E143_Weierstrass**: E₁₄₃/ℤ as a Mathlib WeierstrassCurve.
@@ -135,16 +137,24 @@ theorem E143_disc_explicit : E143_Weierstrass.Δ = -11 * 13 * 13 := by
     hence does not divide 1859 = 11 · 13². -/
 theorem BSD_GoodRed_implies_nonzero_disc (p : ℕ) [hp : Fact p.Prime] (hn : ¬(p ∣ 143)) :
     ¬(p ∣ (1859 : ℕ)) := by
-  have hp11 : p ≠ 11 := fun h => hn (h ▸ dvd_of_eq (by norm_num))
-  have hp13 : p ≠ 13 := fun h => hn (h ▸ dvd_of_eq (by norm_num))
+  have hp11 : p ≠ 11 := by
+    intro h
+    apply hn
+    rw [h]
+    norm_num
+  have hp13 : p ≠ 13 := by
+    intro h
+    apply hn
+    rw [h]
+    norm_num
   intro h1859
   have hfact : 1859 = 11 * 13 * 13 := by norm_num
   rw [hfact] at h1859
-  have := hp.out.dvd_mul.mp (hp.out.dvd_mul.mp h1859)
-  rcases this with (h | h) | h
-  · exact hp11 (Nat.Prime.eq_of_dvd_of_prime hp.out (by norm_num) h)
-  · exact hp13 (Nat.Prime.eq_of_dvd_of_prime hp.out (by norm_num) h)
-  · exact hp13 (Nat.Prime.eq_of_dvd_of_prime hp.out (by norm_num) h)
+  rcases hp.out.dvd_mul.mp h1859 with h | h
+  · rcases hp.out.dvd_mul.mp h with h | h
+    · exact hp11 ((Nat.prime_dvd_prime_iff_eq hp.out (by norm_num)).mp h)
+    · exact hp13 ((Nat.prime_dvd_prime_iff_eq hp.out (by norm_num)).mp h)
+  · exact hp13 ((Nat.prime_dvd_prime_iff_eq hp.out (by norm_num)).mp h)
 
 /-! ## §3. Affine point match -/
 
