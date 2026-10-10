@@ -1,5 +1,6 @@
 import Mathlib.Tactic
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_FiberCount
 import Towers.BSD.BSD_Frobenius_Certificate_Clean
 import Towers.BSD.BSD_Frobenius_Fact_Instances
 
@@ -63,7 +64,9 @@ private instance i886_p9791 : Fact (9791 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p9721 : (E143_Finset 9721).card = 9621 := by native_decide
+theorem BSD_E143_card_p9721 : (E143_Finset 9721).card = 9621 := by
+  rw [card_affine_eq_sum_eulerChi 9721 (by decide)]
+  native_decide
 theorem BSD_E143_card_p9733 : (E143_Finset 9733).card = 9752 := by native_decide
 theorem BSD_E143_card_p9739 : (E143_Finset 9739).card = 9840 := by native_decide
 theorem BSD_E143_card_p9743 : (E143_Finset 9743).card = 9787 := by native_decide

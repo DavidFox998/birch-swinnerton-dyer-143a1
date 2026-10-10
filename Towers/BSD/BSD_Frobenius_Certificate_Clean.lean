@@ -7,6 +7,7 @@
 -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_FiberCount
 
 namespace Towers.BSD
 

@@ -66,15 +66,12 @@ lemma eulerChi_eq_legendreSym (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2)
       constructor
       · intro hcon
         unfold eulerChi at hcon
-        simp [hd_ne] at hcon
-        by_contra hc
-        rw [if_neg hc] at hcon
-        norm_num at hcon
+        simpa [hd_ne] using hcon
       · intro hcon
         unfold eulerChi
         simp [hd_ne, hcon]
     have key : eulerChi p d = 1 ↔ IsSquare d :=
-      he1.trans (isSquare_iff_pow_half p hp2 d hd_ne)
+      he1.trans (isSquare_iff_pow_half p hp2 d hd_ne).symm
     by_cases hs : IsSquare d
     · have h1 : eulerChi p d = 1 := key.mpr hs
       have h2 : quadraticChar (ZMod p) d = 1 :=
@@ -144,21 +141,19 @@ lemma fiber_card_eq_eulerChi (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2)
           ⟨fun y => 2 * y + 1, h_inj⟩ =
         Finset.univ.filter (fun z : ZMod p => z ^ 2 = d) := by
       ext z
-      simp only [Finset.mem_map, Finset.mem_filter, Finset.mem_univ, true_and]
+      simp only [Finset.mem_map, Finset.mem_filter, Finset.mem_univ, true_and,
+        Function.Embedding.coeFn_mk]
       constructor
       · rintro ⟨y, hy, rfl⟩
-        rw [hd_def]
-        linear_combination 4 * hy
+        exact (h_iff y).mp hy
       · intro hz
         refine ⟨(z - 1) * (2 : ZMod p)⁻¹, ?_, ?_⟩
-        · have hz' : z ^ 2 = 4 * c + 1 := by rw [← hd_def]; exact hz
-          have hu : (2 : ZMod p)⁻¹ * 2 = 1 := inv_mul_cancel₀ h2_ne
-          have hu2 : (2 : ZMod p)⁻¹ ^ 2 * 4 = 1 := by
-            calc (2 : ZMod p)⁻¹ ^ 2 * 4 = ((2 : ZMod p)⁻¹ * 2) ^ 2 := by ring
-              _ = (1 : ZMod p) ^ 2 := by rw [hu]
-              _ = 1 := one_pow 2
-          linear_combination (1 / 4 : ZMod p) * hz' +
-            ((z - 1) ^ 2 / 4 : ZMod p) * hu2 + ((z - 1) / 2 : ZMod p) * hu
+        · have hy2 : 2 * ((z - 1) * (2 : ZMod p)⁻¹) + 1 = z := by
+            calc 2 * ((z - 1) * (2 : ZMod p)⁻¹) + 1
+                = (z - 1) * (2 * (2 : ZMod p)⁻¹) + 1 := by ring
+              _ = (z - 1) * 1 + 1 := by rw [mul_inv_cancel₀ h2_ne]
+              _ = z := by ring
+          exact (h_iff _).mpr (by rw [hy2, hz])
         · calc 2 * ((z - 1) * (2 : ZMod p)⁻¹) + 1
               = (z - 1) * (2 * (2 : ZMod p)⁻¹) + 1 := by ring
             _ = (z - 1) * 1 + 1 := by rw [mul_inv_cancel₀ h2_ne]
@@ -191,10 +186,7 @@ lemma fiber_card_eq_eulerChi (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2)
             constructor
             · intro hcon
               unfold eulerChi at hcon
-              simp [hd_ne] at hcon
-              by_contra hc
-              rw [if_neg hc] at hcon
-              norm_num at hcon
+              simpa [hd_ne] using hcon
             · intro hcon
               unfold eulerChi
               simp [hd_ne, hcon]
@@ -203,8 +195,8 @@ lemma fiber_card_eq_eulerChi (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2)
       obtain ⟨r, hr⟩ := h_isSquare
       have hr_ne : r ≠ 0 := by
         intro h
-        rw [h, zero_pow (by decide)] at hr
-        exact hd_ne hr.symm
+        rw [h, zero_mul] at hr
+        exact hd_ne hr
       have h_neg_ne : r ≠ -r := by
         intro h
         have h2r : (2 : ZMod p) * r = 0 := by linear_combination h
@@ -215,11 +207,14 @@ lemma fiber_card_eq_eulerChi (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2)
         constructor
         · intro hz
           have hzz : (z - r) * (z + r) = 0 := by
-            linear_combination hz.trans hr.symm
+            have : z ^ 2 - r * r = 0 := by rw [hz, hr, sub_self]
+            linear_combination this
           rcases mul_eq_zero.mp hzz with h | h
           · left; linear_combination h
           · right; linear_combination h
-        · rintro (rfl | rfl) <;> simp [hr]
+        · rintro (rfl | rfl)
+          · rw [pow_two, hr]
+          · rw [pow_two, hr]; ring
       rw [h_filter_eq, Finset.card_pair h_neg_ne, hsq]
       simp
     · -- not a square: no roots, eulerChi = -1
@@ -240,7 +235,7 @@ lemma fiber_card_eq_eulerChi (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2)
         ext z
         simp [Finset.mem_filter]
         intro hz
-        exact h_not_sq ⟨z, by rwa [← pow_two]⟩
+        exact h_not_sq ⟨z, by simpa [pow_two] using hz.symm⟩
       rw [h_empty, Finset.card_empty, h_chi_neg]
       simp
 
@@ -252,9 +247,6 @@ lemma card_affine_eq_sum_fiber (p : ℕ) [Fact p.Prime] :
       Finset.univ.biUnion (fun x : ZMod p => (E143_fiber p x).image (fun y => (x, y))) := by
     ext ⟨x, y⟩
     simp [E143_Finset, E143_fiber, Finset.mem_biUnion, Finset.mem_image, Finset.mem_filter]
-    constructor
-    · intro h; use x; exact ⟨h, rfl⟩
-    · rintro ⟨x', ⟨hy, rfl⟩⟩; exact hy
   have h_disj : ∀ x₁ ∈ Finset.univ, ∀ x₂ ∈ Finset.univ, x₁ ≠ x₂ →
       Disjoint ((E143_fiber p x₁).image (fun y => (x₁, y)))
                ((E143_fiber p x₂).image (fun y => (x₂, y))) := by

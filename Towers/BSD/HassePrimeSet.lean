@@ -1,5 +1,6 @@
 import Mathlib.Data.Nat.Prime
 import Mathlib.Tactic.NormNum
+import Towers.BSD.BSD_FiberCount
 
 namespace Towers.BSD
 
