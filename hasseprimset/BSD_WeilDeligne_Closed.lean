@@ -1,5 +1,6 @@
 import hasseprimset.BSD_Hasse_Points_971_997
 import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+import Towers.BSD.BSD_MissingDefinitionsRegistry
 
 /-
 ================================================================
