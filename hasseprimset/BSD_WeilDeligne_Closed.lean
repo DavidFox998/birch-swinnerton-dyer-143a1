@@ -237,27 +237,4 @@ theorem BSD_TierA_166_evidence : (166 : ℕ) ≤ 166 := le_refl 166
 def BSD_HasseBound_TierC_OPEN : Prop :=
   ∀ (p : ℕ) [Fact p.Prime], p > 997 → ¬(p ∣ 143) → (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ)
 
-/-! ## §6. Combinator -/
-
-/-- **BSD_Genesis775_Combinator** (0 sorry, classical trio).
-
-    Gate 1: BSD_WeilHasse_Weierstrass_OPEN
-      = Hasse bound stated in Mathlib WeierstrassCurve terms (Option C).
-      = BSD_HasseBound_Discriminant_OPEN definitionally (BSD_WeilHasse_eq_Gate1).
-      Mathlib gap: Frobenius endomorphism absent from v4.12.0.
-    Gate 2: BSD_LFunctionIsLinFunc_OPEN (unchanged).
-      Mathlib gap: Mellin/Hecke absent from v4.12.0.
-
-    Forward-compatibility note: when Mathlib vX.Y adds
-      WeierstrassCurve.card_affine_sub_one_le_two_sqrt,
-    BSD_WeilHasse_Weierstrass_OPEN closes in one theorem; this combinator
-    then produces BSD_143_OPEN unconditionally (modulo Gate 2).
-
-    NOT a brick.  BSD: OPEN.  No Clay claim. -/
-theorem BSD_Genesis775_Combinator
-    (h_hasse  : BSD_WeilHasse_Weierstrass_OPEN)
-    (h_anchor : BSD_LFunctionIsLinFunc_OPEN) :
-    BSD_143_OPEN :=
-  BSD_Genesis774_Combinator (BSD_Gate1_from_Weierstrass h_hasse) h_anchor
-
 end Towers.BSD

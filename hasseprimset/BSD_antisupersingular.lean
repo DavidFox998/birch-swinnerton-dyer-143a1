@@ -366,23 +366,4 @@ def BSD_aNBound_to_LSeries_OPEN : Prop :=
   BSD_LSeriesSummable_OPEN →  -- just records the implication direction
   True                         -- placeholder: the gap is the τ(n)=O(n^ε) formalization
 
-/-! ## §7. Updated combinator -/
-
-/-- **BSD_Genesis776_Combinator** (0 sorry, classical trio):
-
-    Gate 1: BSD_WeilHasse_Weierstrass_OPEN (unchanged)
-      → BSD_PrimePowBound_PROVED (via §1–4 of this file)
-      → BSD_aNBound_OPEN (via Finsupp.prod identity, roadmap in §6)
-      → BSD_LSeriesSummable_OPEN (via LSeriesSummable_of_isBigO_rpow, roadmap in §6)
-      → BSD_AnalyticOn_OPEN (standard M-test from LSeriesSummable)
-    Gate 2: BSD_LFunctionIsLinFunc_OPEN (unchanged)
-
-    All four consequence surfaces close simultaneously when Gate 1 closes.
-    NOT a brick.  BSD: OPEN.  No Clay claim. -/
-theorem BSD_Genesis776_Combinator
-    (h_hasse  : BSD_WeilHasse_Weierstrass_OPEN)
-    (h_anchor : BSD_LFunctionIsLinFunc_OPEN) :
-    BSD_143_OPEN :=
-  BSD_Genesis775_Combinator h_hasse h_anchor
-
 end Towers.BSD
