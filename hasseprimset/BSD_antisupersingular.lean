@@ -60,24 +60,32 @@ theorem BSD_antisupersingular (p : ℕ) [hp : Fact p.Prime] :
     have hcp : c ^ 2 = (p : ℤ) := by linarith [hZ]
     -- (p : ℤ) divides c²
     have hp_dvd_c2 : (p : ℤ) ∣ c ^ 2 := ⟨1, by linarith⟩
-    -- Since p is prime: p ∣ c
-    have hp_int : (p : ℤ).Prime := Int.coe_nat_prime.mpr hp.out
-    have hp_dvd_c : (p : ℤ) ∣ c := hp_int.dvd_of_dvd_pow (hcp ▸ hp_dvd_c2)
+    -- Since p is prime: p ∣ c.  Mathlib v4.12.0 has no Int.Prime;
+    -- Prime (p : ℤ) ↔ Nat.Prime (p : ℤ).natAbs.
+    have hp_int : Prime (p : ℤ) :=
+      Int.prime_iff_natAbs_prime.mpr (by simpa using hp.out)
+    have hp_dvd_c : (p : ℤ) ∣ c := hp_int.dvd_of_dvd_pow hp_dvd_c2
     obtain ⟨k, hk⟩ := hp_dvd_c
     rw [hk] at hcp
     -- p²k² = p → pk² = 1 → p ≤ 1
     have hpk : (p : ℤ) * k ^ 2 = 1 := by
-      have := hcp; ring_nf at this ⊢; linarith [this]
+      have hp0 : (p : ℤ) ≠ 0 := by exact_mod_cast hp.out.ne_zero
+      have hmul : (p : ℤ) * ((p : ℤ) * k ^ 2) = (p : ℤ) * 1 := by
+        calc (p : ℤ) * ((p : ℤ) * k ^ 2) = ((p : ℤ) * k) ^ 2 := by ring
+          _ = (p : ℤ) := hcp
+          _ = (p : ℤ) * 1 := (mul_one _).symm
+      exact mul_left_cancel₀ hp0 hmul
     have hple : (p : ℤ) ≤ 1 := by
-      have hpos : 0 < k^2 ∨ k = 0 := by
-        rcases eq_or_ne k 0 with h | h
-        · right; exact h
-        · left; positivity
-      rcases hpos with hkpos | hk0
-      · calc (p : ℤ) ≤ (p : ℤ) * k^2 := le_mul_of_one_le_right (by positivity) hkpos
-             _ = 1 := hpk
-      · simp [hk0] at hpk; linarith [hpk]
-    linarith [hp.out.two_le]
+      rcases eq_or_ne k 0 with hk0 | hkne
+      · simp [hk0] at hpk
+      · have hk_sq : (1 : ℤ) ≤ k ^ 2 := by
+          have : (0 : ℤ) < k ^ 2 := sq_pos_of_ne_zero hkne
+          omega
+        calc (p : ℤ) ≤ (p : ℤ) * k ^ 2 :=
+            le_mul_of_one_le_right (by positivity) hk_sq
+          _ = 1 := hpk
+    have htwo : (2 : ℤ) ≤ (p : ℤ) := by exact_mod_cast hp.out.two_le
+    linarith
   · -- Odd case: a_p = 2c+1, so (2c+1)² = 4p → 4c²+4c+1 = 4p
     rw [hc] at hZ
     have : 4 * (p : ℤ) = 4 * c ^ 2 + 4 * c + 1 := by linarith [hZ]
@@ -104,6 +112,7 @@ theorem BSD_sin_succ_le (k : ℕ) (θ : ℝ) :
   induction k with
   | zero => simp
   | succ n ih =>
+    rw [show ((n + 1 : ℕ) : ℝ) = (n : ℝ) + 1 by push_cast; ring]
     have hstep : ((n : ℝ) + 1 + 1) * θ = ((n : ℝ) + 1) * θ + θ := by ring
     rw [hstep, Real.sin_add]
     have h_bound :
@@ -143,8 +152,8 @@ private theorem BSD_Newton_sin {p : ℕ} [hp : Fact p.Prime] {θ : ℝ}
     (Real.sqrt (p : ℝ)) ^ k * Real.sin (((k : ℝ) + 1) * θ) := by
   have hap_eq : (a_p p : ℝ) = 2 * Real.sqrt (p : ℝ) * Real.cos θ := by
     rw [hcos]
-    have : (0 : ℝ) ≤ (p : ℝ) := Nat.cast_nonneg p
-    field_simp [Real.sqrt_ne_zero'.mpr (lt_of_lt_of_le hp.out.pos (le_refl _))]
+    have hpos : (0 : ℝ) < (p : ℝ) := by exact_mod_cast hp.out.pos
+    field_simp [Real.sqrt_ne_zero'.mpr hpos]
   have hp_sq : (p : ℝ) = Real.sqrt (p : ℝ) ^ 2 :=
     (Real.sq_sqrt (Nat.cast_nonneg p)).symm
   -- Prove ∀ j, P(j) ∧ P(j+1) by induction, then extract P(k)
@@ -158,12 +167,13 @@ private theorem BSD_Newton_sin {p : ℕ} [hp : Fact p.Prime] {θ : ℝ}
     constructor
     · simp [a_prime_pow]
     · simp only [a_prime_pow, Nat.cast_zero, zero_add, pow_one]
-      rw [show (0 : ℝ) + 2 = 2 from by norm_num,
-          show 2 * θ = θ + θ from by ring, Real.sin_add, hap_eq]
+      rw [show (2 : ℝ) * θ = θ + θ from by ring, Real.sin_add, hap_eq]
       ring
   | succ n ih =>
     obtain ⟨ihn, ihn1⟩ := ih
-    refine ⟨ihn1, ?_⟩
+    refine ⟨?_, ?_⟩
+    · rw [show ((n + 1 : ℕ) : ℝ) + 1 = (n : ℝ) + 2 by push_cast; ring]
+      exact ihn1
     -- Unfold the recurrence for a_prime_pow p (n+2)
     have hrec : (a_prime_pow p (n + 2) : ℝ) =
         (a_p p : ℝ) * (a_prime_pow p (n + 1) : ℝ) - (p : ℝ) * (a_prime_pow p n : ℝ) := by
@@ -179,17 +189,22 @@ private theorem BSD_Newton_sin {p : ℕ} [hp : Fact p.Prime] {θ : ℝ}
     have hn1 : Real.sin (((n : ℝ) + 2) * θ - θ) =
         Real.sin (((n : ℝ) + 2) * θ) * Real.cos θ - Real.cos (((n : ℝ) + 2) * θ) * Real.sin θ :=
       Real.sin_sub _ _
-    have hn1_simp : Real.sin (((n : ℝ) + 1 + 1) * θ) =
+    have hn1_simp : Real.sin (((n : ℝ) + 1) * θ) =
         Real.sin (((n : ℝ) + 2) * θ) * Real.cos θ - Real.cos (((n : ℝ) + 2) * θ) * Real.sin θ := by
-      convert hn1 using 2; ring
+      have harg : ((n : ℝ) + 1) * θ = ((n : ℝ) + 2) * θ - θ := by ring
+      rw [harg]
+      exact hn1
     -- Chain calculation
-    rw [hrec, show ((n : ℝ) + 1 + 1 + 1) = (n : ℝ) + 3 from by push_cast; ring]
+    rw [hrec, show ((n + 1 : ℕ) : ℝ) + 2 = (n : ℝ) + 3 by push_cast; ring]
     calc ((a_p p : ℝ) * ↑(a_prime_pow p (n + 1)) - (p : ℝ) * ↑(a_prime_pow p n)) * Real.sin θ
         = (a_p p : ℝ) * (↑(a_prime_pow p (n + 1)) * Real.sin θ) -
           (p : ℝ) * (↑(a_prime_pow p n) * Real.sin θ) := by ring
       _ = 2 * Real.sqrt p * Real.cos θ * ((Real.sqrt p) ^ (n + 1) * Real.sin (((n : ℝ) + 2) * θ)) -
           (Real.sqrt p) ^ 2 * ((Real.sqrt p) ^ n * Real.sin (((n : ℝ) + 1) * θ)) := by
-          rw [ihn1, ihn, hap_eq, hp_sq]
+          set s := Real.sqrt (p : ℝ)
+          have hs : (p : ℝ) = s ^ 2 := by
+            simp [s, Real.sq_sqrt]
+          rw [ihn1, ihn, hap_eq, hs]
       _ = (Real.sqrt p) ^ (n + 2) *
           (2 * Real.cos θ * Real.sin (((n : ℝ) + 2) * θ) - Real.sin (((n : ℝ) + 1) * θ)) := by
           ring
@@ -219,7 +234,7 @@ theorem BSD_PrimePowBound_PROVED {p : ℕ} [hp : Fact p.Prime]
     (h_hasse : BSD_WeilHasse_Weierstrass_OPEN)
     (k : ℕ) :
     BSD_PrimePowBound_OPEN p k := by
-  unfold BSD_PrimePowBound_OPEN BSD_Hasse_OPEN
+  unfold BSD_PrimePowBound_OPEN
   -- Step 1: extract (a_p p)² ≤ 4p from Hasse
   have hdisc : (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ) := h_hasse p hn
   have hp_nn : (0 : ℝ) ≤ p := Nat.cast_nonneg p
@@ -227,11 +242,14 @@ theorem BSD_PrimePowBound_PROVED {p : ℕ} [hp : Fact p.Prime]
     Real.sqrt_pos.mpr (Nat.cast_pos.mpr hp.out.pos)
   -- Step 2: θ_p = arccos(a_p/(2√p)) is well-defined
   have h_arg_le : |((a_p p : ℝ) / (2 * Real.sqrt p))| ≤ 1 := by
-    rw [abs_div, abs_of_pos (by positivity)]
-    rw [div_le_one (by positivity)]
-    have := Real.sq_sqrt hp_nn
-    nlinarith [sq_abs (a_p p : ℝ)]
-  set θ := Real.arccos ((a_p p : ℝ) / (2 * Real.sqrt p)) with hθ_def
+    have hden : (0 : ℝ) < 2 * Real.sqrt (p : ℝ) := by positivity
+    rw [abs_div, abs_of_pos hden, div_le_one hden]
+    have hsq : (Real.sqrt (p : ℝ)) ^ 2 = (p : ℝ) := Real.sq_sqrt hp_nn
+    have hsqle : |(a_p p : ℝ)| ^ 2 ≤ (2 * Real.sqrt (p : ℝ)) ^ 2 := by
+      rw [sq_abs]
+      nlinarith [hdisc, hsq]
+    simpa [abs_abs, abs_of_pos hden] using (sq_le_sq).mp hsqle
+  set θ := Real.arccos ((a_p p : ℝ) / (2 * Real.sqrt p))
   -- Step 3: cos θ = a_p/(2√p)
   have hcos : Real.cos θ = (a_p p : ℝ) / (2 * Real.sqrt p) :=
     Real.cos_arccos (abs_le.mp h_arg_le).1 (abs_le.mp h_arg_le).2
@@ -241,7 +259,7 @@ theorem BSD_PrimePowBound_PROVED {p : ℕ} [hp : Fact p.Prime]
     have hcos_sq : Real.cos θ ^ 2 = 1 := by
       have := Real.sin_sq_add_cos_sq θ
       rw [hsin_zero, zero_pow, zero_add] at this
-      · exact this.symm
+      · exact this
       · norm_num
     have hap_sq : (a_p p : ℝ) ^ 2 = 4 * p := by
       rw [hcos] at hcos_sq
@@ -252,10 +270,11 @@ theorem BSD_PrimePowBound_PROVED {p : ℕ} [hp : Fact p.Prime]
     exact BSD_antisupersingular_real p hap_sq
   -- Step 5: sin θ > 0 (since θ ∈ (0,π) from disc < 0)
   have hsin_pos : 0 < Real.sin θ := by
-    have hθ_range : θ ∈ Set.Icc (0 : ℝ) Real.pi := Real.arccos_mem_Icc _
-    rcases eq_or_lt_of_le hθ_range.1 with h | h
+    have hθ_nonneg : (0 : ℝ) ≤ θ := Real.arccos_nonneg _
+    have hθ_le : θ ≤ Real.pi := Real.arccos_le_pi _
+    rcases eq_or_lt_of_le hθ_nonneg with h | h
     · exfalso; apply hsin_ne; rw [← h]; simp
-    rcases eq_or_lt_of_le hθ_range.2 with h' | h'
+    rcases eq_or_lt_of_le hθ_le with h' | h'
     · exfalso; apply hsin_ne; rw [h']; simp
     exact Real.sin_pos_of_pos_of_lt_pi h h'
   -- Step 6: Apply Newton identity and sin inequality
@@ -299,10 +318,16 @@ theorem BSD_PrimePow_Weak {p : ℕ} [hp : Fact p.Prime] (k : ℕ) :
   intro j
   induction j with
   | zero =>
-    simp [a_prime_pow, a_p]
     constructor
-    · simp
-    · exact Int.natAbs_le.mpr ⟨by linarith [Int.natAbs_nonneg (a_p p)], by linarith [Int.natAbs_nonneg (a_p p)]⟩
+    · simp [a_prime_pow]
+    · simp only [a_prime_pow, zero_add, pow_one]
+      have hweak : |(a_p p : ℤ)| ≤ (p : ℤ) := by
+        have := a_p_bound_weak p
+        exact_mod_cast this
+      have h2p : (p : ℤ) ≤ 2 * (p : ℤ) := by
+        have : (1 : ℤ) ≤ p := by exact_mod_cast hp.out.one_le
+        linarith
+      exact le_trans hweak h2p
   | succ n ih =>
     obtain ⟨ihn, ihn1⟩ := ih
     refine ⟨ihn1, ?_⟩
@@ -313,21 +338,32 @@ theorem BSD_PrimePow_Weak {p : ℕ} [hp : Fact p.Prime] (k : ℕ) :
     have h_weak : |(a_p p : ℤ)| ≤ (p : ℤ) := by
       have := a_p_bound_weak p
       exact_mod_cast this
+    have hp_nn : (0 : ℤ) ≤ p := Int.natCast_nonneg p
     calc |a_p p * a_prime_pow p (n + 1) - (p : ℤ) * a_prime_pow p n|
-        ≤ |a_p p| * |a_prime_pow p (n + 1)| + |(p : ℤ)| * |a_prime_pow p n| := by
-          linarith [abs_sub_abs_le_abs_sub (a_p p * a_prime_pow p (n+1)) ((p:ℤ) * a_prime_pow p n),
-                    abs_mul (a_p p) (a_prime_pow p (n+1)), abs_mul (p:ℤ) (a_prime_pow p n)]
-      _ ≤ (p : ℤ) * (2*(p:ℤ))^(n+1) + (p : ℤ) * (2*(p:ℤ))^n := by
-          have hp_nn : (0 : ℤ) ≤ p := Int.coe_nat_nonneg p
-          gcongr
-          · exact h_weak
-          · exact ihn1
-          · simp [abs_of_nonneg hp_nn]
-          · exact ihn
+        ≤ |a_p p * a_prime_pow p (n + 1)| + |(p : ℤ) * a_prime_pow p n| :=
+          abs_sub _ _
+      _ = |a_p p| * |a_prime_pow p (n + 1)| + |(p : ℤ)| * |a_prime_pow p n| := by
+          simp [abs_mul]
+      _ ≤ (p : ℤ) * (2 * (p : ℤ)) ^ (n + 1) + (p : ℤ) * (2 * (p : ℤ)) ^ n := by
+          have h1 : |a_p p| * |a_prime_pow p (n + 1)| ≤
+              (p : ℤ) * (2 * (p : ℤ)) ^ (n + 1) :=
+            mul_le_mul h_weak ihn1 (abs_nonneg _) hp_nn
+          have h2 : |(p : ℤ)| * |a_prime_pow p n| ≤ (p : ℤ) * (2 * (p : ℤ)) ^ n := by
+            rw [abs_of_nonneg hp_nn]
+            exact mul_le_mul_of_nonneg_left ihn hp_nn
+          linarith [h1, h2]
       _ ≤ (2 * (p : ℤ)) ^ (n + 2) := by
           have hp2 : (2 : ℤ) ≤ (p : ℤ) := by exact_mod_cast hp.out.two_le
-          have := hp.out.pos
-          nlinarith [pow_nonneg (show (0:ℤ) ≤ 2*(p:ℤ) from by linarith) n, hp2]
+          have hnn : (0 : ℤ) ≤ (2 * (p : ℤ)) ^ n := pow_nonneg (by linarith) n
+          have hleft :
+              (p : ℤ) * (2 * (p : ℤ)) ^ (n + 1) + (p : ℤ) * (2 * (p : ℤ)) ^ n
+                = (2 * (p : ℤ)) ^ n * ((p : ℤ) * (2 * (p : ℤ) + 1)) := by ring
+          have hright :
+              (2 * (p : ℤ)) ^ (n + 2) = (2 * (p : ℤ)) ^ n * (4 * (p : ℤ) * (p : ℤ)) := by ring
+          have hcoeff : (p : ℤ) * (2 * (p : ℤ) + 1) ≤ 4 * (p : ℤ) * (p : ℤ) := by
+            nlinarith
+          rw [hleft, hright]
+          exact mul_le_mul_of_nonneg_left hcoeff hnn
 
 /-! ## §6. Roadmap: BSD_aNBound_OPEN and BSD_LSeriesSummable_OPEN -/
 
