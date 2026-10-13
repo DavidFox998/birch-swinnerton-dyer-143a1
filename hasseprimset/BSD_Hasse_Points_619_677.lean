@@ -1,3 +1,6 @@
+import hasseprimset.BSD_Hasse_Points_569_617
+import Towers.BSD.BSD_FiberCount
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis769_CLOSED  (genesis-769)
@@ -23,14 +26,24 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_Hasse_Points_569_617
+
+private instance instFactPrime619 : Fact (619 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime631 : Fact (631 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime641 : Fact (641 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime643 : Fact (643 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime647 : Fact (647 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime653 : Fact (653 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime659 : Fact (659 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime661 : Fact (661 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime673 : Fact (673 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime677 : Fact (677 : ℕ).Prime := ⟨by norm_num⟩
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
 
 namespace Towers.BSD
 
-private lemma BSD_disc_from_deg_769 {p : ℕ}
+private lemma BSD_disc_from_deg_769 {p : ℕ} [Fact p.Prime]
     (h : BSD_FrobeniusDegreeNonneg_OPEN p) : (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ) := by
   have hspec := h ((a_p p : ℝ) / 2)
   nlinarith [hspec]
@@ -50,16 +63,36 @@ private instance i769_p677 : Fact (677 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §1. Point counts (by decide) -/
 
-theorem BSD_E143_card_p619 : (E143_Finset 619).card = 626 := by decide
-theorem BSD_E143_card_p631 : (E143_Finset 631).card = 658 := by decide
-theorem BSD_E143_card_p641 : (E143_Finset 641).card = 674 := by decide
-theorem BSD_E143_card_p643 : (E143_Finset 643).card = 692 := by decide
-theorem BSD_E143_card_p647 : (E143_Finset 647).card = 662 := by decide
-theorem BSD_E143_card_p653 : (E143_Finset 653).card = 666 := by decide
-theorem BSD_E143_card_p659 : (E143_Finset 659).card = 703 := by decide
-theorem BSD_E143_card_p661 : (E143_Finset 661).card = 630 := by decide
-theorem BSD_E143_card_p673 : (E143_Finset 673).card = 669 := by decide
-theorem BSD_E143_card_p677 : (E143_Finset 677).card = 671 := by decide
+theorem BSD_E143_card_p619 : (E143_Finset 619).card = 626 := by
+  rw [card_affine_eq_sum_eulerChi 619 (by decide)]
+  native_decide
+theorem BSD_E143_card_p631 : (E143_Finset 631).card = 658 := by
+  rw [card_affine_eq_sum_eulerChi 631 (by decide)]
+  native_decide
+theorem BSD_E143_card_p641 : (E143_Finset 641).card = 674 := by
+  rw [card_affine_eq_sum_eulerChi 641 (by decide)]
+  native_decide
+theorem BSD_E143_card_p643 : (E143_Finset 643).card = 692 := by
+  rw [card_affine_eq_sum_eulerChi 643 (by decide)]
+  native_decide
+theorem BSD_E143_card_p647 : (E143_Finset 647).card = 662 := by
+  rw [card_affine_eq_sum_eulerChi 647 (by decide)]
+  native_decide
+theorem BSD_E143_card_p653 : (E143_Finset 653).card = 666 := by
+  rw [card_affine_eq_sum_eulerChi 653 (by decide)]
+  native_decide
+theorem BSD_E143_card_p659 : (E143_Finset 659).card = 703 := by
+  rw [card_affine_eq_sum_eulerChi 659 (by decide)]
+  native_decide
+theorem BSD_E143_card_p661 : (E143_Finset 661).card = 630 := by
+  rw [card_affine_eq_sum_eulerChi 661 (by decide)]
+  native_decide
+theorem BSD_E143_card_p673 : (E143_Finset 673).card = 669 := by
+  rw [card_affine_eq_sum_eulerChi 673 (by decide)]
+  native_decide
+theorem BSD_E143_card_p677 : (E143_Finset 677).card = 671 := by
+  rw [card_affine_eq_sum_eulerChi 677 (by decide)]
+  native_decide
 
 /-! ## §2. Exact a_p values -/
 
@@ -221,13 +254,5 @@ theorem BSD_HasseBound_Discriminant_TierA_Batch7 (p : ℕ) [Fact p.Prime]
   · exact BSD_HasseBound_Disc_p661
   · exact BSD_HasseBound_Disc_p673
   · exact BSD_HasseBound_Disc_p677
-
-/-! ## §7. Combinator -/
-
-theorem BSD_Genesis769_Combinator
-    (h_disc   : BSD_HasseBound_Discriminant_OPEN)
-    (h_anchor : BSD_LFunctionIsLinFunc_OPEN) :
-    BSD_143_OPEN :=
-  BSD_Genesis768_Combinator h_disc h_anchor
 
 end Towers.BSD

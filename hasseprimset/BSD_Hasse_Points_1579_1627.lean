@@ -1,3 +1,8 @@
+import Mathlib.Tactic
+import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+import Towers.BSD.BSD_Frobenius_Fact_Instances
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis791_CLOSED  (genesis-791)
@@ -22,15 +27,24 @@ NOT a brick. BSD: OPEN (Clay). No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_TauBound_small_proved
-import Mathlib.Tactic
+
+private instance instFactPrime1579 : Fact (1579 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1583 : Fact (1583 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1597 : Fact (1597 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1601 : Fact (1601 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1607 : Fact (1607 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1609 : Fact (1609 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1613 : Fact (1613 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1619 : Fact (1619 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1621 : Fact (1621 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime1627 : Fact (1627 : ℕ).Prime := ⟨by norm_num⟩
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 0
 
 namespace Towers.BSD
 
-private lemma BSD_disc_from_deg_791 {p : ℕ}
+private lemma BSD_disc_from_deg_791 {p : ℕ} [Fact p.Prime]
     (h : BSD_FrobeniusDegreeNonneg_OPEN p) : (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ) := by
   have hspec := h ((a_p p : ℝ) / 2); nlinarith [hspec]
 
@@ -49,16 +63,36 @@ private instance i791_p1627 : Fact (1627 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §2. Point counts (native_decide) -/
 
-theorem BSD_E143_card_p1579 : (E143_Finset 1579).card = 1576 := by native_decide
-theorem BSD_E143_card_p1583 : (E143_Finset 1583).card = 1606 := by native_decide
-theorem BSD_E143_card_p1597 : (E143_Finset 1597).card = 1562 := by native_decide
-theorem BSD_E143_card_p1601 : (E143_Finset 1601).card = 1556 := by native_decide
-theorem BSD_E143_card_p1607 : (E143_Finset 1607).card = 1649 := by native_decide
-theorem BSD_E143_card_p1609 : (E143_Finset 1609).card = 1612 := by native_decide
-theorem BSD_E143_card_p1613 : (E143_Finset 1613).card = 1634 := by native_decide
-theorem BSD_E143_card_p1619 : (E143_Finset 1619).card = 1660 := by native_decide
-theorem BSD_E143_card_p1621 : (E143_Finset 1621).card = 1632 := by native_decide
-theorem BSD_E143_card_p1627 : (E143_Finset 1627).card = 1636 := by native_decide
+theorem BSD_E143_card_p1579 : (E143_Finset 1579).card = 1575 := by
+  rw [card_affine_eq_sum_eulerChi 1579 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1583 : (E143_Finset 1583).card = 1605 := by
+  rw [card_affine_eq_sum_eulerChi 1583 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1597 : (E143_Finset 1597).card = 1561 := by
+  rw [card_affine_eq_sum_eulerChi 1597 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1601 : (E143_Finset 1601).card = 1555 := by
+  rw [card_affine_eq_sum_eulerChi 1601 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1607 : (E143_Finset 1607).card = 1648 := by
+  rw [card_affine_eq_sum_eulerChi 1607 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1609 : (E143_Finset 1609).card = 1611 := by
+  rw [card_affine_eq_sum_eulerChi 1609 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1613 : (E143_Finset 1613).card = 1633 := by
+  rw [card_affine_eq_sum_eulerChi 1613 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1619 : (E143_Finset 1619).card = 1659 := by
+  rw [card_affine_eq_sum_eulerChi 1619 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1621 : (E143_Finset 1621).card = 1631 := by
+  rw [card_affine_eq_sum_eulerChi 1621 (by decide)]
+  native_decide
+theorem BSD_E143_card_p1627 : (E143_Finset 1627).card = 1635 := by
+  rw [card_affine_eq_sum_eulerChi 1627 (by decide)]
+  native_decide
 
 /-! ## §3. Exact a_p values -/
 

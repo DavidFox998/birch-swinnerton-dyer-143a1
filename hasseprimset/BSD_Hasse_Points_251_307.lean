@@ -1,3 +1,9 @@
+import Mathlib.Tactic
+import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Certificate_Clean
+import Towers.BSD.BSD_Frobenius_Fact_Instances
+import Towers.BSD.BSD_FiberCount
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis763_CLOSED  (genesis-763)
@@ -54,7 +60,17 @@ Axiom footprint: classical trio {propext, Classical.choice, Quot.sound}.
 ================================================================
 -/
 
-import Towers.BSD.BSD_BSD_L143a1_zero_at_one
+
+private instance instFactPrime251 : Fact (251 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime257 : Fact (257 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime263 : Fact (263 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime269 : Fact (269 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime271 : Fact (271 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime277 : Fact (277 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime281 : Fact (281 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime283 : Fact (283 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime293 : Fact (293 : ℕ).Prime := ⟨by norm_num⟩
+private instance instFactPrime307 : Fact (307 : ℕ).Prime := ⟨by norm_num⟩
 
 set_option maxRecDepth 10000
 
@@ -62,7 +78,7 @@ namespace Towers.BSD
 
 /-! ## Local helper (re-declared; BSD_disc_from_degree_nonneg is private in genesis-762) -/
 
-private lemma BSD_disc_from_deg_763 {p : ℕ}
+private lemma BSD_disc_from_deg_763 {p : ℕ} [Fact p.Prime]
     (h : BSD_FrobeniusDegreeNonneg_OPEN p) : (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ) := by
   have hspec := h ((a_p p : ℝ) / 2)
   nlinarith [hspec]
@@ -82,16 +98,36 @@ private instance i763_p307 : Fact (307 : ℕ).Prime := ⟨by norm_num⟩
 
 /-! ## §1. Point counts over 𝔽_p  (by decide) -/
 
-theorem BSD_E143_card_p251 : (E143_Finset 251).card = 230 := by decide
-theorem BSD_E143_card_p257 : (E143_Finset 257).card = 239 := by decide
-theorem BSD_E143_card_p263 : (E143_Finset 263).card = 281 := by decide
-theorem BSD_E143_card_p269 : (E143_Finset 269).card = 299 := by decide
-theorem BSD_E143_card_p271 : (E143_Finset 271).card = 243 := by decide
-theorem BSD_E143_card_p277 : (E143_Finset 277).card = 251 := by decide
-theorem BSD_E143_card_p281 : (E143_Finset 281).card = 263 := by decide
-theorem BSD_E143_card_p283 : (E143_Finset 283).card = 313 := by decide
-theorem BSD_E143_card_p293 : (E143_Finset 293).card = 279 := by decide
-theorem BSD_E143_card_p307 : (E143_Finset 307).card = 307 := by decide
+theorem BSD_E143_card_p251 : (E143_Finset 251).card = 230 := by
+  rw [card_affine_eq_sum_eulerChi 251 (by decide)]
+  native_decide
+theorem BSD_E143_card_p257 : (E143_Finset 257).card = 239 := by
+  rw [card_affine_eq_sum_eulerChi 257 (by decide)]
+  native_decide
+theorem BSD_E143_card_p263 : (E143_Finset 263).card = 281 := by
+  rw [card_affine_eq_sum_eulerChi 263 (by decide)]
+  native_decide
+theorem BSD_E143_card_p269 : (E143_Finset 269).card = 299 := by
+  rw [card_affine_eq_sum_eulerChi 269 (by decide)]
+  native_decide
+theorem BSD_E143_card_p271 : (E143_Finset 271).card = 243 := by
+  rw [card_affine_eq_sum_eulerChi 271 (by decide)]
+  native_decide
+theorem BSD_E143_card_p277 : (E143_Finset 277).card = 251 := by
+  rw [card_affine_eq_sum_eulerChi 277 (by decide)]
+  native_decide
+theorem BSD_E143_card_p281 : (E143_Finset 281).card = 263 := by
+  rw [card_affine_eq_sum_eulerChi 281 (by decide)]
+  native_decide
+theorem BSD_E143_card_p283 : (E143_Finset 283).card = 313 := by
+  rw [card_affine_eq_sum_eulerChi 283 (by decide)]
+  native_decide
+theorem BSD_E143_card_p293 : (E143_Finset 293).card = 279 := by
+  rw [card_affine_eq_sum_eulerChi 293 (by decide)]
+  native_decide
+theorem BSD_E143_card_p307 : (E143_Finset 307).card = 307 := by
+  rw [card_affine_eq_sum_eulerChi 307 (by decide)]
+  native_decide
 
 /-! ## §2. Exact a_p values -/
 
@@ -260,17 +296,5 @@ theorem BSD_HasseBound_Discriminant_TierA_Batch1 (p : ℕ) [Fact p.Prime]
   · exact BSD_HasseBound_Disc_p283
   · exact BSD_HasseBound_Disc_p293
   · exact BSD_HasseBound_Disc_p307
-
-/-! ## §7. Genesis-763 combinator -/
-
-/-- **`BSD_Genesis763_Combinator`** — reuses genesis-762 combinator.
-    BSD_143_OPEN from (Gate 1 ALL + Gate 2) at LMFDB-anchor level.
-    61 primes now proved for Gate 1 Tier A.  Gates themselves unchanged (OPEN).
-    NOT a Clay brick.  BSD: OPEN. -/
-theorem BSD_Genesis763_Combinator
-    (h_disc   : BSD_HasseBound_Discriminant_OPEN)
-    (h_anchor : BSD_LFunctionIsLinFunc_OPEN) :
-    BSD_143_OPEN :=
-  BSD_Genesis762_Combinator h_disc h_anchor
 
 end Towers.BSD

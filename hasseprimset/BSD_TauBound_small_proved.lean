@@ -1,3 +1,6 @@
+import hasseprimset.BSD_tau_le_two_sqrt
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
 /-!
 # BSD genesis-782: Closing BSD_TauBound_small_OPEN
 
@@ -50,8 +53,6 @@ Clay gate count: 2 (unchanged). BSD: OPEN. No Clay claim.
 0 sorry. Classical trio. Gate 1 in §10 only.
 -/
 
-import hasseprimset.BSD_tau_le_two_sqrt
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 open BigOperators Real Nat ArithmeticFunction
 

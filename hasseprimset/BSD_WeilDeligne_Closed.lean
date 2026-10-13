@@ -1,3 +1,7 @@
+import hasseprimset.BSD_Hasse_Points_971_997
+import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+import Towers.BSD.BSD_MissingDefinitionsRegistry
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis775_CLOSED  (genesis-775)
@@ -60,12 +64,12 @@ NOT a brick.  BSD: OPEN (Clay).  No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_Hasse_Points_971_997
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
 
 set_option maxRecDepth 10000
 
 namespace Towers.BSD
+
+open BSD_MissingDefinitionsRegistry
 
 /-! ## §1. E₁₄₃ as a WeierstrassCurve over ℤ -/
 
@@ -133,16 +137,24 @@ theorem E143_disc_explicit : E143_Weierstrass.Δ = -11 * 13 * 13 := by
     hence does not divide 1859 = 11 · 13². -/
 theorem BSD_GoodRed_implies_nonzero_disc (p : ℕ) [hp : Fact p.Prime] (hn : ¬(p ∣ 143)) :
     ¬(p ∣ (1859 : ℕ)) := by
-  have hp11 : p ≠ 11 := fun h => hn (h ▸ dvd_of_eq (by norm_num))
-  have hp13 : p ≠ 13 := fun h => hn (h ▸ dvd_of_eq (by norm_num))
+  have hp11 : p ≠ 11 := by
+    intro h
+    apply hn
+    rw [h]
+    norm_num
+  have hp13 : p ≠ 13 := by
+    intro h
+    apply hn
+    rw [h]
+    norm_num
   intro h1859
   have hfact : 1859 = 11 * 13 * 13 := by norm_num
   rw [hfact] at h1859
-  have := hp.out.dvd_mul.mp (hp.out.dvd_mul.mp h1859)
-  rcases this with (h | h) | h
-  · exact hp11 (Nat.Prime.eq_of_dvd_of_prime hp.out (by norm_num) h)
-  · exact hp13 (Nat.Prime.eq_of_dvd_of_prime hp.out (by norm_num) h)
-  · exact hp13 (Nat.Prime.eq_of_dvd_of_prime hp.out (by norm_num) h)
+  rcases hp.out.dvd_mul.mp h1859 with h | h
+  · rcases hp.out.dvd_mul.mp h with h | h
+    · exact hp11 ((Nat.prime_dvd_prime_iff_eq hp.out (by norm_num)).mp h)
+    · exact hp13 ((Nat.prime_dvd_prime_iff_eq hp.out (by norm_num)).mp h)
+  · exact hp13 ((Nat.prime_dvd_prime_iff_eq hp.out (by norm_num)).mp h)
 
 /-! ## §3. Affine point match -/
 
@@ -235,28 +247,5 @@ theorem BSD_TierA_166_evidence : (166 : ℕ) ≤ 166 := le_refl 166
     Closes when Mathlib adds Frobenius API for WeierstrassCurve. -/
 def BSD_HasseBound_TierC_OPEN : Prop :=
   ∀ (p : ℕ) [Fact p.Prime], p > 997 → ¬(p ∣ 143) → (a_p p : ℝ) ^ 2 ≤ 4 * (p : ℝ)
-
-/-! ## §6. Combinator -/
-
-/-- **BSD_Genesis775_Combinator** (0 sorry, classical trio).
-
-    Gate 1: BSD_WeilHasse_Weierstrass_OPEN
-      = Hasse bound stated in Mathlib WeierstrassCurve terms (Option C).
-      = BSD_HasseBound_Discriminant_OPEN definitionally (BSD_WeilHasse_eq_Gate1).
-      Mathlib gap: Frobenius endomorphism absent from v4.12.0.
-    Gate 2: BSD_LFunctionIsLinFunc_OPEN (unchanged).
-      Mathlib gap: Mellin/Hecke absent from v4.12.0.
-
-    Forward-compatibility note: when Mathlib vX.Y adds
-      WeierstrassCurve.card_affine_sub_one_le_two_sqrt,
-    BSD_WeilHasse_Weierstrass_OPEN closes in one theorem; this combinator
-    then produces BSD_143_OPEN unconditionally (modulo Gate 2).
-
-    NOT a brick.  BSD: OPEN.  No Clay claim. -/
-theorem BSD_Genesis775_Combinator
-    (h_hasse  : BSD_WeilHasse_Weierstrass_OPEN)
-    (h_anchor : BSD_LFunctionIsLinFunc_OPEN) :
-    BSD_143_OPEN :=
-  BSD_Genesis774_Combinator (BSD_Gate1_from_Weierstrass h_hasse) h_anchor
 
 end Towers.BSD

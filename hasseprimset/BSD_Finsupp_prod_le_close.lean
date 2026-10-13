@@ -1,3 +1,7 @@
+import hasseprimset.BSD_aNBound_Finsupp_bridge_close
+import Mathlib.NumberTheory.LSeries.Basic
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+
 /-!
 # BSD genesis-780: Closing Avenue 3 and BSD_isBigO_to_LSeries_OPEN
 
@@ -43,9 +47,6 @@ OPEN (genuine mathematical gaps, no timeline):
 BSD: OPEN.  No Clay claim.
 -/
 
-import hasseprimset.BSD_BSD_aNBound_Finsupp_bridge_close
-import Mathlib.NumberTheory.LSeries.Basic
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 
 open BigOperators Real Nat ArithmeticFunction
 

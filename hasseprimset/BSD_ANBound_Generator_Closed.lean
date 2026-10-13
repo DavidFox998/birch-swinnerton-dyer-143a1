@@ -1,3 +1,5 @@
+import hasseprimset.BSD_antisupersingular
+
 /-
 ================================================================
 Towers / BSD / BSD_Genesis777_CLOSED  (genesis-777)
@@ -34,7 +36,6 @@ BSD: OPEN.  NOT a Clay claim.  No Clay claim.
 ================================================================
 -/
 
-import hasseprimset.BSD_BSD_antisupersingular
 
 namespace Towers.BSD
 
