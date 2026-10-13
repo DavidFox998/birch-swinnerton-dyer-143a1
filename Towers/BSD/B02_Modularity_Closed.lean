@@ -5,7 +5,10 @@ namespace Towers.BSD
 
 open Complex
 
--- LMFDB 143.a1 q-expansion: a2=-2, a3=-1, a5=1, a7=-2 ... from ap_table.json
+-- a143_B02 is a stub. It is not ap_table_143a1 and it is not the proved affine trace.
+-- Proved on 143a1 (y² + y = x³ − x² − x − 2, a_p = p − #E_affine):
+-- a_2 = 0, a_3 = −1, a_5 = −1, a_7 = −2 (a_n_at_2 .. a_n_at_7 below).
+-- The contaminated table had a_2 = −1. This stub still stores a_2 = −2 and a_5 = 1.
 def a143_B02 : ℕ → ℤ
 | 0 => 0
 | 1 => 1

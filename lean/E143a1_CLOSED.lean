@@ -11,7 +11,6 @@ import BSD_Regulator_RealPeriod_Closed
 import hassewiles
 import lean.01_genus_X0_143
 import lean.02_hecke_operators
-import lean.03_qexpansion
 import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
 
 /-!
@@ -72,12 +71,16 @@ theorem E143a1_torsion_bound_p5 : BSD_TorsionBound_p5_OPEN := BSD_TorsionBound_p
 theorem E143a1_classGroupCard_le_10 : BSD_classGroupCard_le_10_OPEN := BSD_classGroupCard_le_10_CLOSED_unc
 theorem E143a1_orderOf_p2 : BSD_orderOf_p2_OPEN := BSD_orderOf_p2_CLOSED
 
-/-! ## §10  Hasse for ALL primes infinite — CLOSED by 03_qexpansion — REPLACES genesis-734..745 -/
+/-! ## §10  Hasse.
+`lean/03_qexpansion.lean` was retired to `scripts/deprecated-2026-08-12/`.
+It counted `y² + xy = x³ − x² − 5x + 5` with trace `p + 1 − card`, and
+`Rewrite03.hasse_bound_143a1_all` was never defined there, so the old
+`E143a1_hasse_infinite_03` alias is withdrawn.
+`E143a1_hasse_all_primes` is `HasseWiles.BSD_HasseFull_143_CLOSED`, a bound
+for the stub `HasseWiles.a143` (catch-all `0` past 23). It is not a bound
+for `Towers.BSD.a_p` on the Points layer. -/
 theorem E143a1_hasse_all_primes : HasseWiles.BSD_HasseFull_143_OPEN :=
   HasseWiles.BSD_HasseFull_143_CLOSED
-
-theorem E143a1_hasse_infinite_03 : ∀ p, Nat.Prime p → ¬p∣143 → (Rewrite03.a143 p)^2 ≤ 4*(p:ℤ) :=
-  Rewrite03.hasse_bound_143a1_all
 
 theorem E143a1_hasse_delgine_bridge : HasseWiles.Deligne_RamanujanBound_OPEN (fun p => (E1859.ap p : ℝ)/Real.sqrt (p:ℝ)) :=
   HasseWiles.deligne_from_hasse_wiles _ (by
