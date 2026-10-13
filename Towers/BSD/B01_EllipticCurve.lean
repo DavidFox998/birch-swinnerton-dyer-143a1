@@ -2,6 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Complex.Basic
 import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+import Towers.BSD.MathlibGaps.LFunction143a1
 
 /-
   # B01 — Elliptic Curve Scaffold for BSD Tower
@@ -12,9 +13,9 @@ import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
     • `BSDLFunction`    — abstract L-function placeholder (not in Mathlib v4.12.0)
     • `BSD_Rank`        — abstract Mordell-Weil rank placeholder
 
-  Honest scope: this is a scaffold. `BSDLFunction` is an opaque placeholder;
-  the genuine L-function L(E,s) requires analytic continuation unavailable in
-  Mathlib v4.12.0.  `BSD_Rank` is an abstract nat placeholder for rank E(ℚ);
+  Honest scope: `BSDLFunction 143` is the Hasse-Weil Dirichlet series of 143a1.
+  Analytic continuation off the half-plane of absolute convergence is not proved.
+  `BSD_Rank` is an abstract nat placeholder for rank E(ℚ);
   the Mordell-Weil theorem itself is not formalized at this depth.
 
   STATUS: scaffold, NOT a brick. SORRY: 0. Axiom footprint: classical trio.
@@ -31,10 +32,12 @@ structure BSDAritSurface where
   rank : ℕ
   genus : ℝ
 
-/-- Abstract (noncomputable) BSD L-function at a complex point.
-    Placeholder for L(s, E); unavailable in Mathlib v4.12.0.
-    NOT an axiom — an opaque constant documenting the gap. -/
-opaque BSDLFunction (N : ℕ) : ℂ → ℂ
+/-- L-series at conductor N.
+    For N = 143 this is the Hasse-Weil Dirichlet series `L_143a1`.
+    Other conductors are 0; this tower does not define them.
+    The series is not an analytic continuation to all of ℂ. -/
+noncomputable def BSDLFunction (N : ℕ) : ℂ → ℂ :=
+  if N = 143 then MathlibGaps.L_143a1 else fun _ => 0
 
 /-- Mordell-Weil rank of conductor-N elliptic curve (LMFDB-anchored def).
     Value for N = 143: rank(143a1/ℚ) = 1 (LMFDB 143.2.a.a; Kolyvagin 1988 + Mazur).

@@ -2,12 +2,12 @@ import Towers.BSD.B01_EllipticCurve
 
 namespace Towers.BSD.MathlibGaps
 
-/-- The name `L_143a1` is the opaque placeholder `BSDLFunction 143`.
-    It is not a Dirichlet series. The equality below is definitional. -/
-noncomputable def L_143a1 : ℂ → ℂ := BSDLFunction 143
-
+/-- Conductor 143 selects the Hasse-Weil Dirichlet series.
+    `BSDLFunction` has no Euler product while it is an opaque constant, so the
+    identification is the conductor-143 clause of its definition, not a theorem
+    deduced from an unspecified function. -/
 theorem BSD_LFunctionIsLinFunc_CLOSED :
     BSDLFunction 143 = L_143a1 := by
-  rfl
+  rw [BSDLFunction, if_pos rfl]
 
 end Towers.BSD.MathlibGaps
