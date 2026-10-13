@@ -7,14 +7,20 @@ set_option maxHeartbeats 0
 namespace Towers.BSD
 
 /-
-`ap_table_143a1` holds 1061 affine traces on 143a1,
+`ap_table_143a1` holds 1065 affine traces on 143a1,
 `y² + y = x³ − x² − x − 2`, with `a_p = p − #E_affine`.
-Each pair is the right-hand side of `theorem BSD_ap_p*` in `BSD_Hasse_Points_*.lean`.
-The primes are the smallest 1061 such primes, 17 through 8563.
-Primes 2, 3, 5, and 7 are not in those files.
+The 1061 pairs from 17 through 8563 are the right-hand sides of
+`theorem BSD_ap_p*` in `BSD_Hasse_Points_*.lean`.
+Primes 2, 3, 5, and 7 are not in those files. Their traces were computed
+by enumerating the affine solutions of that equation:
+`a_2 = 2 − 2 = 0`, `a_3 = 3 − 4 = -1`, `a_5 = 5 − 6 = -1`, `a_7 = 7 − 9 = -2`.
 -/
 
 def ap_table_143a1 : List (ℕ × ℤ) := [
+ (2, 0),
+ (3, -1),
+ (5, -1),
+ (7, -2),
  (17, -4),
  (19, 2),
  (23, 7),
@@ -1083,6 +1089,6 @@ theorem hasse_audit_143a1 : ∀ x ∈ ap_table_143a1, x.2 ^ 2 ≤ 4 * (x.1 : ℤ
     native_decide
   simpa [List.all_eq_true, decide_eq_true_iff] using h
 
-theorem hasse_card_143a1 : ap_table_143a1.length = 1061 := by native_decide
+theorem hasse_card_143a1 : ap_table_143a1.length = 1065 := by native_decide
 
 end Towers.BSD
