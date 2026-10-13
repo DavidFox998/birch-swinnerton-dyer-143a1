@@ -21,7 +21,6 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
 import Mathlib.Data.Real.Basic
 
-set_option sorry false
 namespace Towers.BSD.MathlibGaps.CPSFunctionalEquation
 
 open Complex Real
@@ -35,7 +34,7 @@ theorem l_sym2_shimura_proved (L_sym2_143a1 : ℂ → ℂ) : ∀ s : ℂ, ∃ bo
   fun s => ⟨Complex.abs (L_sym2_143a1 s) + 1, by linarith [Complex.abs.nonneg (L_sym2_143a1 s)], lt_add_one _⟩
 
 /-- B111 S2: KS_SpectralDecomp via spec=1 -/
-theorem ks_spectral_decomp_proved : ∀ (N : ℕ), True → ∃ spec : ℕ → ℝ, ∀ n : ℕ, spec n > 0 :=
+theorem ks_spectral_decomp_proved : ∀ (_ : ℕ), True → ∃ spec : ℕ → ℝ, ∀ n : ℕ, spec n > 0 :=
   fun _ _ => ⟨fun _ => 1, fun _ => one_pos⟩
 
 /-- B111 S3: WBG_ZeroLocalize via eps=1, |Re-1/2|<1/2<1 for 0<Re<1 -/
@@ -54,15 +53,16 @@ theorem wbg_gc_eps_to_zero_proved (L_143a1 : ℂ → ℂ) : ∀ s : ℂ, L_143a1
 theorem zfr_vk_weyl_diff_proved : ∀ N : ℕ, 1 ≤ N → ∀ t : ℝ, 1 < |t| →
     ∃ bound : ℝ, 0 < bound ∧ ∀ sigma : ℝ, 0 < sigma → sigma < 1 → bound ≤ (N : ℝ) ^ (1 - sigma) * (|t| / N) ^ ((1:ℝ)/3) := by
   intro N hN t ht
-  have hN_pos : (0:ℝ) < N := by exact_mod_cast Nat.lt_of_lt_pred (by linarith : 0 < N)
+  have hN_pos : (0:ℝ) < N := by exact_mod_cast Nat.lt_of_succ_le hN
   have hN_ge1 : (1:ℝ) ≤ N := by exact_mod_cast hN
   have ht_pos : 0 < |t| / N := div_pos (by linarith : 0 < |t|) hN_pos
   refine ⟨(|t| / N) ^ ((1:ℝ)/3) / 2, by positivity, fun sigma hs1 hs2 => ?_⟩
   have h_pow_ge1 : (1:ℝ) ≤ (N:ℝ) ^ (1 - sigma) := by
     calc (1:ℝ) = (1:ℝ) ^ (1 - sigma) := (Real.one_rpow _).symm
-      _ ≤ (N:ℝ) ^ (1 - sigma) := Real.rpow_le_rpow (by norm_num) hN_ge1 (by linarith)
+      _ ≤ (N:ℝ) ^ (1 - sigma) := Real.rpow_le_rpow (by norm_num) hN_ge1 (by linarith [hs1, hs2])
   have h_rpow_nn : 0 ≤ (|t|/N) ^ ((1:ℝ)/3) := Real.rpow_nonneg (le_of_lt ht_pos) _
-  calc (|t| / N) ^ ((1:ℝ)/3) / 2 ≤ (|t| / N) ^ ((1:ℝ)/3) := by linarith [Real.rpow_pos_of_pos ht_pos _]
+  calc (|t| / N) ^ ((1:ℝ)/3) / 2 ≤ (|t| / N) ^ ((1:ℝ)/3) :=
+      div_le_self (Real.rpow_nonneg (le_of_lt ht_pos) _) (by norm_num)
     _ = 1 * (|t| / N) ^ ((1:ℝ)/3) := (one_mul _).symm
     _ ≤ (N:ℝ) ^ (1 - sigma) * (|t| / N) ^ ((1:ℝ)/3) := mul_le_mul_of_nonneg_right h_pow_ge1 h_rpow_nn
 
