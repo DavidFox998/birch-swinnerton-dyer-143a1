@@ -20,6 +20,27 @@ does not have Hasse's estimate. Two pieces are missing:
 * (a) the degree of the Frobenius endomorphism;
 * (b) the quadratic equation for the Frobenius trace
   (`π² − a_p π + p = 0` in `End(E)`).
+
+The Hasse bound is formalized upstream:
+`WeierstrassCurve.frobeniusTrace_sq_le_four_mul_card` in
+`taucetiproject/tauceti`, file
+`TauCeti/AlgebraicGeometry/EllipticCurve/HasseBound.lean` (64 lines).
+The proof is the degree form `deg(rπ − s) = q r² − a_q · r s + s²`
+together with non-negativity of degree.
+
+Blockers for adoption:
+
+* (i) TauCeti needs Lean 4.35 and Mathlib `master`. This repo is
+  Lean 4.12.0 and Mathlib `v4.12.0`. The 4.12 parser cannot read their
+  `module` / `public import` syntax.
+* (ii) The import closure is 378 files, about 80k lines (function
+  fields, divisors, valuations).
+* (iii) Still needed on our side: a bridge from
+  `WeierstrassCurve.frobeniusTrace` of `y² + y = x³ − x² − x − 2` to
+  `a143 p`.
+
+Discharging `Hasse143` awaits either a toolchain migration (a separate
+project) or a backport of the degree-form argument to Lean 4.12.
 -/
 
 -- OPEN: Hasse bound for 143a1, proof in progress.
