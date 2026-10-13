@@ -15,14 +15,26 @@
   local polynomials (`LSeries`). Mathlib's `LSeries` is the tsum of
   a_n n^{−s}, and is 0 at a point where that series is not summable.
 
-  Absolute convergence for Re s > 3/2, and the Euler product on that
-  half-plane, are proved from the Hasse bound `|a_p| ≤ 2√p` at every good
-  prime. That bound is the hypothesis `Hasse143`. It is not a theorem of
-  this file: Mathlib 4.12 has no elliptic Hasse theorem, and the pointwise
-  checks elsewhere in the repository do not cover every prime.
-  Analytic continuation to ℂ is not claimed.
-  `MellinAnalyticExt` supplies local non-vanishing on Re s > 3/2
-  (`complex_euler_poly_nonzero`, `cpow_normSq_lt_one`).
+  Absolute convergence for Re s > 3/2, the Euler product on that
+  half-plane, and holomorphy of the Dirichlet series there, take the
+  Hasse bound `|a_p| ≤ 2√p` at every good prime as the explicit
+  hypothesis `Hasse143`. There is no axiom and no proof of that bound
+  in this file. The open obligation is `hasse_143a1` in
+  `Hasse143Proof.lean`. Mathlib 4.12 has no degree-of-Frobenius
+  theorem and no quadratic equation for the Frobenius trace.
+
+  The Dirichlet series is holomorphic on Re s > 3/2 by
+  `LSeries_analyticOn`. It is not proved entire. `MellinAnalyticExt`
+  gives local non-vanishing (`complex_euler_poly_nonzero`,
+  `cpow_normSq_lt_one`) and an identity-theorem wrapper whose inputs
+  `L143_AnalyticC_OPEN` and `Newform_AnalyticC_OPEN` are still
+  hypotheses about two unbound functions. `CPSFunctionalEquation` does
+  not state a functional equation of this series. Mathlib's
+  `StrongFEPair` continues a Mellin transform only after a modular
+  transformation law is supplied, and the level-N form of that law is
+  a TODO in `AbstractFuncEq.lean`. Rank does not supply the missing
+  continuation: a zero at s = 1 is not a pole, and this file does not
+  identify `L_143a1` with the Mellin transform of a cusp form.
 -/
 import Mathlib.Algebra.BigOperators.Finsupp
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
@@ -38,6 +50,7 @@ import Mathlib.NumberTheory.ArithmeticFunction
 import Mathlib.NumberTheory.EulerProduct.Basic
 import Mathlib.NumberTheory.LSeries.Basic
 import Mathlib.NumberTheory.LSeries.Convolution
+import Mathlib.NumberTheory.LSeries.Deriv
 import Towers.BSD.MathlibGaps.MellinAnalyticExt
 
 namespace Towers.BSD.MathlibGaps
@@ -73,8 +86,8 @@ theorem a143_2 : a143 2 = 0 := by native_decide
 theorem a143_3 : a143 3 = -1 := by native_decide
 theorem a143_5 : a143 5 = -1 := by native_decide
 theorem a143_7 : a143 7 = -2 := by native_decide
-theorem a143_11 : a143 11 = -1 := by native_decide
-theorem a143_13 : a143 13 = -1 := by native_decide
+theorem a143_11 : a143 11 = -1 := by decide
+theorem a143_13 : a143 13 = -1 := by decide
 
 theorem a143_bad (p : ℕ) (hp : p = 11 ∨ p = 13) : a143 p = -1 := by
   rcases hp with rfl | rfl
@@ -193,9 +206,9 @@ theorem good_eulerDenom_real_pos
   exact MellinAnalyticExt.real_euler_poly_pos_of_hasse hp.pos hasse hu hpu
 
 /-- Dirichlet series ∑ a_n n^{−s} of 143a1.
-    For Re s > 3/2 and under `Hasse143`, this equals the Euler product
-    `∏_p eulerFactor p s`. Analytic continuation off that half-plane is
-    not proved. -/
+    For Re s > 3/2, assuming `Hasse143`, this equals the Euler product
+    `∏_p eulerFactor p s` and is holomorphic. Continuation off that
+    half-plane is not proved. -/
 noncomputable def L_143a1 : ℂ → ℂ :=
   LSeries fun n => (coeff143 n : ℂ)
 
@@ -204,8 +217,7 @@ theorem L_143a1_eq_LSeries :
 
 /-- Hasse bound at every good prime, in discriminant form `a_p² ≤ 4p`.
     Equivalent to `|a_p| ≤ 2√p`, which places the roots of `X² − a_p X + p`
-    on the circle of radius `√p`. This is a hypothesis: it is not proved
-    for every prime in this repository. -/
+    on the circle of radius `√p`. -/
 def Hasse143 : Prop :=
   ∀ p : ℕ, Nat.Prime p → p ≠ 11 → p ≠ 13 → (a143 p : ℝ) ^ 2 ≤ 4 * (p : ℝ)
 
@@ -548,8 +560,7 @@ lemma oneSeq_convolution_eq_cardDiv (n : ℕ) :
     simp [ArithmeticFunction.natCoe_apply, ArithmeticFunction.zeta_apply, hj0]
   rw [hsum, Finset.sum_const, nsmul_eq_mul, mul_one]
 
-/-- For Re s > 3/2, assuming Hasse at every good prime,
-    `∑_n |a_n n^{−s}| < ∞`. -/
+/-- For Re s > 3/2, assuming `Hasse143`, `∑_n |a_n n^{−s}| < ∞`. -/
 theorem summable_norm_coeff143 {s : ℂ} (hs : (3 : ℝ) / 2 < s.re) (hH : Hasse143) :
     Summable fun n : ℕ => ‖(coeff143 n : ℂ) / (n : ℂ) ^ s‖ := by
   let s0 : ℂ := (s.re - 1 / 2 : ℝ)
@@ -794,8 +805,7 @@ theorem sum_local_eq_eulerFactor {p : ℕ} (hp : Nat.Prime p) {s : ℂ}
   simp_rw [hterm]
   simpa [eulerFactor] using hG
 
-/-- For Re s > 3/2, assuming Hasse at every good prime,
-    `L_143a1 s = ∏_p eulerFactor p s`. -/
+/-- For Re s > 3/2, assuming `Hasse143`, `L_143a1 s = ∏_p eulerFactor p s`. -/
 theorem L_143a1_eulerProduct {s : ℂ} (hs : (3 : ℝ) / 2 < s.re) (hH : Hasse143) :
     L_143a1 s = ∏' p : Nat.Primes, eulerFactor (p : ℕ) s := by
   let f : ℕ → ℂ := fun n => LSeries.term (fun m => (coeff143 m : ℂ)) s n
@@ -836,5 +846,23 @@ theorem L_143a1_eulerProduct {s : ℂ} (hs : (3 : ℝ) / 2 < s.re) (hH : Hasse14
   have htsum : L_143a1 s = ∑' n, f n := by
     simp [L_143a1, LSeries, f]
   rw [htsum, ← hEP, tprod_congr hlocal]
+
+/-- The abscissa of absolute convergence is at most 3/2, assuming `Hasse143`. -/
+theorem L_143a1_abscissa_le (hH : Hasse143) :
+    LSeries.abscissaOfAbsConv (fun n => (coeff143 n : ℂ)) ≤ (3 / 2 : ℝ) :=
+  LSeries.abscissaOfAbsConv_le_of_forall_lt_LSeriesSummable fun y hy =>
+    L_143a1_LSeriesSummable (by simpa [Complex.ofReal_re] using hy) hH
+
+/-- The Dirichlet series is holomorphic on the open half-plane Re s > 3/2,
+    assuming `Hasse143`. This is `LSeries_analyticOn` applied to
+    `L_143a1_abscissa_le`. It is not an entire continuation, and it is
+    not a functional equation. -/
+theorem L_143a1_analyticOn_re_gt_three_halves (hH : Hasse143) :
+    AnalyticOn ℂ L_143a1 {s : ℂ | (3 / 2 : ℝ) < s.re} := by
+  have hsub : {s : ℂ | (3 / 2 : ℝ) < s.re} ⊆
+      {s : ℂ | LSeries.abscissaOfAbsConv (fun n => (coeff143 n : ℂ)) < s.re} := by
+    intro s hs
+    exact (L_143a1_abscissa_le hH).trans_lt (EReal.coe_lt_coe_iff.mpr hs)
+  simpa [L_143a1] using (LSeries_analyticOn (fun n => (coeff143 n : ℂ))).mono hsub
 
 end Towers.BSD.MathlibGaps
