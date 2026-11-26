@@ -8,7 +8,6 @@ import Towers.BSD.BostBound_143
 import Towers.BSD.BSD_TorsionSha_CLOSED
 import Towers.BSD.BSD_TorsionBound_P2P5_Closed
 import BSD_Regulator_RealPeriod_Closed
-import hassewiles
 import lean.01_genus_X0_143
 import lean.02_hecke_operators
 import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
@@ -79,15 +78,14 @@ It counted `y² + xy = x³ − x² − 5x + 5` with trace `p + 1 − card`, and
 `E143a1_hasse_all_primes` is `HasseWiles.BSD_HasseFull_143_CLOSED`, a bound
 for the stub `HasseWiles.a143` (catch-all `0` past 23). It is not a bound
 for `Towers.BSD.a_p` on the Points layer. -/
-theorem E143a1_hasse_all_primes : HasseWiles.BSD_HasseFull_143_OPEN :=
-  HasseWiles.BSD_HasseFull_143_CLOSED
-
-theorem E143a1_hasse_delgine_bridge : HasseWiles.Deligne_RamanujanBound_OPEN (fun p => (E1859.ap p : ℝ)/Real.sqrt (p:ℝ)) :=
-  HasseWiles.deligne_from_hasse_wiles _ (by
-    intro p hp h143
-    exact ⟨E1859.ap p, rfl, by
-      have := E143a1_hasse_all_primes p hp h143
-      exact this⟩)
+-- QUARANTINE NOTE 2026-11-26: `E143a1_hasse_all_primes` and
+-- `E143a1_hasse_delgine_bridge` stood here. Both rested on the stub
+-- HasseWiles.a143 bound (quarantine/hassewiles.lean); the bridge also
+-- referenced HasseWiles.Deligne_RamanujanBound_OPEN and
+-- HasseWiles.deligne_from_hasse_wiles, which are defined NOWHERE in the
+-- repo, so this file could not elaborate as committed. Removed under the
+-- adopted consolidation order. The genuine ∀p Hasse bound over
+-- Towers.BSD.a_p remains OPEN (see OPEN-REGISTRY.md).
 
 theorem E143a1_hasse_p2 : BSD_Hasse_OPEN 2 := BSD_Hasse_OPEN_p2
 theorem E143a1_hasse_p3 : BSD_Hasse_OPEN 3 := BSD_Hasse_OPEN_p3

@@ -1,3 +1,11 @@
+/- QUARANTINED 2026-11-26 — its headline theorem
+   BSD_L143a1_BSDLFunction_ID_PROVED was proved by the term
+   `BSD_LFunctionIsLinFunc_CLOSED.symm`, i.e. the rfl over the wrong-table
+   stub alias equality quarantined in B02_stub_fragment.lean. A "PROVED"
+   banner resting on that term cannot stand. The file is also a fragment
+   (no imports). BSD_AnalyticOrder_143_PROVED inside has a real AnalyticAt
+   proof over a linear-model L_143a1 and is preserved here for re-homing
+   by David / the prover. Do not re-import. -/
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis898_CLOSED.lean — extracted 4 closed declarations. -/
 
 theorem BSD_L143a1_BSDLFunction_ID_PROVED : BSD_L143a1_BSDLFunction_ID_OPEN :=

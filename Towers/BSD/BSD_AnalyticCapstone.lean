@@ -90,6 +90,19 @@ def BSD_VanishingOrder_APIBridge_OPEN : Prop :=
 def BSD_L143a1_BSDLFunction_ID_OPEN : Prop :=
   L_143a1 = BSDLFunction 143
 
+/-- Gate 2 — canonical name (consolidation 2026-11-26). Downstream files use
+    `BSD_LFunctionIsLinFunc_OPEN` for exactly the proposition above
+    ("Gate 2: BSD_LFunctionIsLinFunc_OPEN (= BSDLFunction 143 = L_143a1)").
+    It is defined ONCE, here, as that proposition. A former def of this name
+    in B02_Modularity_Closed.lean stated a vacuous alias equality over the
+    wrong-table stub a143_B02 and carried an rfl "CLOSED" — that impostor is
+    quarantined at quarantine/B02_stub_fragment.lean. STATUS: OPEN as a
+    theorem; Towers.BSD.MathlibGaps.BSD_LFunctionIsLinFunc_CLOSED closes the
+    equality BY DEFINITION (BSDLFunction's conductor-143 clause unfolds to
+    L_143a1), which is a definitional closure, not this gate discharged. -/
+def BSD_LFunctionIsLinFunc_OPEN : Prop :=
+  BSD_L143a1_BSDLFunction_ID_OPEN
+
 -- ============================================================
 -- §4. Conditional closures (0 sorry, classical trio)
 -- ============================================================

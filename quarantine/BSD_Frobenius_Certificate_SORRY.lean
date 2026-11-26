@@ -1,5 +1,11 @@
 /-
-  BSD_Frobenius_Certificate_CLOSED — Weil Bound Gap CLOSED via Hodge measurement.
+  QUARANTINED 2026-11-26 — BSD_Frobenius_Certificate_SORRY.
+  Was lean/BSD_Frobenius_Certificate_CLOSED.lean. It contains ONE genuine
+  sorry (BSD_HasseFull_143_CLOSED, the ∀p Hasse bound over the geometric
+  a_p — genuine open content, NOT closable from the finite ap_table).
+  Moved out of the build and out of CI grep scope under the adopted
+  consolidation order. Nothing in the filing tree may import this file.
+  Original header follows.
 
   TARGET: BSD_HasseFull_143_OPEN : ∀ p prime, ¬p∣143 → |ap(p)|² ≤ 4p
 
@@ -13,7 +19,7 @@
   168 primes ≤ 997 already closed by BSD_Weil_168_CLOSED.
   This file closes p > 997.
 
-  SORRY: 0. Classical trio only.
+  SORRY: 1 (genuine — see BSD_HasseFull_143_CLOSED below). Classical trio only.
 -/
 
 import Mathlib.Data.Complex.Basic

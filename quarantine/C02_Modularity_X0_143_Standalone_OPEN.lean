@@ -1,3 +1,7 @@
+/- QUARANTINED 2026-11-26 — wrong coefficient table. This file's `a143`
+   stores a_2 = -2, a_5 = 1, a_11 = 0, a_13 = 0 (LMFDB 143.2.a.a: 0, -1, -1, -1)
+   under a comment claiming LMFDB provenance. No file imports it. Moved out of
+   the build under the adopted consolidation order; do not re-import. -/
 /-
   # C02 — Modularity for X₀(143) — STANDALONE
   Same OPEN surface as RH Core C02, but no import of Towers.RH.
