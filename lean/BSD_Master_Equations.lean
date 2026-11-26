@@ -1,4 +1,9 @@
-import Towers.BSD.BSD_BSD_L143a1_BSDLFunction_ID_PROVED
+-- Import of Towers.BSD.BSD_BSD_L143a1_BSDLFunction_ID_PROVED removed
+-- 2026-11-26 (consolidation): that module is quarantined (its headline proof
+-- term was the stub rfl). Nothing in this file's code referenced its names;
+-- the import was dead. NOTE: Part II prose below describes the 143-repo
+-- linear model L_143a1(s) = (5759/10000)(s-1); the canonical L_143a1 in
+-- this repo is the Hasse-Weil L-series (MathlibGaps/LFunction143a1.lean).
 
 /-!
 # BSD_Master_Equations — E_{143a1}/Q over Q
