@@ -1,3 +1,9 @@
+/- QUARANTINED 2026-11-26 — wrong coefficient table + stipulated bound.
+   This file's `a143` is the Batch152 lookup table (a_2=-2, a_5=1, a_17=-2,
+   a_19=4, a_23=0; LMFDB 143.2.a.a: 0, -1, -4, 2, 7) with catch-all `| _ => 0`,
+   and `hasse_bound_143a1` proves the ∀p bound by 9 cases + that catch-all —
+   a bound on a stipulated function, not on the curve. Its only importer was
+   lean/E143a1_CLOSED.lean (§10 removed the same day). Do not re-import. -/
 /-
   lean/hassewiles.lean
   BC6 §4 Hecke Correspondence — Genuine Clay Rigor — Merged Batch151+152+TeX

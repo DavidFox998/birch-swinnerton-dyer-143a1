@@ -1,0 +1,123 @@
+# Placeholder registry — birch-swinnerton-dyer-143a1
+
+Generated 2026-11-26 under the adopted BSD consolidation order (step 3).
+Every `Prop := True` placeholder definition in the tree (quarantine/ excluded),
+with file and line. These are October assessed-batch scaffolding. They stay in
+place; the CI placeholder-import guard keeps them out of the filing build:
+no module under `Towers/` or `lean/` may import a `BSD_Assessed_Batch*` file.
+
+**Total: 111**
+
+| # | Name | File | Line |
+|---|------|------|------|
+| 1 | `BSD_L_Analytic_143_OPEN_prop` | `BSD_Assessed_Batch1.lean` | 13 |
+| 2 | `BSD_L143a1_HasDerivAt_OPEN_prop` | `BSD_Assessed_Batch1.lean` | 33 |
+| 3 | `BSD_AnalyticOn_L143a1_CLOSED_prop` | `BSD_Assessed_Batch1.lean` | 37 |
+| 4 | `BSD_H1_decomp_verified_prop` | `BSD_Assessed_Batch1.lean` | 42 |
+| 5 | `BSD_analytic_rank_open_count_prop` | `BSD_Assessed_Batch1.lean` | 43 |
+| 6 | `BSD_EulerProduct_Global_OPEN_prop` | `BSD_Assessed_Batch1.lean` | 47 |
+| 7 | `BSD_BQF_ClassNumber_bridge_CLOSED_prop` | `BSD_Assessed_Batch1.lean` | 52 |
+| 8 | `BSD_ClassNum_Unconditional_prop` | `BSD_Assessed_Batch1.lean` | 60 |
+| 9 | `BSD_classNumber_upper_gate_discharged_prop` | `BSD_Assessed_Batch1.lean` | 61 |
+| 10 | `BSD_BQF_ClassNumber_bridge_prop` | `BSD_Assessed_Batch1.lean` | 65 |
+| 11 | `BSD_orderOf_p2_OPEN_prop` | `BSD_Assessed_Batch1.lean` | 70 |
+| 12 | `BSD_classGroupCard_le_10_OPEN_prop` | `BSD_Assessed_Batch1.lean` | 71 |
+| 13 | `BSD_classNumber_completion_open_count_prop` | `BSD_Assessed_Batch1.lean` | 76 |
+| 14 | `BSD_w3_ideal_equality_OPEN_prop` | `BSD_Assessed_Batch1.lean` | 80 |
+| 15 | `BSD_w4_ideal_equality_OPEN_prop` | `BSD_Assessed_Batch1.lean` | 81 |
+| 16 | `BSD_small_norm_in_zpowers_OPEN_prop` | `BSD_Assessed_Batch1.lean` | 82 |
+| 17 | `BSD_ClayGap_VanishingOrder_prop` | `BSD_Assessed_Batch1.lean` | 86 |
+| 18 | `BSD_ClayGap_GrossZagier_prop` | `BSD_Assessed_Batch1.lean` | 87 |
+| 19 | `BSD_ClaySubmission_Combinator_prop` | `BSD_Assessed_Batch1.lean` | 92 |
+| 20 | `BSD_722_bost_bound_prop` | `BSD_Assessed_Batch1.lean` | 98 |
+| 21 | `BSD_Arakelov_CrossReference_prop` | `BSD_Assessed_Batch1.lean` | 102 |
+| 22 | `BSD_Hasse_OPEN_p9973_prop` | `BSD_Assessed_Batch10.lean` | 55 |
+| 23 | `BSD_TauBound_small_proved_prop` | `BSD_Assessed_Batch10.lean` | 59 |
+| 24 | `BSD_TauBound_OPEN_proved_prop` | `BSD_Assessed_Batch10.lean` | 60 |
+| 25 | `E143_Weierstrass_prop` | `BSD_Assessed_Batch10.lean` | 64 |
+| 26 | `BSD_WeilHasse_Weierstrass_OPEN_prop` | `BSD_Assessed_Batch10.lean` | 65 |
+| 27 | `BSD_TauBound_OPEN_prop` | `BSD_Assessed_Batch10.lean` | 70 |
+| 28 | `BSD_isBigO_to_LSeries_OPEN_prop` | `BSD_Assessed_Batch10.lean` | 71 |
+| 29 | `BSD_PrimePowBound_to_aNBound_OPEN_prop` | `BSD_Assessed_Batch10.lean` | 75 |
+| 30 | `BSD_aNBound_to_LSeries_OPEN_prop` | `BSD_Assessed_Batch10.lean` | 76 |
+| 31 | `BSD_TauBound_small_OPEN_prop` | `BSD_Assessed_Batch10.lean` | 80 |
+| 32 | `BSD_EulerProduct_Global_CLOSED_prop` | `BSD_Assessed_Batch2.lean` | 13 |
+| 33 | `BSD_FormIdeal_open_count_prop` | `BSD_Assessed_Batch2.lean` | 17 |
+| 34 | `BSD_open_surface_count_756_prop` | `BSD_Assessed_Batch2.lean` | 21 |
+| 35 | `BSD_FrobeniusViaModularity_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 25 |
+| 36 | `BSD_FrobeniusHighPrimes_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 26 |
+| 37 | `BSD_FuncEq_CLOSED_prop` | `BSD_Assessed_Batch2.lean` | 34 |
+| 38 | `BSD_genesis892_gap_count_clay_prop` | `BSD_Assessed_Batch2.lean` | 35 |
+| 39 | `BSD_genesis892_gap_count_opaque_prop` | `BSD_Assessed_Batch2.lean` | 36 |
+| 40 | `BSD_EndomorphismDegree_Partial_CLOSED_prop` | `BSD_Assessed_Batch2.lean` | 55 |
+| 41 | `BSD_Hasse_OPEN_partial_CLOSED_prop` | `BSD_Assessed_Batch2.lean` | 56 |
+| 42 | `BSD_ChebyshevBound_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 61 |
+| 43 | `BSD_TauBound_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 62 |
+| 44 | `BSD_LSeriesSummable_Deligne_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 63 |
+| 45 | `BSD_Tamagawa_11_is_1_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 72 |
+| 46 | `BSD_Tamagawa_13_is_2_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 73 |
+| 47 | `BSD_Tamagawa_11_is_1_CLOSED_prop` | `BSD_Assessed_Batch2.lean` | 74 |
+| 48 | `BSD_RankOneToConj_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 78 |
+| 49 | `BSD_KolyvaginPath_gap_count_prop` | `BSD_Assessed_Batch2.lean` | 79 |
+| 50 | `BSD_RankOneToConj_CLOSED_prop` | `BSD_Assessed_Batch2.lean` | 83 |
+| 51 | `BSD_KolyvaginPath_gap_count_v2_prop` | `BSD_Assessed_Batch2.lean` | 84 |
+| 52 | `BSD_SpecialValue_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 94 |
+| 53 | `BSD_SimpleZero_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 95 |
+| 54 | `BSD_FunctionalEq_143_OPEN_prop` | `BSD_Assessed_Batch2.lean` | 96 |
+| 55 | `BSD_L143a1_Anchor_Analytic_prop` | `BSD_Assessed_Batch2.lean` | 100 |
+| 56 | `BSD_modularityE143_is_open_prop` | `BSD_Assessed_Batch2.lean` | 106 |
+| 57 | `BSD_bsdFormula_is_open_prop` | `BSD_Assessed_Batch2.lean` | 107 |
+| 58 | `BSD_open_surface_count_prop` | `BSD_Assessed_Batch2.lean` | 111 |
+| 59 | `BSD_classNumber_lower_bound_prop` | `BSD_Assessed_Batch3.lean` | 13 |
+| 60 | `BSD_NonTorsion_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 22 |
+| 61 | `BSD_genesis_753_ledger_prop` | `BSD_Assessed_Batch3.lean` | 23 |
+| 62 | `BSD_ClassNumber_Upper_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 31 |
+| 63 | `BSD_ClassNumber_Lower_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 32 |
+| 64 | `BSD_orderOf_p2_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 36 |
+| 65 | `BSD_OrderOf_all_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 37 |
+| 66 | `BSD_OrderOf_open_count_prop` | `BSD_Assessed_Batch3.lean` | 38 |
+| 67 | `BSD_p2_pow_10_principal_hyp_prop` | `BSD_Assessed_Batch3.lean` | 42 |
+| 68 | `BSD_p2_pow_10_principal_prop` | `BSD_Assessed_Batch3.lean` | 43 |
+| 69 | `BSD_WilesTaylor_143_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 48 |
+| 70 | `BSD_MellinL_143_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 49 |
+| 71 | `BSD_RankCapstone_gap_count_prop` | `BSD_Assessed_Batch3.lean` | 53 |
+| 72 | `BSD_BQF_ClassNumber_bridge_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 63 |
+| 73 | `BSD_SHA_Finite_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 67 |
+| 74 | `BSD_NonTorsion_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 73 |
+| 75 | `BSD_semistable_milestone_54_prop` | `BSD_Assessed_Batch3.lean` | 74 |
+| 76 | `BSD_clay_open_count_723_prop` | `BSD_Assessed_Batch3.lean` | 78 |
+| 77 | `BSD_clay_primary_gap_count_723_prop` | `BSD_Assessed_Batch3.lean` | 79 |
+| 78 | `BSD_clay_open_count_730_prop` | `BSD_Assessed_Batch3.lean` | 80 |
+| 79 | `BSD_w3_ideal_equality_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 84 |
+| 80 | `BSD_w4_ideal_equality_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 85 |
+| 81 | `BSD_small_norm_in_zpowers_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 86 |
+| 82 | `BSD_Sha_via_Kolyvagin_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 90 |
+| 83 | `BSD_Regulator_via_Height_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 91 |
+| 84 | `BSD_tamagawa_open_count_prop` | `BSD_Assessed_Batch3.lean` | 92 |
+| 85 | `BSD_gap_ledger_890_prop` | `BSD_Assessed_Batch3.lean` | 97 |
+| 86 | `BSD_TorsionBound_p2_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 101 |
+| 87 | `BSD_TorsionBound_p5_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 102 |
+| 88 | `BSD_torsion_open_count_prop` | `BSD_Assessed_Batch3.lean` | 103 |
+| 89 | `BSD_TorsionBound_p2_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 107 |
+| 90 | `BSD_TorsionBound_p5_CLOSED_prop` | `BSD_Assessed_Batch3.lean` | 108 |
+| 91 | `BSD_torsion_open_count_735_prop` | `BSD_Assessed_Batch3.lean` | 109 |
+| 92 | `BSD_SieveDensity_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 113 |
+| 93 | `BSD_ZetaBound_OPEN_prop` | `BSD_Assessed_Batch3.lean` | 114 |
+| 94 | `BSD_Tier2B_ProvedFacts_prop` | `BSD_Assessed_Batch3.lean` | 115 |
+| 95 | `BSD_L143a1_HasDerivAt_CLOSED_prop` | `BSD_Assessed_Batch4.lean` | 19 |
+| 96 | `E143a1_prop` | `BSD_Assessed_Batch4.lean` | 24 |
+| 97 | `E143a1_bost_bound_prop` | `BSD_Assessed_Batch4.lean` | 26 |
+| 98 | `BSD_NeronTateHeight_OPEN_prop` | `BSD_Assessed_Batch4.lean` | 30 |
+| 99 | `BSD_Regulator_OPEN_prop` | `BSD_Assessed_Batch4.lean` | 31 |
+| 100 | `BSD_SHA_Finite_OPEN_prop` | `BSD_Assessed_Batch4.lean` | 32 |
+| 101 | `BSD_isBigO_to_LSeries_close_prop` | `BSD_Assessed_Batch4.lean` | 36 |
+| 102 | `BSD_HasseViaEndDeg_holds` | `Towers/BSD/BSD_HasseEndDeg_CLOSED.lean` | 20 |
+| 103 | `BSD_ApCompat_Partial_CLOSED` | `Towers/BSD/BSD_HasseEndDeg_CLOSED.lean` | 101 |
+| 104 | `BSD_VanishingOrder_143_Genuine_OPEN` | `Towers/BSD/BSD_MissingDefinitionsRegistry.lean` | 8 |
+| 105 | `BSD_Kolyvagin_OPEN` | `Towers/BSD/BSD_MissingDefinitionsRegistry.lean` | 10 |
+| 106 | `BSD_HeegnerPoint_OPEN` | `Towers/BSD/BSD_MissingDefinitionsRegistry.lean` | 12 |
+| 107 | `BSD_SHA_Finite_OPEN` | `hasseprimset/BSD_ANBound_Generator_Closed.lean` | 130 |
+| 108 | `BSD_LeadingCoeff_OPEN` | `hasseprimset/BSD_ANBound_Generator_Closed.lean` | 144 |
+| 109 | `BSD_Tamagawa_OPEN` | `hasseprimset/BSD_ANBound_Generator_Closed.lean` | 174 |
+| 110 | `BSD_Torsion_OPEN` | `hasseprimset/BSD_ANBound_Generator_Closed.lean` | 194 |
+| 111 | `BSD_Rank1_Generator_OPEN` | `hasseprimset/BSD_ANBound_Generator_Closed.lean` | 213 |

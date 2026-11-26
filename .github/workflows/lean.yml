@@ -28,6 +28,21 @@ jobs:
           fi
           echo "0 sorry OK"
 
+
+      - name: Wrong-table guard (consolidation 2026-11-26)
+        run: |
+          if grep -R --include="*.lean" -E "\| 2 => -2|\| 5 => 1$" Towers lean; then
+            echo "WRONG TRACE TABLE PATTERN IN BUILD SCOPE"; exit 1
+          fi
+          echo "no wrong-table patterns OK"
+
+      - name: Placeholder import guard (consolidation 2026-11-26)
+        run: |
+          if grep -R --include="*.lean" -E "^import .*BSD_Assessed_Batch" Towers lean; then
+            echo "FILING SCOPE IMPORTS A PLACEHOLDER BATCH"; exit 1
+          fi
+          echo "no placeholder imports OK"
+
       - name: Upload Hasse audit
         uses: actions/upload-artifact@v4
         with:
