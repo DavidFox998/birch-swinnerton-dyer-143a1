@@ -3,13 +3,24 @@
 > **Opera Numerorum ensemble** — 19 repos · chain `7472f4e5` · [REPOS.md →](https://github.com/DavidFox998/rh-p5-bridge-14/blob/main/REPOS.md)
 
 
-# birch-swinnerton-dyer-143a1 — BSD for Curve 143a1 — Hasse Infinite HONEST + Bost Bound S₄ — Analytic Rank 1 = Algebraic Rank 1 — Lean 4.12.0 — 0 sorry — BUILD #175 GREEN
+## Status — 2026-11-27 (read first)
+
+- **Toolchain:** Lean 4.12.0 / Mathlib v4.12.0 throughout. No 4.35 migration has started; there is no 4.35 toolchain on the build machine.
+- **main:** `origin/main` = `14f39936c0c21bbc89492a074a798c1e2fa87d2a` — the 2026-11-26 consolidation (quarantine + registries) is merged and pushed.
+- **Strengthened tree:** the class-number strengthening (h(ℚ(√−143)) = 10 unconditional, classical-trio axioms only, verified locally 2026-11-26) is UNCOMMITTED working-tree state — it has no SHA yet. A reviewer sweep of all 260 build-scope modules is in flight (68 logged at last check: 34 PASS / 34 FAIL); defects are fixed after the sweep, then the tree is pushed on a branch for review. None of it is merged or submitted.
+- **Table machinery:** the a_p table generator is in `table-machinery/` on branch `table-machinery-v1` (commit `80696772a1446719acb1cedf79f376eafbc7f402`), NOT merged to main.
+- **p4-p5 follow-up** (missing-primes drift): DEFERRED — parked outside this repo in the consolidation workspace (`docs/followups/missing-primes-p4-p5-drift.md`); it resumes only after the MathDB submission is recorded.
+- The older text below predates the consolidation. Where it conflicts with `OPEN-REGISTRY.md`, `PLACEHOLDER-REGISTRY.md`, or this block, the registries and this block govern. BSD itself remains OPEN; in the consolidated tree Gate 2 stands as an OPEN definition, and the OPEN surfaces are named in the registries.
+
+---
+
+# birch-swinnerton-dyer-143a1 — BSD for Curve 143a1 — Hasse Infinite HONEST + Bost Bound S₄ — Analytic Rank 1 = Algebraic Rank 1 — Lean 4.12.0 — 0 sorry — build status per registry (see Status block)
 
 **Curve:** E: y² + y = x³ - x² - x -2 — Cremona 143a1, LMFDB 143.a1, Conductor N=143=11·13, Rank 1, Point (4,6) — Heegner.
 
 **Claim:** Analytic rank = Algebraic rank = 1, |Sha|=1, |E(Q)_tors|=1, h(Q(√-143))=10, and BSD formula holds:
 `L*·|Sha|·|tors|² = Ω·R·∏c_p` → `37006603/25000000 = 12583/10000 × 5882/10000 ×2`
-Lean 4.12.0 Mathlib v4.12.0 — 0 sorry — Axioms `{propext, Classical.choice, Quot.sound}` — Build #175 GREEN.
+Lean 4.12.0 Mathlib v4.12.0 — 0 sorry — Axioms `{propext, Classical.choice, Quot.sound}` — build status per the registries (see Status block).
 
 **DOI:** `10.5281/zenodo.21585042` — Zenodo https://zenodo.org/records/21585042
 
@@ -42,14 +53,22 @@ Hasse 1933: #E(F_p)=p+1-a_p, |a_p|≤2√p ⇔ a_p²≤4p.
 - No `a143 p=0 ⇒ 0≤4p via hp.pos` cheat — removed in `03_qexpansion_closed.lean`
 **Now CLOSED in `MathlibGaps/FrobeniusDiscriminant_CLOSED.lean` — `∀ p good, (a_p)²≤4p` — 0 sorry #175 GREEN**
 
-**6. BSD — Gate 2 & 3 CLOSED:**
+**6. BSD — Gate 2 & 3 (status per registry — Gate 2 OPEN):**
 - `BostBound143.lean` C(S4)>2√13 S4={2,3,19,191} C=11.422148... >7.211 margin x1.58
 - Class number h(Q(√-143))=10 via reduced forms length 10 `rfl` + p2^10 principal norm 1024, ClassGroup={[p2]} — both routes
 - Torsion 1, Sha 1, Regulator 5882/10000>0, Heegner (4,6)
 - `LFunctionIsLinFunc_CLOSED`: `BSDLFunction 143 = L_143a1` via `CPSFunctionalEquation` + `MellinAnalyticExt` — `by rfl` opaque→def same pattern as ShaCard/TorsCard
 - Root number ε=-1, AnalyticRankAnchor 1, Tamagawa formula holds
 
-### Gates — All CLOSED
+### Gates — status per registry (corrected 2026-11-27)
+
+> **Superseding note — 2026-11-27:** the gate-closure claims in this
+> section predate the 2026-11-26 consolidation. Per `OPEN-REGISTRY.md`,
+> Gate 2 stands OPEN as a definition in the consolidated tree and BSD
+> itself remains OPEN; the registries govern wherever this section
+> conflicts with them. Build numbers cited below (#175) are historical
+> snapshots, not current status — a reviewer sweep of all 260
+> build-scope modules is in flight (see Status block).
 
 **Gate 1: Weil/Hasse via Frobenius degree ✓** — `FrobeniusDiscriminant_CLOSED.lean` #175
 **Gate 2: LFunctionIsLinFunc / Modularity X0(143) standalone ✓** — `LFunctionIsLinFunc_CLOSED.lean` #175
@@ -103,7 +122,7 @@ Where `Ω` = real period, `R` = regulator (height of generators), `c_p` = Tamaga
 - `L'(143a1,1)≈0.5759...`, `Ω≈1.2583...`, `R=0.5882...`
 - Formula: `37006603/25000000 = 12583/10000 × 5882/10000 ×2` → `L*·|Sha|·|tors|² = Ω·R·∏c_p`
 
-**How we address it — 3 Gates CLOSED #175 GREEN:**
+**How we address it — 3 Gates (status per registry, see Status block):**
 
 **Gate 1 — Hasse Infinite HONEST:** Need `a_p²≤4p` for all p.
 - `E143_Finset p` enumerates F_p×F_p (63k..94k pairs) `by decide`

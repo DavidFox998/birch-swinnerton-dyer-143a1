@@ -1,4 +1,13 @@
-# Table machinery — BSD a_p tables for any curve, verified from the equation
+# Table Machinery for BSD 143a1
+
+BSD a_p tables for any curve, verified from the equation.
+
+**Status — 2026-11-27:** this directory lives on branch `table-machinery-v1`
+(commit `80696772a1446719acb1cedf79f376eafbc7f402`) of
+birch-swinnerton-dyer-143a1. It is NOT merged to main. Toolchain:
+Lean 4.12.0 / Mathlib v4.12.0. The run of record is v2 (see PIN.md);
+the E143 instantiation below is what the generator emitted and Lean
+verified for the 143a1 curve.
 
 Built 2026-11-27 on David's order: stop carrying generated tables whose
 only in-Lean check is the Hasse bound (a bound any plausible table
@@ -26,13 +35,18 @@ every entry in Lean against that equation.
   emits two Lean modules:
   - `STEMData.lean` — the curve and the table as data (chunked list
     literals of 128, joined by `++`).
-  - `STEMCheck.lean` — four theorems, all by `native_decide`:
+  - `STEMCheck.lean` — six theorems, all by `native_decide`:
     `entries_brute` (small segment = brute-force count from the
     equation), `entries_agree` (character sum = brute force on the
     small segment), `entries_char` (full table = character sum),
-    `entries_hasse` (every entry satisfies a_p² ≤ 4p).
-- `verify-table4.sh` — compiles Machinery → Data → Check oleans, then
-  prints the axioms of all four theorems.
+    `entries_hasse` (every entry satisfies a_p² ≤ 4p — necessary,
+    not sufficient), `table_prime_bound` (every table prime ≤ the
+    stated bound, as a theorem, not a comment), `table_length`
+    (the entry count, as a theorem).
+- Verification compiles Machinery → Data → Check oleans in order,
+  then prints the axioms of all six theorems from the compiled
+  oleans. The exact commands and file hashes are recorded in PIN.md;
+  the output is in `verify-table.log`.
 
 ## Why two modules
 
@@ -47,16 +61,16 @@ quadratically; 128-entry chunks elaborate linearly.
 
 - Generator reproduced the standing tree table **exactly**: 1,065
   entries, primes ≤ 8,563, Δ = −1859, bad primes 11 and 13 excluded.
-- Lean verification (run of record, 2026-11-27): machinery, data, and
-  check modules all compile clean; the four theorems together took
-  361 s on this throttled VM (individually measured during tuning:
-  brute 66 s, agree 81 s, char 133 s, hasse 12 s). Axiom footprints
-  from the compiled oleans: `entries_brute`, `entries_agree`,
-  `entries_char` depend on `[Lean.ofReduceBool]` only; `entries_hasse`
-  on `[propext, Lean.ofReduceBool]`. No `Classical.choice`, no
-  `Quot.sound` — the computations are fully concrete, and
-  `native_decide`'s `ofReduceBool` is named wherever it appears, as
-  everywhere in the house. Full log: `verify-table.log`.
+- Lean verification (run of record v2, 2026-11-27): machinery, data,
+  and check modules all compile clean (check exit=0, 439 s on this
+  throttled VM; individually measured during tuning: brute 66 s,
+  agree 81 s, char 133 s, hasse 12 s). Axiom footprints from the
+  compiled oleans: `entries_brute`, `entries_agree`, `entries_char`,
+  `table_prime_bound`, `table_length` depend on `[Lean.ofReduceBool]`
+  only; `entries_hasse` on `[propext, Lean.ofReduceBool]`.
+  No `Classical.choice`, no `Quot.sound` — the computations are fully
+  concrete, and `native_decide`'s `ofReduceBool` is named wherever it
+  appears, as everywhere in the house. Full log: `verify-table.log`.
 
 ## Claim typing
 
@@ -69,5 +83,5 @@ finset point count) are the template's next rung — not claimed here.
 
 `python3 gen_table.py A1 A2 A3 A4 A6 BOUND NAME Table<Name>` then
 compile Machinery, `Table<Name>Data`, `Table<Name>Check` in order with
-the clone's Lean toolchain and Mathlib on LEAN_PATH (see
-`verify-table4.sh` for the exact invocation pattern).
+the clone's Lean toolchain and Mathlib on LEAN_PATH (the exact
+invocation used for the run of record is recorded in PIN.md).
