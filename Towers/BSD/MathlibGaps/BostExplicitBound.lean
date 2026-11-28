@@ -1,12 +1,13 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Finset.Basic
+import Mathlib.Data.Finset.Card
 import Mathlib.Tactic.NormNum
 
 namespace Towers.BSD.MathlibGaps
 
 def S4 : Finset ℕ := {2, 3, 19, 191}
 
-def Bost_c54 : ℝ := 37006603 / 100000000 * 4  -- 1.480.../10*4 = 0.592... > 2/13
+noncomputable def Bost_c54 : ℝ := 37006603 / 100000000 * 4  -- 1.480.../10*4 = 0.592... > 2/13
 -- your Genesis737 constant: 37006603/25000000 = L* = Ω·R·∏c = 12583/10000*5882/10000*2
 
 theorem Bost_bound_c54_gt : Bost_c54 > 2/13 := by
