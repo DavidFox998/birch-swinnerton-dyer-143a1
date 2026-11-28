@@ -1,7 +1,7 @@
 {
-  "title": "Birch–Swinnerton-Dyer for Curve 143a1 — Hasse and Rank Formalization",
+  "title": "BSD 143a1 Formalization — Strengthened Tree and Table Machinery",
   "upload_type": "software",
-  "description": "Lean 4 formalization of the Hasse-bound, analytic-rank, and Birch–Swinnerton-Dyer formalization for Cremona elliptic curve 143a1 of conductor 143. This repository is part of David Fox's Opera Numerorum ensemble.",
+  "description": "Lean formalization of BSD for curve 143a1. Census-measured tree: 222 PASS / 40 FAIL / 16 quarantined (278 files), with full verdict log and CENSUS-REPORT.md. Table machinery, honesty READMEs, and strengthened files on table-machinery-v1 base.",
   "creators": [
     {
       "name": "Fox, David",
@@ -11,13 +11,12 @@
   ],
   "license": "MIT",
   "keywords": [
-    "Birch–Swinnerton-Dyer conjecture",
+    "Birch and Swinnerton-Dyer",
     "BSD",
-    "elliptic curve 143a1",
-    "Hasse bound",
-    "analytic rank",
-    "Lean 4",
-    "formal verification"
+    "143a1",
+    "Lean",
+    "Mathlib",
+    "formalization"
   ],
   "access_right": "open",
   "related_identifiers": [
@@ -28,5 +27,5 @@
     }
   ],
   "language": "en",
-  "version": "set-by-zenodo-workflow-to-the-release-tag"
+  "version": "bsd-census-2026-11-27"
 }
