@@ -1,28 +1,42 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis745_CLOSED.lean — extracted 20 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Fact_Instances
+import Towers.BSD.BSD_AffineCount_Fast
 
-theorem BSD_E143_card_p227 : (E143_Finset 227).card = 227 := by decide
+open Towers.BSD
+
+theorem BSD_E143_card_p227 : (E143_Finset 227).card = 227 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 /-- **`BSD_E143_card_p229`** — 143a1 has exactly **220 affine 𝔽₂₂₉-points**.
-    a₂₂₉ = 229−220 = +9.  Computed by `decide` over ZMod 229 × ZMod 229 (52441 pairs). -/
+    a₂₂₉ = 229−220 = +9.  Computed by the fast route over ZMod 229 × ZMod 229 (52441 pairs). -/
 
-theorem BSD_E143_card_p229 : (E143_Finset 229).card = 220 := by decide
+theorem BSD_E143_card_p229 : (E143_Finset 229).card = 220 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 /-- **`BSD_E143_card_p233`** — 143a1 has exactly **249 affine 𝔽₂₃₃-points**.
-    a₂₃₃ = 233−249 = −16.  Computed by `decide` over ZMod 233 × ZMod 233 (54289 pairs). -/
+    a₂₃₃ = 233−249 = −16.  Computed by the fast route over ZMod 233 × ZMod 233 (54289 pairs). -/
 
-theorem BSD_E143_card_p233 : (E143_Finset 233).card = 249 := by decide
+theorem BSD_E143_card_p233 : (E143_Finset 233).card = 249 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 /-- **`BSD_E143_card_p239`** — 143a1 has exactly **269 affine 𝔽₂₃₉-points**.
-    a₂₃₉ = 239−269 = −30.  Computed by `decide` over ZMod 239 × ZMod 239 (57121 pairs). -/
+    a₂₃₉ = 239−269 = −30.  Computed by the fast route over ZMod 239 × ZMod 239 (57121 pairs). -/
 
-theorem BSD_E143_card_p239 : (E143_Finset 239).card = 269 := by decide
+theorem BSD_E143_card_p239 : (E143_Finset 239).card = 269 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 /-- **`BSD_E143_card_p241`** — 143a1 has exactly **251 affine 𝔽₂₄₁-points**.
-    a₂₄₁ = 241−251 = −10.  Computed by `decide` over ZMod 241 × ZMod 241 (58081 pairs). -/
+    a₂₄₁ = 241−251 = −10.  Computed by the fast route over ZMod 241 × ZMod 241 (58081 pairs). -/
 
-theorem BSD_E143_card_p241 : (E143_Finset 241).card = 251 := by decide
+theorem BSD_E143_card_p241 : (E143_Finset 241).card = 251 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 /-! ## §2. Exact a_p values -/
 
@@ -131,5 +145,4 @@ theorem BSD_Hasse_OPEN_p239 : BSD_Hasse_OPEN 239 :=
 theorem BSD_Hasse_OPEN_p241 : BSD_Hasse_OPEN 241 :=
   BSD_hasse_of_degree_nonneg 241 BSD_DegreeNonneg_p241
 
-end Towers.BSD
 

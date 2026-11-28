@@ -1,0 +1,16 @@
+QUARANTINED FRAGMENT — excised 2026-11-27 (reviewer fix pass).
+Source: tail of Towers/BSD/BSD_BQF_Bridge_Closed.lean after its `end Towers.BSD`.
+Why: a second extract stapled onto the file — a theorem duplicating the name
+BSD_BQF_ClassNumber_bridge_CLOSED (cf. BSD_ClassNumber_Completion_CLOSED),
+a proof whose type does not match its statement as written, and a dangling
+`end BSD` for a namespace never opened. It never compiled in this tree.
+Preserved verbatim below; the file's main theorem was repaired in place
+(imports for BSD_P2_Principal_CLOSED + BSD_ReducedForms).
+---
+theorem BSD_BQF_ClassNumber_bridge_CLOSED :
+    Towers.BSD.BSD_BQF_ClassNumber_bridge :=
+  (BSD_classNumber_eq_10_via_principal BSD_p2_pow_10_principal).trans
+    Towers.BSD.BSD_numReducedForms143.symm
+
+end BSD
+

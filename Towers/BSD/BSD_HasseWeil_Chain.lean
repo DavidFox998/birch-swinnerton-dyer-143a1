@@ -1,5 +1,61 @@
-/- Ported closed theorems from birch-swinnerton-dyer-143/BSD_HasseWeil_Chain.lean — extracted 9 closed declarations. -/
+import Towers.BSD.BSD_LFunction_Closed
 
+/-!
+# BSD_HasseWeil_Chain — Milestone 3: Weil Bound and Convergence Improvement
+
+## Mathematical context
+
+The Hasse-Weil theorem (Hasse 1936, Weil 1948): for an elliptic curve E/𝔽_p of
+good reduction, the Frobenius eigenvalues α, ᾱ satisfy |α| = √p, giving
+  |a_p| = |α + ᾱ| ≤ 2√p.
+
+For E₁₄₃/ℚ (143a1), `BSD_Hasse_OPEN p` is already defined in BSD_LFunction.lean.
+This file proves what CAN be proved without the Frobenius API, documents the three
+remaining gaps, and integrates with the M2 chain.
+
+## Tier A — Proved unconditionally (0 sorry, classical trio)
+
+| Theorem | Statement |
+|---------|-----------|
+| `BSD_PrimePow_k0` | `BSD_PrimePowBound_OPEN p 0` — base case: \|a_{p^0}\|=1≤1·p^0 |
+| `BSD_PrimePow_k1` | given `BSD_Hasse_OPEN p`, proves `BSD_PrimePowBound_OPEN p 1` |
+| `BSD_hasse_to_primepow` | `BSD_Hasse_OPEN` (∀p) + `BSD_ChebyshevBound_OPEN` → `BSD_PrimePowBound_OPEN` (∀p,k) |
+| `BSD_m3_hasse_chain` | full M3 conditional chain (0 sorry) |
+| `BSD_m2_m3_full_chain` | M2 + M3 combined (0 sorry) |
+
+## Tier B — OPEN sub-surfaces (named Prop, not axioms, not sorry)
+
+| Surface | Gap |
+|---------|-----|
+| `BSD_ChebyshevBound_OPEN` | Inductive step k≥2: Chebyshev-U trig identity |
+| `BSD_TauBound_OPEN` | τ(n) = O(n^ε) — divisor function sub-power growth |
+| `BSD_LSeriesSummable_Deligne_OPEN` | summability at σ>1 given τ(n)=O(n^ε) |
+
+## Why the inductive step is OPEN
+
+For k ≥ 2, the recurrence a_{p^{k+2}} = a_p · a_{p^{k+1}} − p · a_{p^k}
+and Hasse give a_{p^k}/p^{k/2} = U_k(a_p/(2√p)) (Chebyshev-U polynomial).
+Since |U_k(x)| ≤ k+1 for |x| ≤ 1, this bounds |a_{p^k}| ≤ (k+1)p^{k/2}.
+
+The naive triangle inequality overshoots and does NOT close the bound;
+the Chebyshev identity requires `Real.arccos`, `Real.sin_nsucc_mul` (or similar),
+and the bound |sin(nθ)/sin θ| ≤ n+1 — not readily available in Mathlib v4.12.0.
+
+SORRY: 0. Axiom footprint: classical trio {propext, Classical.choice, Quot.sound}.
+BSD Surface: OPEN. NOT a brick. No Clay claim.
+-/
+
+namespace Towers.BSD
+
+open Real
+
+-- ============================================================
+-- §1. Tier A: base cases proved unconditionally
+-- ============================================================
+
+/-- **PROVED** (0 sorry, classical trio, Milestone 3 base case k=0):
+    |a_{p^0}| = |1| = 1 = (0+1) · (√p)^0 = 1.
+    Uses only the definition of a_prime_pow; no Hasse needed. -/
 theorem BSD_PrimePow_k0 (p : ℕ) [Fact p.Prime] :
     BSD_PrimePowBound_OPEN p 0 := by
   simp [BSD_PrimePowBound_OPEN, a_prime_pow]
@@ -8,10 +64,10 @@ theorem BSD_PrimePow_k0 (p : ℕ) [Fact p.Prime] :
     Given BSD_Hasse_OPEN p (|a_p| ≤ 2√p),
     |a_{p^1}| = |a_p| ≤ 2√p = (1+1)·(√p)^1.
     Proof: unfold definitions then linarith. -/
-
 theorem BSD_PrimePow_k1 (p : ℕ) [Fact p.Prime]
     (h : BSD_Hasse_OPEN p) : BSD_PrimePowBound_OPEN p 1 := by
   simp only [BSD_PrimePowBound_OPEN, a_prime_pow, pow_one, Nat.cast_add, Nat.cast_one]
+  unfold BSD_Hasse_OPEN at h
   linarith [h]
 
 -- ============================================================
@@ -68,7 +124,6 @@ def BSD_LSeriesSummable_Deligne_OPEN : Prop :=
     - Prove (BSD_PrimePowBound_OPEN p k ∧ BSD_PrimePowBound_OPEN p (k+1)) by induction.
     - Base: k=0: ⟨BSD_PrimePow_k0, BSD_PrimePow_k1⟩ (both proved above).
     - Step: ⟨ih.2, BSD_ChebyshevBound_OPEN p k h_hasse ih.1 ih.2⟩. -/
-
 theorem BSD_hasse_to_primepow
     (h_hasse : ∀ (p : ℕ) [Fact p.Prime], BSD_Hasse_OPEN p)
     (h_cheb  : BSD_ChebyshevBound_OPEN)
@@ -103,7 +158,6 @@ theorem BSD_hasse_to_primepow
 
     This combinator documents the gate structure.  The named surface
     BSD_LSeriesSummable_Deligne_OPEN is the honest placeholder. -/
-
 theorem BSD_deligne_convergence_chain
     (_h_del : ∀ n : ℕ+, BSD_aNBound_OPEN n.val)
     (_h_tau : BSD_TauBound_OPEN)
@@ -129,7 +183,6 @@ theorem BSD_deligne_convergence_chain
     - BSD_Hasse_OPEN (∀ p; Frobenius gap)
 
     NOT a proof of BSD.  NOT a proof of Hasse.  Honest conditional chain. -/
-
 theorem BSD_m3_hasse_chain
     (h_hasse : ∀ (p : ℕ) [Fact p.Prime], BSD_Hasse_OPEN p)
     (h_cheb  : BSD_ChebyshevBound_OPEN) :
@@ -158,7 +211,6 @@ theorem BSD_m3_hasse_chain
     - BSD_PrimePowBound_OPEN p k for all k (M3 conditional, 2 gates: hasse+cheb)
 
     NOT a proof of BSD. Honest conditional. SORRY: 0. Classical trio. -/
-
 theorem BSD_m2_m3_full_chain
     -- M3 gates
     (h_hasse : ∀ (p : ℕ) [Fact p.Prime], BSD_Hasse_OPEN p)
@@ -186,20 +238,16 @@ theorem BSD_m2_m3_full_chain
 /-- M3 gap audit: BSD_ChebyshevBound_OPEN remains OPEN.
     Gap: Chebyshev-U trig identity for inductive step k≥2;
     arccos + sin quotient bound not in Mathlib v4.12.0. -/
-
 theorem BSD_chebyshev_gap_sentinel : BSD_ChebyshevBound_OPEN → True := fun _ => trivial
 
 /-- M3 gap audit: BSD_TauBound_OPEN remains OPEN.
     Gap: τ(n) = O(n^ε) divisor function sub-power bound;
     not in Mathlib v4.12.0 ArithmeticFunction. -/
-
 theorem BSD_tau_gap_sentinel : BSD_TauBound_OPEN → True := fun _ => trivial
 
 /-- M3 gap audit: BSD_Hasse_OPEN remains OPEN at all primes.
     Gap: Frobenius endomorphism degree theory absent from Mathlib v4.12.0. -/
-
 theorem BSD_hasse_gap_sentinel (p : ℕ) [Fact p.Prime] :
     BSD_Hasse_OPEN p → True := fun _ => trivial
 
 end Towers.BSD
-

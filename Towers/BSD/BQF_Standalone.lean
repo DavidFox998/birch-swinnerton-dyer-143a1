@@ -1,4 +1,65 @@
-/- Ported closed theorems from birch-swinnerton-dyer-143/BQF_Standalone.lean — extracted 6 closed declarations. -/
+import Batteries
+
+/-!
+# BQF_Standalone — 10 reduced positive-definite BQFs of discriminant -143
+
+Proves exactly 10 reduced positive-definite binary quadratic forms of discriminant
+D = -143 exist.  This is a certificate for h(ℚ(√-143)) = 10.
+
+## Imports
+
+`Batteries` only — no Mathlib.  Every tactic used (`omega`, `simp`, `decide`,
+`Int.mul_self_le_mul_self`, `Int.neg_mul_neg`, `Int.mul_le_mul_of_nonneg_left/right`)
+is available in Lean 4.12.0 Init / Batteries.
+
+## What is proved (classical trio, 0 sorry)
+
+| Result | Status |
+|--------|--------|
+| `BQF_Standalone.forms143` | 10 explicit triples |
+| `forms143_length` | length = 10 (rfl) |
+| `forms143_nodup` | all 10 distinct (decide) |
+| `forms143_valid` | each of the 10 is reduced with disc = -143 |
+| `forms143_complete` | every reduced BQF of disc -143 appears in the list |
+
+## Open surface (named, not proved here)
+
+`BSD_BQF_ClassNumber_bridge_OPEN` remains OPEN in `BSD_ReducedForms.lean`:
+`BinaryQuadraticForm.classGroupEquiv` connecting reduced forms to ClassGroup(𝓞 K)
+is absent from Mathlib v4.12.0.
+
+SORRY: 0.  Axiom footprint: classical trio {propext, Classical.choice, Quot.sound}.
+-/
+
+namespace BQF_Standalone
+
+/-! ## 1. Type definitions -/
+
+/-- A binary quadratic form with integer coefficients. -/
+structure BQF where
+  a : Int
+  b : Int
+  c : Int
+
+/-- Discriminant `b·b − 4·a·c` (written with `*` to avoid `^` unfolding issues). -/
+def BQF.disc (f : BQF) : Int :=
+  f.b * f.b - 4 * f.a * f.c
+
+/-- Standard reduction conditions for a positive-definite BQF:
+    `0 < a`,  `b ≤ a`,  `−a < b`,  `a ≤ c`,  and (`a = c → b ≥ 0`). -/
+def BQF.IsReduced (f : BQF) : Prop :=
+  0 < f.a ∧ f.b ≤ f.a ∧ -f.a < f.b ∧ f.a ≤ f.c ∧ (f.a = f.c → 0 ≤ f.b)
+
+/-! ## 2. The 10 reduced forms -/
+
+/-- The complete list of 10 reduced positive-definite BQFs of discriminant -143. -/
+def forms143 : List (Int × Int × Int) :=
+  [(1,  1, 36), (2,  1, 18), (2, -1, 18),
+   (3,  1, 12), (3, -1, 12), (4,  1,  9),
+   (4, -1,  9), (6,  1,  6), (6,  5,  7),
+   (6, -5,  7)]
+
+/-! ## 3. Length and distinctness -/
 
 theorem forms143_length : forms143.length = 10 := rfl
 
@@ -11,7 +72,6 @@ theorem forms143_nodup : forms143.Nodup := by decide
     Proof: for each of the 10 concrete triples, unfold disc/IsReduced and close
     with omega (handles all concrete integer arithmetic including the symmetry
     implication `a = c → 0 ≤ b`). -/
-
 theorem forms143_valid :
     ∀ t ∈ forms143,
       BQF.disc ⟨t.1, t.2.1, t.2.2⟩ = -143 ∧
@@ -34,7 +94,6 @@ theorem forms143_valid :
     - `b ≥ 0`: `Int.mul_self_le_mul_self` with `0 ≤ b ≤ a`.
     - `b < 0`: `0 ≤ -b ≤ a` (from strict `-a < b`), same lemma on `-b`,
       then `Int.neg_mul_neg b b` converts `(-b)·(-b)` back to `b·b`. -/
-
 theorem sq_bound (a b : Int) (hcond1 : -a < b) (hcond2 : b ≤ a) :
     b * b ≤ a * a := by
   rcases (show 0 ≤ b ∨ b < 0 from by omega) with hb | hb
@@ -60,7 +119,6 @@ theorem sq_bound (a b : Int) (hcond1 : -a < b) (hcond2 : b ≤ a) :
     • Case-split on `a ∈ {1,…,6}`, then on `b` in the range `−a < b ≤ a`.
       Each leaf either has no integer solution for `c` (omega) or gives a unique
       concrete triple that `decide` confirms is in `forms143`. -/
-
 theorem forms143_complete (a b c : Int)
     (hdisc  : b * b - 4 * a * c = -143)
     (hcond1 : -a < b)
@@ -179,7 +237,6 @@ theorem forms143_complete (a b c : Int)
     The formal bridge to `NumberField.classNumber` requires
     `BinaryQuadraticForm.classGroupEquiv`, absent from Mathlib v4.12.0
     — see `BSD_BQF_ClassNumber_bridge_OPEN` in `BSD_ReducedForms.lean`. -/
-
 theorem classNumber_143_certificate :
     ∀ a b c : Int,
       (b * b - 4 * a * c = -143 ∧

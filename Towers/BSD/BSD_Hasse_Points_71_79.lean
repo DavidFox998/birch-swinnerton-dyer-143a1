@@ -1,18 +1,28 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis739_CLOSED.lean — extracted 12 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Fact_Instances
+import Towers.BSD.BSD_AffineCount_Fast
 
-theorem BSD_E143_card_p71 : (E143_Finset 71).card = 80 := by decide
+open Towers.BSD
+
+theorem BSD_E143_card_p71 : (E143_Finset 71).card = 80 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 /-- **`BSD_E143_card_p73`** — 143a1 has exactly **89 affine 𝔽₇₃-points**.
-    a₇₃ = 73−89 = −16.  Computed by `decide` over ZMod 73 × ZMod 73 (5329 pairs). -/
+    a₇₃ = 73−89 = −16.  Computed by the fast route over ZMod 73 × ZMod 73 (5329 pairs). -/
 
-theorem BSD_E143_card_p73 : (E143_Finset 73).card = 89 := by decide
+theorem BSD_E143_card_p73 : (E143_Finset 73).card = 89 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 /-- **`BSD_E143_card_p79`** — 143a1 has exactly **71 affine 𝔽₇₉-points**.
-    a₇₉ = 79−71 = +8.  Computed by `decide` over ZMod 79 × ZMod 79 (6241 pairs). -/
+    a₇₉ = 79−71 = +8.  Computed by the fast route over ZMod 79 × ZMod 79 (6241 pairs). -/
 
-theorem BSD_E143_card_p79 : (E143_Finset 79).card = 71 := by decide
+theorem BSD_E143_card_p79 : (E143_Finset 79).card = 71 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 /-! ## §2. Exact a_p values -/
 
@@ -87,5 +97,4 @@ theorem BSD_Hasse_OPEN_p73 : BSD_Hasse_OPEN 73 :=
 theorem BSD_Hasse_OPEN_p79 : BSD_Hasse_OPEN 79 :=
   BSD_hasse_of_degree_nonneg 79 BSD_DegreeNonneg_p79
 
-end Towers.BSD
 

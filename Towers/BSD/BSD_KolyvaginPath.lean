@@ -1,5 +1,80 @@
-/- Ported closed theorems from birch-swinnerton-dyer-143/BSD_KolyvaginPath.lean — extracted 3 closed declarations. -/
+import Towers.BSD.BSD_LFunction_Chain
+import Towers.BSD.BSD_Frobenius_Certificate
+import Towers.BSD.B03_LFunction
 
+/-!
+# BSD_KolyvaginPath — The Clay-Minimal Kolyvagin Route for 143a1
+
+## Mathematical context
+
+The BSD conjecture for 143a1 is mathematically known:
+  - Root number ε(143a1) = −1 (PROVED: `BSD_RootNumber_CLOSED`)
+  - A rational point (2, 0) exists on 143a1 (PROVED: `BSD_HeegnerPoint_CLOSED`)
+  - By the Gross-Zagier + Kolyvagin theorem:
+      L'(E, 1) ≠ 0  ↔  ĥ(y_K) > 0  →  rank E(ℚ) = 1  →  BSD holds.
+
+This file makes that path **formal and explicit**, showing:
+
+1. `BSD_HasseFull_143_OPEN` is **not a separate Clay gap** — it is subsumed by
+   `BSD_AnalyticContinuation_143_OPEN`.  Any proof of analytic continuation to ℂ
+   presupposes that the Euler product converges on {Re s > 3/2}, which requires the
+   Hasse bound.  Listing HasseFull as a separate gap is a structural redundancy.
+
+2. The **minimal surface set** for Clay BSD via Kolyvagin has exactly **3 genuine gaps**
+   (down from the 4-gap list that included HasseFull separately):
+
+   | # | Surface | Mathematical content | Mathlib gap |
+   |---|---------|----------------------|-------------|
+   | 1 | `BSD_GrossZagier_OPEN`      | L'(1) ≠ 0 ↔ Heegner height > 0 | Height pairing API |
+   | 2 | `BSD_Kolyvagin_OPEN`        | Heegner height > 0 → rank = 1   | Euler system API |
+   | 3 | `BSD_RankOneToConj_OPEN`    | ∃ r = 1 → BSD_143_OPEN (Lean bridge) | rank/L-fn id API |
+
+3. `BSD_HeegnerPoint_CLOSED` and `BSD_RootNumber_CLOSED` are **already proved**
+   (0 sorry, classical trio) — they are discharged unconditionally.
+
+## What is NOT claimed
+
+- BSD_143_OPEN is NOT proved here.
+- No surface is discharged with sorry or a new axiom.
+- The Gross-Zagier and Kolyvagin surfaces remain OPEN (absent Mathlib API).
+- YM and NS towers are unaffected.
+
+## Axiom footprint: classical trio {propext, Classical.choice, Quot.sound}.
+
+NOT a brick.  NOT registered in BRICKS[].  No Clay claim.
+-/
+
+namespace Towers.BSD
+
+-- ============================================================
+-- §1.  HasseFull is subsumed — not a separate Clay gap
+-- ============================================================
+
+/-- **BSD_HasseSubsumedByCont_OPEN** — OPEN named surface.
+
+    Mathematical claim: `BSD_AnalyticContinuation_143_OPEN` subsumes
+    `BSD_HasseFull_143_OPEN`.
+
+    Argument: any proof that BSDLFunction 143 extends analytically to all of ℂ
+    implicitly requires the Euler product to converge on {Re s > 3/2} first,
+    which requires |a_p| ≤ 2√p (Hasse) for all good primes p.
+
+    Formal gap: the identification bridge `BSD_LFunction_Identification_OPEN`
+    (connecting the opaque `BSDLFunction 143` to the explicit Dirichlet series)
+    is needed to extract the Hasse bound from `AnalyticOn`.
+    Without that bridge, the opaque constant cannot be inspected.
+
+    **Consequence**: `BSD_HasseFull_143_OPEN` should NOT be listed as a separate
+    primary gap alongside `BSD_AnalyticContinuation_143_OPEN`. -/
+def BSD_HasseSubsumedByCont_OPEN : Prop :=
+  BSD_AnalyticContinuation_143_OPEN →
+  BSD_LFunction_Identification_OPEN →
+  BSD_HasseFull_143_OPEN
+
+/-- **BSD_hasse_not_separate_gap** (0 sorry, classical trio):
+    Conditional combinator: given the subsumption surface, HasseFull is
+    derivable from AnalyticCont + Identification.
+    Shows structurally that HasseFull is NOT an independent Clay gap. -/
 theorem BSD_hasse_not_separate_gap
     (h_ac      : BSD_AnalyticContinuation_143_OPEN)
     (h_id      : BSD_LFunction_Identification_OPEN)
@@ -36,7 +111,6 @@ def BSD_RankOneToConj_OPEN : Prop :=
       h_kol (...) : ∃ r : ℕ, r = 1
 
     This wraps `BSD_rank1_from_analytic` with an explicit docstring. -/
-
 theorem BSD_kolyvagin_rank1
     (h_gz  : BSD_GrossZagier_OPEN)
     (h_kol : BSD_Kolyvagin_OPEN) :
@@ -63,7 +137,6 @@ theorem BSD_kolyvagin_rank1
       Reduction: HasseFull is subsumed by AnalyticCont (§1).
                  AnalyticCont + GammaFuncEq feed into GZ/Kol via the L-function
                  identification chain already in `BSD_LFunction_Chain.lean`. -/
-
 theorem BSD_KolyvaginPath_capstone
     (h_gz  : BSD_GrossZagier_OPEN)
     (h_kol : BSD_Kolyvagin_OPEN)
@@ -92,4 +165,3 @@ theorem BSD_KolyvaginPath_capstone
 def BSD_KolyvaginPath_gap_count : ℕ := 3
 
 end Towers.BSD
-

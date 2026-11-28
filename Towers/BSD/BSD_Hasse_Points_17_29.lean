@@ -1,6 +1,10 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Genesis736_CLOSED.lean — extracted 16 closed declarations. -/
 
 import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_Frobenius_Fact_Instances
+import Towers.BSD.BSD_AffineCount_Fast
+
+open Towers.BSD
 
 theorem BSD_E143_card_p17 : (E143_Finset 17).card = 21 := by decide
 
@@ -114,5 +118,4 @@ theorem BSD_Hasse_OPEN_p23 : BSD_Hasse_OPEN 23 :=
 theorem BSD_Hasse_OPEN_p29 : BSD_Hasse_OPEN 29 :=
   BSD_hasse_of_degree_nonneg 29 BSD_DegreeNonneg_p29
 
-end Towers.BSD
 

@@ -1,5 +1,58 @@
-/- Ported closed theorems from birch-swinnerton-dyer-143/BSD_NormFormBounds.lean — extracted 15 closed declarations. -/
+import Towers.BSD.BSD_ClassNumber
 
+/-
+  # BSD_NormFormBounds — Tier 2 Track A: norm-form lower bound for 𝓞_K = ℤ[ω]
+
+  Clean Tier 2 entry point.  The field K = ℚ(√-143) has ring of integers
+  𝓞_K = ℤ[ω], ω = (1+√-143)/2, ω² = ω − 36.
+
+  Every element of 𝓞_K has the form a + bω (a, b : ℤ).
+  The algebraic norm is the quadratic form
+
+      N(a + bω) = a² + ab + 36b²  (the Euler/Gauss form of discriminant -143).
+
+  KEY IDENTITY (proved):
+      4 · N(a + bω) = (2a + b)² + 143 · b²                     [normForm_four_eq]
+
+  LOWER BOUND (proved):
+      b ≠ 0  →  N(a + bω) ≥ 36                                 [normForm_lower_bound]
+
+  MINKOWSKI-RELEVANT IMPOSSIBILITIES (all proved, sorry = 0):
+      ¬ ∃ a b : ℤ, N(a + bω) = 2    [normForm_two_impossible]
+      ¬ ∃ a b : ℤ, N(a + bω) = 3    [normForm_three_impossible]
+      ¬ ∃ a b : ℤ, N(a + bω) = 5    [normForm_five_impossible]
+      ¬ ∃ a b : ℤ, N(a + bω) = 7    [normForm_seven_impossible]
+
+  MINKOWSKI BOUND (proved in BSD_NumberField):
+      (2/π)·√143 < 8  [minkowski_lt_eight_BSD]
+  →  every ideal class has a representative ideal of norm ≤ 7.
+  →  the only norms ≤ 7 that CAN be hit are N = 1 and N = 4 (= 4·1²).
+  →  at most the primes dividing N = 4 (i.e., only p = 2) contribute
+     non-principal ideal classes.
+
+  NAMED OPEN SURFACES:
+      BSD_ClassNumber_Upper_OPEN : h(K) ≤ 10
+      BSD_ClassNumber_Lower_OPEN : 10 ≤ h(K)
+
+  COMBINATOR (0 sorry):
+      BSD_ClassNumber_eq_ten_cond : h(K) = 10  (conditional)
+
+  SORRY: 0 in proved results.  Classical trio axiom footprint.
+-/
+
+namespace Towers.BSD
+
+open NumberField
+
+/-! ### Norm form definition -/
+
+/-- N(a + bω) = a² + ab + 36b² — the norm form of 𝓞_K = ℤ[ω] in the {1, ω} basis.
+    Discriminant: disc(normForm) = 1² − 4·36 = −143. -/
+def normForm (a b : ℤ) : ℤ := a ^ 2 + a * b + 36 * b ^ 2
+
+/-- KEY IDENTITY: 4 · normForm(a, b) = (2a+b)² + 143b².
+    This identity — the "completing the square" step — is the engine
+    for all lower-bound and impossibility proofs below. -/
 lemma normForm_four_eq (a b : ℤ) :
     4 * normForm a b = (2 * a + b) ^ 2 + 143 * b ^ 2 := by
   unfold normForm; ring
@@ -14,7 +67,6 @@ lemma one_le_sq_of_ne_zero {n : ℤ} (hn : n ≠ 0) : 1 ≤ n ^ 2 := by
 /-- If b ≠ 0 then N(a + bω) ≥ 36.
     Proof: 4·N = (2a+b)² + 143b² ≥ 143b² ≥ 143 > 143 when b² ≥ 1.
     So 4·N ≥ 143, and N ∈ ℤ forces N ≥ ⌈143/4⌉ = 36. -/
-
 lemma normForm_lower_bound {a b : ℤ} (hb : b ≠ 0) : 36 ≤ normForm a b := by
   have hb2 : 1 ≤ b ^ 2 := one_le_sq_of_ne_zero hb
   nlinarith [normForm_four_eq a b, sq_nonneg (2 * a + b)]
@@ -23,7 +75,6 @@ lemma normForm_lower_bound {a b : ℤ} (hb : b ≠ 0) : 36 ≤ normForm a b := b
 
 /-- N(a + bω) = 2 has no integer solution.
     Proof: b = 0 forces a² = 2 (impossible); b ≠ 0 gives N ≥ 36 > 2. -/
-
 theorem normForm_two_impossible : ¬ ∃ a b : ℤ, normForm a b = 2 := by
   rintro ⟨a, b, h⟩
   by_cases hb : b = 0
@@ -34,7 +85,6 @@ theorem normForm_two_impossible : ¬ ∃ a b : ℤ, normForm a b = 2 := by
   · linarith [normForm_lower_bound (a := a) hb, h.symm.le]
 
 /-- N(a + bω) = 3 has no integer solution. -/
-
 theorem normForm_three_impossible : ¬ ∃ a b : ℤ, normForm a b = 3 := by
   rintro ⟨a, b, h⟩
   by_cases hb : b = 0
@@ -45,7 +95,6 @@ theorem normForm_three_impossible : ¬ ∃ a b : ℤ, normForm a b = 3 := by
   · linarith [normForm_lower_bound (a := a) hb, h.symm.le]
 
 /-- N(a + bω) = 5 has no integer solution. -/
-
 theorem normForm_five_impossible : ¬ ∃ a b : ℤ, normForm a b = 5 := by
   rintro ⟨a, b, h⟩
   by_cases hb : b = 0
@@ -56,7 +105,6 @@ theorem normForm_five_impossible : ¬ ∃ a b : ℤ, normForm a b = 5 := by
   · linarith [normForm_lower_bound (a := a) hb, h.symm.le]
 
 /-- N(a + bω) = 7 has no integer solution. -/
-
 theorem normForm_seven_impossible : ¬ ∃ a b : ℤ, normForm a b = 7 := by
   rintro ⟨a, b, h⟩
   by_cases hb : b = 0
@@ -68,7 +116,6 @@ theorem normForm_seven_impossible : ¬ ∃ a b : ℤ, normForm a b = 7 := by
 
 /-- All four Minkowski-relevant prime norms are impossible:
     the norm form a² + ab + 36b² represents none of {2, 3, 5, 7}. -/
-
 theorem normForm_no_small_primes :
     (¬ ∃ a b : ℤ, normForm a b = 2) ∧
     (¬ ∃ a b : ℤ, normForm a b = 3) ∧
@@ -80,12 +127,10 @@ theorem normForm_no_small_primes :
 /-! ### Connection to BSD_ClassNumber -/
 
 /-- normForm agrees with the explicit form used throughout BSD_ClassNumber. -/
-
 lemma normForm_eq_bsd (a b : ℤ) :
     normForm a b = a ^ 2 + a * b + 36 * b ^ 2 := rfl
 
 /-- BSD norm-form impossibilities recast in normForm language. -/
-
 lemma normForm_two_impossible_direct (a b : ℤ) : normForm a b ≠ 2 :=
   norm_form_no_norm_two_BSD a b
 
@@ -132,7 +177,6 @@ def BSD_ClassNumber_Lower_OPEN : Prop := K1_ClassNumber_Lower_BSD
 
 /-- h(K) = 10, given both OPEN surfaces as explicit hypotheses.
     COMBINATOR: 0 sorry, classical trio only.  NOT a brick. -/
-
 theorem BSD_ClassNumber_eq_ten_cond
     (h_upper : BSD_ClassNumber_Upper_OPEN)
     (h_lower : BSD_ClassNumber_Lower_OPEN) :
@@ -142,7 +186,6 @@ theorem BSD_ClassNumber_eq_ten_cond
 /-! ### Tier 2A evidence summary -/
 
 /-- All Tier 2A arithmetic evidence collected in one place. -/
-
 theorem BSD_Tier2A_ArithEvidence :
     -- Key identity
     (∀ a b : ℤ, 4 * normForm a b = (2 * a + b) ^ 2 + 143 * b ^ 2) ∧
@@ -164,4 +207,3 @@ theorem BSD_Tier2A_ArithEvidence :
    by norm_num [normForm]⟩
 
 end Towers.BSD
-

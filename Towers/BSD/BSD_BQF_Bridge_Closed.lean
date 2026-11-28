@@ -1,5 +1,7 @@
 import Towers.BSD.BSD_ClassNum_Upper_CLOSED
 import Towers.BSD.BSD_ClassNum_Unconditional_CLOSED
+import Towers.BSD.BSD_P2_Principal_CLOSED
+import Towers.BSD.BSD_ReducedForms
 
 /-!
 # BSD_BQF_Bridge_Closed
@@ -34,10 +36,3 @@ theorem BSD_BQF_classNumber_eq_numForms :
   exact hcn
 
 end Towers.BSD
-theorem BSD_BQF_ClassNumber_bridge_CLOSED :
-    Towers.BSD.BSD_BQF_ClassNumber_bridge :=
-  (BSD_classNumber_eq_10_via_principal BSD_p2_pow_10_principal).trans
-    Towers.BSD.BSD_numReducedForms143.symm
-
-end BSD
-

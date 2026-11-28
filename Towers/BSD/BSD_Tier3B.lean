@@ -1,4 +1,28 @@
-/- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Tier3B.lean — extracted 6 closed declarations. -/
+import Towers.BSD.BSD_NormBridge
+import Mathlib.FieldTheory.Adjoin
+import Mathlib.RingTheory.Norm.Basic
+import Mathlib.NumberTheory.NumberField.Norm
+import Mathlib.LinearAlgebra.Dimension.Free
+
+/-!
+# BSD_Tier3B — Tier 3B: Formal norm certificate for gen(𝔭₂^{10})
+
+Closes `BSD_algNorm_gen_OPEN` by proving `(Algebra.norm ℤ gen_OK : ℤ) = 1024` via:
+
+1. `gen_poly_natDegree` : natDegree (X² + 53X + 1024 : ℚ[X]) = 2
+2. `irred_gen_poly_monic` : that polynomial is monic (leadingCoeff = 1)
+3. `irred_gen_poly` : irreducible (disc = −1287 < 0 ⟹ no real roots)
+4. `gen_OK_minpoly_eq` : minpoly ℚ (gen_OK : K) = X² + 53X + 1024
+5. `BSD_algNorm_gen_CLOSED` : norm route via adjoin power basis + coeff₀
+
+## Proved (0 sorry, classical trio only)
+-/
+
+namespace Towers.BSD
+
+open NumberField Polynomial IntermediateField FiniteDimensional
+
+/-! ### Step 1: natDegree -/
 
 lemma gen_poly_natDegree : (X ^ 2 + C (53 : ℚ) * X + C 1024).natDegree = 2 := by
   have h_C : (X ^ 2 + C (53 : ℚ) * X + C (1024 : ℚ)).natDegree =
@@ -39,7 +63,6 @@ lemma irred_gen_poly : Irreducible (X ^ 2 + C (53 : ℚ) * X + C 1024) := by
 /-! ### Step 4: Minimal polynomial -/
 
 /-- The key cast: gen_sq_BSD (in 𝓞 K) implies the same equation in K. -/
-
 lemma gen_OK_sq_K : (gen_OK : K) ^ 2 + 53 * (gen_OK : K) + 1024 = 0 := by
   have h := congr_arg (algebraMap (𝓞 K) K) gen_sq_BSD
   simp only [map_add, map_pow, map_mul, map_ofNat, map_zero] at h
@@ -60,7 +83,6 @@ lemma gen_OK_minpoly_eq :
 Proves the ℤ-norm of gen_OK = −28 + 3ω equals 1024 = 2^{10},
 via Algebra.norm_eq_norm_adjoin + minpoly route.
 (The canonical surface proof is BSD_algNorm_gen_proof in BSD_AlgNorm.lean.) -/
-
 theorem BSD_Tier3B_algNorm_cert : (Algebra.norm ℤ gen_OK : ℤ) = 1024 := by
   have hx_int : IsIntegral ℚ (gen_OK : K) := gen_OK.2.tower_top
   suffices h : Algebra.norm ℚ (gen_OK : K) = 1024 by
@@ -91,4 +113,3 @@ theorem BSD_Tier3B_algNorm_cert : (Algebra.norm ℤ gen_OK : ℤ) = 1024 := by
   norm_num [coeff_add, coeff_X_pow, coeff_C_mul, coeff_X, coeff_C]
 
 end Towers.BSD
-

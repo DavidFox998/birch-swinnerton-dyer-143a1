@@ -1,5 +1,14 @@
 /- Ported closed theorems from birch-swinnerton-dyer-143/BSD_ClassNumber_Completion_CLOSED.lean — extracted 6 closed declarations. -/
 
+import Towers.BSD.BSD_ClassNum_Upper_CLOSED
+import Towers.BSD.BSD_ClassNumber
+import Towers.BSD.BSD_ClassNumberBounds
+import Towers.BSD.BSD_MasterProof
+import Towers.BSD.BSD_NormFormBounds
+import Towers.BSD.BSD_ReducedForms
+
+open Towers.BSD
+
 theorem BSD_ClassNumber_Upper_CLOSED (h_upper : BSD_classNumber_upper_OPEN) : BSD_ClassNumber_Upper_OPEN :=
   K1_ClassNumber_Upper_CLOSED h_upper
 
@@ -53,5 +62,4 @@ theorem BSD_ClassNumber_completion_CLOSED (h_upper : BSD_classNumber_upper_OPEN)
 /-- Open surface count for classNumber completion: 0 (all 6 closed at Milestone 5.5). -/
 def BSD_classNumber_completion_open_count : ℕ := 0
 
-end Towers.BSD
 

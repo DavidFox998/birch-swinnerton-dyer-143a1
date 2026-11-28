@@ -1,5 +1,99 @@
-/- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Frobenius_Certificate.lean — extracted 6 closed declarations. -/
+import Towers.BSD.B02_Modularity_Closed
 
+/-!
+# BSD_Frobenius_Certificate — Weil Bound Gap Analysis for 143a1
+
+## What this file documents
+
+The surface `BSD_HasseFull_143_OPEN : ∀ p prime, ¬p∣143 → |ap(p)| ≤ 2√p`
+has been partially verified:
+- **168 primes p ≤ 997**: proved unconditionally by `BSD_Weil_168_CLOSED`.
+- **All primes p > 997**: OPEN (requires Frobenius endomorphism degree theory,
+  absent from Mathlib v4.12.0; Silverman AEC §V.2 / Hasse 1936).
+
+## What would close the gap
+
+Three approaches, each requiring something not yet in Mathlib v4.12.0:
+  A. **Frobenius endomorphism + Hasse's theorem** (Silverman AEC §V.2):
+     Directly applicable; requires EllipticCurve.Frobenius API.
+  B. **Modularity + Ramanujan–Petersson**: 143a1 is modular (Wiles 1995);
+     Ramanujan–Petersson conjecture = Weil bound for weight-2 newforms.
+     Requires modular forms API.
+  C. **Numerical extension** of the 168-prime table to all primes.
+     Requires norm_num/decide for infinite set.
+
+## §5 — Silverman §V.5 skeleton (new, this file)
+
+Weil's proof of the Riemann Hypothesis for elliptic curves (Silverman AEC §V.5)
+shows |a_p| ≤ 2√p via non-negativity of the degree form on End(E) ⊗ ℝ:
+
+  deg(r·1 − π) = r² − a_p·r + p ≥ 0  for ALL r : ℝ.
+
+This file proves the **algebraic step** (0 sorry, classical trio):
+
+  `BSD_weil_discriminant_step`: ∀ r:ℝ, r² − c·r + p ≥ 0  →  |c| ≤ 2√p.
+
+  Proof: specialise at r = c/2: p − c²/4 ≥ 0, so c² ≤ 4p,
+  then |c| = √(c²) ≤ √(4p) = 2√p via `Real.sqrt_le_sqrt`.
+
+The GEOMETRIC gap — that the real-valued degree form satisfies this for all
+r : ℝ, not just integers — is named `BSD_FrobeniusDegreeNonneg_OPEN`.
+This requires End(E) ⊗ ℝ degree-positivity (Silverman AEC §III.6 + §V.5),
+absent from Mathlib v4.12.0.
+
+## Conditional combinator
+
+`BSD_HasseFull_via_Frobenius` shows: given Frobenius theory → HasseFull.
+`BSD_hasse_of_degree_nonneg` shows: BSD_FrobeniusDegreeNonneg_OPEN p → BSD_Hasse_OPEN p.
+
+SORRY: 0.  Axiom footprint: classical trio.  NOT a brick.  BSD: OPEN.
+-/
+
+namespace Towers.BSD
+
+-- ============================================================
+-- §1. Partial evidence: prime-table coverage
+-- ============================================================
+
+/-!
+**Partial evidence (integer bound, 168 primes):**
+`BSD_Weil_168_CLOSED` proves `(ap p)² ≤ 4p` for each of the 168 primes ≤ 997
+in the trace table, where `ap` is the lookup table value from `E1859`.
+
+**Gap — integer-to-real bridge:**
+`BSD_Hasse_OPEN p` says `|(a_p p : ℝ)| ≤ 2 * Real.sqrt p` where `a_p p` is the
+GEOMETRIC counting definition `(p : ℤ) - (E143_Finset p).card`.  Bridging from
+the integer table bound to this real-valued statement requires a compatibility
+lemma `ap p = a_p p` (trace table ↔ geometric count) which is not currently
+proved.  Hence `BSD_Weil_168_CLOSED` does NOT directly discharge
+`BSD_Hasse_OPEN p` — the bridge is an additional open surface.
+-/
+
+-- ============================================================
+-- §2. The Frobenius gap — named honest surface
+-- ============================================================
+
+/-- **BSD_FrobeniusHighPrimes_OPEN** — GENUINE GAP.
+
+    For primes p > 997 with p ∤ 143, the Weil bound |ap(p)|² ≤ 4p
+    requires Frobenius endomorphism theory (Silverman AEC §V.2).
+
+    This is the ONLY remaining part of BSD_HasseFull_143_OPEN:
+    all 168 primes p ≤ 997 are covered by BSD_Weil_168_CLOSED.
+
+    Gap: `EllipticCurve.Frobenius` not in Mathlib v4.12.0.
+    Reference: Hasse (1936), Silverman AEC Ch. V §2. -/
+def BSD_FrobeniusHighPrimes_OPEN : Prop :=
+  ∀ (p : ℕ) [Fact p.Prime], p > 997 → ¬(p ∣ 143) → BSD_Hasse_OPEN p
+
+/-- `BSD_HasseFull_143_OPEN` decomposes into two parts:
+    low primes (p ≤ 997) + high primes (p > 997), both currently OPEN.
+
+    Note: `BSD_Weil_168_CLOSED` gives the INTEGER bound `(ap p)^2 ≤ 4p`
+    for the 168 table primes but does NOT directly give `BSD_Hasse_OPEN p`
+    (real-valued) — bridging requires a compatibility lemma `ap p = a_p p`
+    (trace table ↔ geometric count, not yet proved).  Hence the low-prime
+    case is also an explicit hypothesis here. -/
 theorem BSD_HasseFull_decomposes
     (h_low  : ∀ (p : ℕ) [Fact p.Prime], p ≤ 997 → ¬(p ∣ 143) → BSD_Hasse_OPEN p)
     (h_high : BSD_FrobeniusHighPrimes_OPEN) :
@@ -27,7 +121,6 @@ def BSD_FrobeniusViaModularity_OPEN : Prop :=
 /-- **BSD_Frobenius_ModularityGate** (0 sorry, classical trio):
     Conditional: if 143a1 is modular AND Ramanujan–Petersson holds,
     BSD_HasseFull_143_OPEN follows. -/
-
 theorem BSD_Frobenius_ModularityGate
     (h_rp : BSD_FrobeniusViaModularity_OPEN) :
     Modularity_143_OPEN → BSD_HasseFull_143_OPEN :=
@@ -56,7 +149,6 @@ theorem BSD_Frobenius_ModularityGate
     NOTE: `BSD_Weil_168_CLOSED` gives (ap p)^2 ≤ 4p for 168 primes, but bridging
     to `BSD_Hasse_OPEN p` (real-valued, `a_p` geometric) requires the
     `ap = a_p` compatibility lemma — not yet proved. -/
-
 theorem BSD_Frobenius_status_ledger
     (h_low  : ∀ (p : ℕ) [Fact p.Prime], p ≤ 997 → ¬(p ∣ 143) → BSD_Hasse_OPEN p)
     (h_high : BSD_FrobeniusHighPrimes_OPEN) :
@@ -123,7 +215,6 @@ private theorem BSD_weil_discriminant_step (c : ℝ) (p : ℝ) (_hp : 0 < p)
       BSD_FrobeniusDegreeNonneg_OPEN p
         →  (BSD_weil_discriminant_step)
       BSD_Hasse_OPEN p  ≡  |(a_p p : ℝ)| ≤ 2 * √p -/
-
 theorem BSD_hasse_of_degree_nonneg (p : ℕ) [hp : Fact p.Prime]
     (h : BSD_FrobeniusDegreeNonneg_OPEN p) : BSD_Hasse_OPEN p :=
   BSD_weil_discriminant_step (a_p p : ℝ) (p : ℝ)
@@ -133,7 +224,6 @@ theorem BSD_hasse_of_degree_nonneg (p : ℕ) [hp : Fact p.Prime]
 
     If BSD_FrobeniusDegreeNonneg_OPEN holds for all primes p > 997 (p ∤ 143),
     then BSD_FrobeniusHighPrimes_OPEN follows via BSD_hasse_of_degree_nonneg. -/
-
 theorem BSD_FrobeniusHighPrimes_of_DegreeNonneg
     (h : ∀ (p : ℕ) [Fact p.Prime], p > 997 → ¬(p ∣ 143) →
           BSD_FrobeniusDegreeNonneg_OPEN p) :
@@ -144,33 +234,7 @@ theorem BSD_FrobeniusHighPrimes_of_DegreeNonneg
     Gap 1: degree formula deg(r·1 − π) = r² − a_p·r + p (End(E) theory).
     Gap 2: real extension of deg to End(E) ⊗_ℤ ℝ (Rosati positivity).
     Neither is in Mathlib v4.12.0. Silverman AEC §III.6 + §V.5. -/
-
 theorem BSD_degree_nonneg_sentinel (p : ℕ) [Fact p.Prime] :
     BSD_FrobeniusDegreeNonneg_OPEN p → True := fun _ => trivial
 
 end Towers.BSD
-
-theorem BSD_Weil_168_coverage :
-    ∀ p : ℕ, [Fact p.Prime] → p ≤ 997 → ¬(p ∣ 143) → BSD_Hasse_OPEN p :=
-  fun p hpfact hp_le hp_nbad => BSD_Weil_168_CLOSED p hp_nbad
-
--- ============================================================
--- §2. The Frobenius gap — named honest surface
--- ============================================================
-
-/-- **BSD_FrobeniusHighPrimes_OPEN** — GENUINE GAP.
-
-    For primes p > 997 with p ∤ 143, the Weil bound |ap(p)|² ≤ 4p
-    requires Frobenius endomorphism theory (Silverman AEC §V.2).
-
-    This is the ONLY remaining part of BSD_HasseFull_143_OPEN:
-    all 168 primes p ≤ 997 are covered by BSD_Weil_168_CLOSED.
-
-    Gap: `EllipticCurve.Frobenius` not in Mathlib v4.12.0.
-    Reference: Hasse (1936), Silverman AEC Ch. V §2. -/
-def BSD_FrobeniusHighPrimes_OPEN : Prop :=
-  ∀ (p : ℕ) [Fact p.Prime], p > 997 → ¬(p ∣ 143) → BSD_Hasse_OPEN p
-
-/-- `BSD_HasseFull_143_OPEN` decomposes into two parts:
-    low primes (proved) + high primes (open). -/
-

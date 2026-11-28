@@ -1,5 +1,61 @@
-/- Ported closed theorems from birch-swinnerton-dyer-143/B02_Modularity.lean — extracted 6 closed declarations. -/
+import Towers.BSD.B01_EllipticCurve
+import Mathlib.Analysis.SpecialFunctions.Pow.Complex
 
+/-
+  # B02 — Modularity (Wiles–Taylor) for the BSD Tower
+
+  Named OPEN surfaces for the modularity of elliptic curves over ℚ:
+    • Modularity_BSD_OPEN: E/ℚ of conductor N corresponds to a weight-2 newform
+    • BSD_Hecke_OPEN:      L(E,s) extends to an entire function on ℂ
+    • BSD_FuncEq_OPEN:     L(E,s) satisfies the functional equation
+
+  Honest scope: none of these are provable in Mathlib v4.12.0.
+  They are named hypotheses documenting the Wiles-Taylor gap.
+
+  **Honesty upgrade (Milestone 3):** replaced vacuous `∃ _ : ℕ, True` and
+  `∃ _ : ℂ → ℂ, True` stubs with proper named-Prop statements anchored to
+  `BSDLFunction N` (opaque from B01).  None is a `True`-stub.  None is
+  discharged here.  `BSD_RootNumber 143 = -1` is proved by norm_num (definition).
+
+  SORRY: 0. Axiom footprint: classical trio. NOT a brick.
+  BSD Surface: OPEN.
+-/
+
+namespace Towers.BSD
+
+/-! ### Why these three surfaces are OPEN
+
+**Modularity_BSD_OPEN (Wiles–Taylor 1995; Breuil-Conrad-Diamond-Taylor 2001):**
+Formalization requires `ModularForm` type, weight-2 newforms at level N, and a
+Hecke eigenvalue matching condition — all absent from Mathlib v4.12.0.
+The surface here names the three key properties a newform must satisfy:
+multiplicativity, the Hecke recurrence at prime squares, and the Weil bound.
+
+**BSD_Hecke_OPEN:**
+Given modularity, L(E_N, s) = BSDLFunction N (s) extends from {Re s > 3/2} to all
+ℂ via the completed L-function Λ(s) = N^{s/2} (2π)^{-s} Γ(s) L(E,s) being entire.
+Stated as: BSDLFunction N is analytic on Set.univ.
+
+**BSD_FuncEq_OPEN:**
+Λ(s) = ε_N · Λ(2-s) where ε_N ∈ {±1} is the global root number.
+For 143a1: global root number = ε_∞ × ε_{11} × ε_{13}.
+  ε_∞ = −1 (archimedean factor for weight-2 newforms; always −1 over ℝ).
+  ε_{11} = +1 (non-split multiplicative reduction at p=11).
+  ε_{13} = +1 (non-split multiplicative reduction at p=13).
+Product ε_{143} = (−1)×(+1)×(+1) = −1. This matches LMFDB/Cremona: 143a1 has
+analytic rank 1, so the parity conjecture requires ε = −1 (odd vanishing order).
+-/
+
+/-- The global root number ε_N of E_N/ℚ.
+    For N = 143: ε_{143} = −1 (archimedean factor −1 times both finite factors +1).
+    Defined as a plain integer placeholder; only used in BSD_FuncEq_OPEN. -/
+def BSD_RootNumber (N : ℕ) : ℤ := if N = 143 then -1 else 0
+
+/-- **Root number for 143a1 is −1** (PROVED, 0 sorry, by definition):
+    ε_{143} = ε_∞ × ε_{11} × ε_{13} = (−1)×(+1)×(+1) = −1.
+    Archimedean factor ε_∞ = −1 for weight-2 newforms over ℝ (always).
+    Both finite primes contribute +1 (non-split multiplicative reduction).
+    LMFDB/Cremona confirms: 143a1 has analytic rank 1, root number −1. -/
 theorem BSD_RootNumber_143 : BSD_RootNumber 143 = -1 := by
   simp [BSD_RootNumber]
 
@@ -58,7 +114,6 @@ def BSD_L_Analytic_143_OPEN : Prop := BSD_Hecke_OPEN 143
 /-- **BSD_Modularity_Certificate** (combinator, 0 sorry):
     Given Modularity_143_OPEN and BSD_L_Analytic_143_OPEN, both are assembled.
     NOT a brick — thread of OPEN surfaces. -/
-
 theorem BSD_Modularity_Certificate
     (h_mod   : Modularity_143_OPEN)
     (h_hecke : BSD_L_Analytic_143_OPEN) :
@@ -69,7 +124,6 @@ theorem BSD_Modularity_Certificate
     The functional equation for E_{143}: with root number ε = −1,
     (143)^(s−1)·L(2−s) = −L(s).
     At s=1: L(1) = −L(1), so 2·L(E_{143},1) = 0, i.e. L(E_{143},1) = 0. -/
-
 theorem BSD_FuncEq_143_sentinel
     (h_feq : BSD_FuncEq_OPEN 143) (s : ℂ) :
     (143 : ℂ) ^ (s - 1) * BSDLFunction 143 (2 - s) = -(BSDLFunction 143 s) := by
@@ -83,22 +137,18 @@ theorem BSD_FuncEq_143_sentinel
 /-- M3 gap audit: Modularity_BSD_OPEN remains OPEN.
     The surface now names the newform matching conditions (Hecke multiplicativity,
     Weil bound) — no longer a vacuous `∃ _ : ℕ, True`. -/
-
 theorem BSD_modularity_gap_sentinel (N : ℕ) :
     Modularity_BSD_OPEN N → True := fun _ => trivial
 
 /-- M3 gap audit: BSD_Hecke_OPEN remains OPEN.
     The surface now states AnalyticOn ℂ (BSDLFunction N) Set.univ — anchored to
     the opaque constant, not a vacuous existential. -/
-
 theorem BSD_hecke_gap_sentinel (N : ℕ) :
     BSD_Hecke_OPEN N → True := fun _ => trivial
 
 /-- M3 gap audit: BSD_FuncEq_OPEN remains OPEN.
     The surface now states the precise functional equation with BSDLFunction N. -/
-
 theorem BSD_funcEq_gap_sentinel (N : ℕ) :
     BSD_FuncEq_OPEN N → True := fun _ => trivial
 
 end Towers.BSD
-
