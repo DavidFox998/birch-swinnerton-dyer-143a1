@@ -9,6 +9,7 @@
 -/
 
 import Towers.BSD.BSD_Frobenius_Certificate_Clean
+import Towers.BSD.BSD_AffineCount_Fast
 
 set_option maxHeartbeats 0
 
@@ -72,63 +73,177 @@ instance instFact_prime_3499 : Fact (Nat.Prime 3499) := ⟨by native_decide⟩
 instance instFact_prime_3511 : Fact (Nat.Prime 3511) := ⟨by native_decide⟩
 instance instFact_prime_3517 : Fact (Nat.Prime 3517) := ⟨by native_decide⟩
 
-theorem BSD_E143_card_p2113 : (E143_Finset 2113).card = 2067 := by native_decide
-theorem BSD_E143_card_p2129 : (E143_Finset 2129).card = 2195 := by native_decide
-theorem BSD_E143_card_p2131 : (E143_Finset 2131).card = 2105 := by native_decide
-theorem BSD_E143_card_p2207 : (E143_Finset 2207).card = 2129 := by native_decide
-theorem BSD_E143_card_p2213 : (E143_Finset 2213).card = 2161 := by native_decide
-theorem BSD_E143_card_p2221 : (E143_Finset 2221).card = 2159 := by native_decide
-theorem BSD_E143_card_p2281 : (E143_Finset 2281).card = 2280 := by native_decide
-theorem BSD_E143_card_p2287 : (E143_Finset 2287).card = 2301 := by native_decide
-theorem BSD_E143_card_p2293 : (E143_Finset 2293).card = 2322 := by native_decide
-theorem BSD_E143_card_p2351 : (E143_Finset 2351).card = 2297 := by native_decide
-theorem BSD_E143_card_p2357 : (E143_Finset 2357).card = 2290 := by native_decide
-theorem BSD_E143_card_p2371 : (E143_Finset 2371).card = 2341 := by native_decide
-theorem BSD_E143_card_p2417 : (E143_Finset 2417).card = 2441 := by native_decide
-theorem BSD_E143_card_p2423 : (E143_Finset 2423).card = 2348 := by native_decide
-theorem BSD_E143_card_p2437 : (E143_Finset 2437).card = 2397 := by native_decide
-theorem BSD_E143_card_p2521 : (E143_Finset 2521).card = 2571 := by native_decide
-theorem BSD_E143_card_p2531 : (E143_Finset 2531).card = 2534 := by native_decide
-theorem BSD_E143_card_p2539 : (E143_Finset 2539).card = 2543 := by native_decide
-theorem BSD_E143_card_p2609 : (E143_Finset 2609).card = 2529 := by native_decide
-theorem BSD_E143_card_p2617 : (E143_Finset 2617).card = 2635 := by native_decide
-theorem BSD_E143_card_p2621 : (E143_Finset 2621).card = 2699 := by native_decide
-theorem BSD_E143_card_p2683 : (E143_Finset 2683).card = 2735 := by native_decide
-theorem BSD_E143_card_p2687 : (E143_Finset 2687).card = 2680 := by native_decide
-theorem BSD_E143_card_p2689 : (E143_Finset 2689).card = 2766 := by native_decide
-theorem BSD_E143_card_p2731 : (E143_Finset 2731).card = 2799 := by native_decide
-theorem BSD_E143_card_p2741 : (E143_Finset 2741).card = 2719 := by native_decide
-theorem BSD_E143_card_p2749 : (E143_Finset 2749).card = 2723 := by native_decide
-theorem BSD_E143_card_p2803 : (E143_Finset 2803).card = 2775 := by native_decide
-theorem BSD_E143_card_p2819 : (E143_Finset 2819).card = 2834 := by native_decide
-theorem BSD_E143_card_p2833 : (E143_Finset 2833).card = 2807 := by native_decide
-theorem BSD_E143_card_p2897 : (E143_Finset 2897).card = 2871 := by native_decide
-theorem BSD_E143_card_p2903 : (E143_Finset 2903).card = 2877 := by native_decide
-theorem BSD_E143_card_p2909 : (E143_Finset 2909).card = 2934 := by native_decide
-theorem BSD_E143_card_p2971 : (E143_Finset 2971).card = 2958 := by native_decide
-theorem BSD_E143_card_p2999 : (E143_Finset 2999).card = 3035 := by native_decide
-theorem BSD_E143_card_p3001 : (E143_Finset 3001).card = 3000 := by native_decide
-theorem BSD_E143_card_p3067 : (E143_Finset 3067).card = 3074 := by native_decide
-theorem BSD_E143_card_p3079 : (E143_Finset 3079).card = 3117 := by native_decide
-theorem BSD_E143_card_p3083 : (E143_Finset 3083).card = 3080 := by native_decide
-theorem BSD_E143_card_p311 : (E143_Finset 311).card = 303 := by native_decide
-theorem BSD_E143_card_p313 : (E143_Finset 313).card = 310 := by native_decide
-theorem BSD_E143_card_p317 : (E143_Finset 317).card = 318 := by native_decide
-theorem BSD_E143_card_p3169 : (E143_Finset 3169).card = 3176 := by native_decide
-theorem BSD_E143_card_p3181 : (E143_Finset 3181).card = 3193 := by native_decide
-theorem BSD_E143_card_p3187 : (E143_Finset 3187).card = 3267 := by native_decide
-theorem BSD_E143_card_p3253 : (E143_Finset 3253).card = 3189 := by native_decide
-theorem BSD_E143_card_p3257 : (E143_Finset 3257).card = 3339 := by native_decide
-theorem BSD_E143_card_p3259 : (E143_Finset 3259).card = 3263 := by native_decide
-theorem BSD_E143_card_p3329 : (E143_Finset 3329).card = 3271 := by native_decide
-theorem BSD_E143_card_p3331 : (E143_Finset 3331).card = 3218 := by native_decide
-theorem BSD_E143_card_p3343 : (E143_Finset 3343).card = 3301 := by native_decide
-theorem BSD_E143_card_p3407 : (E143_Finset 3407).card = 3313 := by native_decide
-theorem BSD_E143_card_p3413 : (E143_Finset 3413).card = 3322 := by native_decide
-theorem BSD_E143_card_p3433 : (E143_Finset 3433).card = 3419 := by native_decide
-theorem BSD_E143_card_p3499 : (E143_Finset 3499).card = 3591 := by native_decide
-theorem BSD_E143_card_p3511 : (E143_Finset 3511).card = 3543 := by native_decide
-theorem BSD_E143_card_p3517 : (E143_Finset 3517).card = 3499 := by native_decide
+theorem BSD_E143_card_p2113 : (E143_Finset 2113).card = 2067 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2129 : (E143_Finset 2129).card = 2195 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2131 : (E143_Finset 2131).card = 2105 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2207 : (E143_Finset 2207).card = 2129 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2213 : (E143_Finset 2213).card = 2161 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2221 : (E143_Finset 2221).card = 2159 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2281 : (E143_Finset 2281).card = 2280 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2287 : (E143_Finset 2287).card = 2301 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2293 : (E143_Finset 2293).card = 2322 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2351 : (E143_Finset 2351).card = 2297 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2357 : (E143_Finset 2357).card = 2290 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2371 : (E143_Finset 2371).card = 2341 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2417 : (E143_Finset 2417).card = 2441 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2423 : (E143_Finset 2423).card = 2348 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2437 : (E143_Finset 2437).card = 2397 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2521 : (E143_Finset 2521).card = 2571 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2531 : (E143_Finset 2531).card = 2534 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2539 : (E143_Finset 2539).card = 2543 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2609 : (E143_Finset 2609).card = 2529 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2617 : (E143_Finset 2617).card = 2635 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2621 : (E143_Finset 2621).card = 2699 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2683 : (E143_Finset 2683).card = 2735 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2687 : (E143_Finset 2687).card = 2680 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2689 : (E143_Finset 2689).card = 2766 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2731 : (E143_Finset 2731).card = 2799 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2741 : (E143_Finset 2741).card = 2719 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2749 : (E143_Finset 2749).card = 2723 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2803 : (E143_Finset 2803).card = 2775 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2819 : (E143_Finset 2819).card = 2834 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2833 : (E143_Finset 2833).card = 2807 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2897 : (E143_Finset 2897).card = 2871 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2903 : (E143_Finset 2903).card = 2877 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2909 : (E143_Finset 2909).card = 2934 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2971 : (E143_Finset 2971).card = 2958 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p2999 : (E143_Finset 2999).card = 3035 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3001 : (E143_Finset 3001).card = 3000 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3067 : (E143_Finset 3067).card = 3074 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3079 : (E143_Finset 3079).card = 3117 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3083 : (E143_Finset 3083).card = 3080 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p311 : (E143_Finset 311).card = 303 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p313 : (E143_Finset 313).card = 310 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p317 : (E143_Finset 317).card = 318 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3169 : (E143_Finset 3169).card = 3176 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3181 : (E143_Finset 3181).card = 3193 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3187 : (E143_Finset 3187).card = 3267 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3253 : (E143_Finset 3253).card = 3189 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3257 : (E143_Finset 3257).card = 3339 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3259 : (E143_Finset 3259).card = 3263 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3329 : (E143_Finset 3329).card = 3271 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3331 : (E143_Finset 3331).card = 3218 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3343 : (E143_Finset 3343).card = 3301 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3407 : (E143_Finset 3407).card = 3313 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3413 : (E143_Finset 3413).card = 3322 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3433 : (E143_Finset 3433).card = 3419 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3499 : (E143_Finset 3499).card = 3591 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3511 : (E143_Finset 3511).card = 3543 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
+theorem BSD_E143_card_p3517 : (E143_Finset 3517).card = 3499 := by
+  rw [E143_card_eq_fast (hp := by decide)]
+  native_decide
 
 theorem BSD_ap_p2113 : a_p 2113 = (46 : ℤ) := by
   have h := BSD_E143_card_p2113; unfold a_p; omega
