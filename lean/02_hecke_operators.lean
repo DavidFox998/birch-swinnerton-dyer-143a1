@@ -14,7 +14,7 @@
 
   Axioms: propext, Classical.choice, Quot.sound — classical trio only
 -/
-import Mathlib.Analysis.UpperHalfPlane.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Complex.Basic
 
@@ -25,15 +25,16 @@ open UpperHalfPlane
 /-! §1. ℍ membership — (z+j)/p ∈ ℍ and p·z ∈ ℍ — 0 sorry -/
 
 theorem shift_div_im_pos (z : UpperHalfPlane) (j : ℕ) (p : ℕ) (hp : 0 < p) :
-    (0 : ℝ) < ((z : ℂ) + (j : ℂ)) / (p : ℂ) |>.im := by
+    (0 : ℝ) < (((z : ℂ) + (j : ℂ)) / (p : ℂ)).im := by
   have hzim : 0 < z.im := z.im_pos
   have hpR : (0 : ℝ) < (p : ℝ) := Nat.cast_pos.mpr hp
   have him_eq : ((z : ℂ) + (j : ℂ)).im = z.im := by
     simp [Complex.add_im]
   have hdiv : (((z : ℂ) + (j : ℂ)) / (p : ℂ)).im = ((z : ℂ) + (j : ℂ)).im / (p : ℝ) := by
-    have hp_ne : (p : ℂ) ≠ 0 := by exact_mod_cast Nat.ne_zero_of_lt hp
+    have hp_ne : (p : ℂ) ≠ 0 := by exact_mod_cast hp.ne'
     simp [Complex.div_im, Complex.normSq, Complex.conj_re, Complex.conj_im]
     field_simp
+    ring
   rw [hdiv, him_eq]
   exact div_pos hzim hpR
 
@@ -43,7 +44,6 @@ theorem smul_im_pos (z : UpperHalfPlane) (p : ℕ) (hp : 0 < p) :
   have hpR : (0 : ℝ) < (p : ℝ) := Nat.cast_pos.mpr hp
   have him_eq : ((p : ℂ) * (z : ℂ)).im = (p : ℝ) * z.im := by
     simp [Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im]
-    ring
   rw [him_eq]
   exact mul_pos hpR hzim
 
@@ -66,7 +66,8 @@ theorem hecke_T_smul (c : ℂ) (f : UpperHalfPlane → ℂ) (p : ℕ) (hp : 0 < 
     hecke_T_weight2 (fun w => c * f w) p hp z = c * hecke_T_weight2 f p hp z := by
   unfold hecke_T_weight2
   simp only [Finset.mul_sum]
-  ring
+  congr 1
+  rw [mul_add, Finset.mul_sum]
 
 theorem hecke_T_zero (p : ℕ) (hp : 0 < p) (z : UpperHalfPlane) :
     hecke_T_weight2 (fun _ => 0) p hp z = 0 := by
@@ -78,7 +79,7 @@ def good_primes_143 : Finset ℕ := {2,3,5,7,17,19,23,29,31}
 
 theorem hecke_operators_exist : ∀ p ∈ good_primes_143, 0 < p := by
   intro p hp
-  finset_decide
+  fin_cases hp <;> norm_num
 
 theorem hecke_operator_sample_2 : ∀ z : UpperHalfPlane, 0 < z.im := by
   intro z; exact z.im_pos
