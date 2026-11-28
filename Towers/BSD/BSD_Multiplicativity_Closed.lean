@@ -1,5 +1,49 @@
-/- Ported closed theorems from birch-swinnerton-dyer-143/BSD_Multiplicativity_Closed.lean — extracted 3 closed declarations. -/
+import Towers.BSD.B02_Modularity_Closed
 
+/-!
+# BSD_Multiplicativity_Closed — Unconditional proof that a_n is multiplicative
+
+Closes `BSD_HeckeMultiplicativity_143_OPEN` with 0 sorry, classical trio.
+
+## Proof strategy
+
+`a_n n = n.factorization.prod F` for n ≠ 0, where
+`F p e = if hp : p.Prime then a_prime_pow p e else 1`.
+
+For coprime m, n:
+1. `(m*n).factorization = m.factorization + n.factorization`  [Nat.factorization_mul]
+2. Coprimeness ⟹ disjoint supports: a prime divides at most one of m, n;
+   shared prime ⟹ divides gcd = 1, impossible.
+3. `Finsupp.support_add_eq` collapses the support of the sum.
+4. `Finset.prod_union` splits the product: ∏_{p|mn} = ∏_{p|m} × ∏_{p|n}.
+5. For p|m: (m.factorization + n.factorization) p = m.factorization p  (since n.factorization p = 0).
+6. Symmetrically for p|n.
+
+## Consequences
+
+- `BSD_HeckeMultiplicativity_143_CLOSED` : PROVED unconditionally (0 sorry, classical trio).
+  The `_OPEN` definition in B02_Modularity_Closed.lean is retained for backward compatibility.
+- `Modularity_143_CLOSED_1gate` : now only 1 gate remains (`BSD_HasseFull_143_OPEN`).
+  The 2-gate version (`Modularity_143_CLOSED`) is in B02_Modularity_Closed.lean and stays.
+
+SORRY: 0.  Axiom footprint: classical trio {propext, Classical.choice, Quot.sound}.
+BSD: OPEN.  NOT a brick.  NOT a Clay submission.
+-/
+
+namespace Towers.BSD
+
+open E1859
+
+-- ============================================================
+-- §1. Core multiplicativity theorem (0 sorry, classical trio)
+-- ============================================================
+
+/-- **PROVED** (0 sorry, classical trio):
+    `a_n` is multiplicative for coprime arguments.
+
+    Full proof: edge cases m=0/n=0 are trivial (a_n 0 = 0).
+    For m,n > 0 the factorization splits over disjoint supports by coprimeness,
+    and `Finset.prod_union` closes the goal. -/
 theorem a_n_mul_coprime (m n : ℕ) (h : Nat.Coprime m n) :
     a_n (m * n) = a_n m * a_n n := by
   rcases Nat.eq_zero_or_pos m with rfl | hm
@@ -56,7 +100,6 @@ theorem a_n_mul_coprime (m n : ℕ) (h : Nat.Coprime m n) :
     The `_OPEN` definition in B02_Modularity_Closed.lean remains for backward
     compatibility.  All theorems gated on this surface can now discharge the
     gate unconditionally using this theorem. -/
-
 theorem BSD_HeckeMultiplicativity_143_CLOSED :
     BSD_HeckeMultiplicativity_143_OPEN :=
   fun m n hcop => a_n_mul_coprime m n hcop
@@ -73,11 +116,9 @@ theorem BSD_HeckeMultiplicativity_143_CLOSED :
 
     Gate count: 1 (down from 2 in `Modularity_143_CLOSED`).
     Not a brick. BSD: OPEN. NOT a Clay submission. -/
-
 theorem Modularity_143_CLOSED_1gate
     (h_hasse : BSD_HasseFull_143_OPEN) :
     Modularity_143_OPEN :=
   Modularity_143_CLOSED BSD_HeckeMultiplicativity_143_CLOSED h_hasse
 
 end Towers.BSD
-

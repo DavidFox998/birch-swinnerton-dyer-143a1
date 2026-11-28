@@ -1,4 +1,8 @@
-import hasseprimset.BSD_antisupersingular
+import Towers.BSD.B03_LFunction
+import Towers.BSD.BSD_LFunction
+import Towers.BSD.BSD_MissingDefinitionsRegistry
+import Towers.BSD.BSD_AnalyticCapstone
+import Towers.BSD.BSD_Genesis775_CLOSED
 
 /-
 ================================================================
@@ -111,8 +115,8 @@ definite on E(ℚ)/E(ℚ)_tors.  This is not formalized in Mathlib v4.12.0.
 /-- **OPEN**: Néron-Tate height pairing on E₁₄₃(ℚ) is positive definite.
     Gap: canonical height theory (Silverman AEC §VIII.9) absent from Mathlib v4.12.0. -/
 def BSD_NeronTateHeight_OPEN : Prop :=
-  ∃ (h̃ : ℚ × ℚ → ℝ),
-    (∀ P : ℚ × ℚ, 0 ≤ h̃ P) ∧
+  ∃ (hTilde : ℚ × ℚ → ℝ),
+    (∀ P : ℚ × ℚ, 0 ≤ hTilde P) ∧
     True  -- stub for bilinearity, positivity on E(ℚ)/tors, Néron-Tate normalization
 
 /-!
@@ -125,7 +129,7 @@ LMFDB 143.2.a.a gives R ≈ 0.4822... (Néron-Tate height of the generator).
 
 /-- **OPEN**: Regulator R = det(Néron-Tate matrix) > 0.
     Gap: depends on BSD_NeronTateHeight_OPEN + generator identification. -/
-def BSD_Regulator_OPEN : Prop :=
+def BSD_Regulator143_OPEN : Prop :=
   ∃ (R : ℝ), R > 0 ∧ True  -- R = h̃(generator) for rank-1 case
 
 /-!
@@ -269,7 +273,6 @@ def BSD_Finsupp_abs_prod_OPEN (n : ℕ) : Prop :=
 theorem BSD_Finsupp_abs_prime_pow (p : ℕ) [hp : Fact p.Prime] (k : ℕ) :
     BSD_Finsupp_abs_prod_OPEN (p ^ k) := by
   intro hpk
-  simp only [BSD_Finsupp_abs_prod_OPEN]
   rw [BSD_a_n_factorization_eq _ hpk]
   have hfact : (p ^ k).factorization = Finsupp.single p k := by
     rw [Nat.factorization_pow, Nat.Prime.factorization hp.out]
@@ -318,7 +321,7 @@ theorem BSD_extended_chain
     (_hAnchor : BSD_LFunctionIsLinFunc_OPEN)
     -- Gate 3: Height theory
     (_hNT     : BSD_NeronTateHeight_OPEN)
-    (_hReg    : BSD_Regulator_OPEN)
+    (_hReg    : BSD_Regulator143_OPEN)
     -- Gate 4: Tate-Shafarevich
     (_hSHA    : BSD_SHA_Finite_OPEN)
     (_hLC     : BSD_LeadingCoeff_OPEN)
