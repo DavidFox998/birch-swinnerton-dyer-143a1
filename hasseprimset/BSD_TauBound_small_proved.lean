@@ -89,6 +89,7 @@ private theorem bernoulli_ineq (k : ℕ) (x : ℝ) (hx : 0 ≤ x) :
 
 private theorem finset_prod_cast {α : Type*} (s : Finset α) (f : α → ℕ) :
     (↑(∏ i in s, f i) : ℝ) = ∏ i in s, (f i : ℝ) := by
+  classical
   induction s using Finset.induction_on with
   | empty => simp
   | insert ha ih =>
@@ -99,10 +100,11 @@ private theorem finset_prod_cast {α : Type*} (s : Finset α) (f : α → ℕ) :
 private theorem finset_prod_rpow {α : Type*} (s : Finset α) (f : α → ℝ)
     (hf : ∀ i ∈ s, 0 ≤ f i) (r : ℝ) :
     (∏ i in s, f i) ^ r = ∏ i in s, (f i) ^ r := by
+  classical
   induction s using Finset.induction_on with
   | empty => simp [Real.one_rpow]
   | insert ha ih =>
-    rename_i a s' _
+    rename_i a s'
     rw [Finset.prod_insert ha, Finset.prod_insert ha]
     rw [Real.mul_rpow (hf a (Finset.mem_insert_self a s'))
       (Finset.prod_nonneg (fun i hi => hf i (Finset.mem_insert_of_mem hi)))]
@@ -143,11 +145,12 @@ private theorem succ_le_rpow_small (k : ℕ) (β : ℝ) (hβ : 1 < β) :
     (k + 1 : ℝ) ≤ β / (β - 1) * β ^ k := by
   have hβ1 : 0 < β - 1 := by linarith
   rw [div_mul_eq_mul_div, le_div_iff hβ1,
-      show β * β ^ k = β ^ (k + 1) from (pow_succ β k).symm]
+      show β * β ^ k = β ^ (k + 1) from (pow_succ' β k).symm]
   -- Goal: (↑k + 1) * (β - 1) ≤ β^(k+1)
   -- Bernoulli: β^(k+1) = (1+(β-1))^(k+1) ≥ 1 + (k+1)*(β-1) ≥ (k+1)*(β-1)
   have hbern := bernoulli_ineq (k + 1) (β - 1) hβ1.le
-  simp only [sub_add_cancel] at hbern
+  have h1β : (1 : ℝ) + (β - 1) = β := by ring
+  rw [h1β] at hbern
   push_cast at hbern ⊢
   linarith
 
@@ -166,7 +169,7 @@ private theorem succ_le_rpow_small (k : ℕ) (β : ℝ) (hβ : 1 < β) :
 theorem BSD_TauBound_small_proved : BSD_TauBound_small_OPEN := by
   intro ε hε _
   -- Finite threshold: primes p with p^ε < 2 satisfy p < 2^{1/ε} < B
-  let B : ℕ := Nat.ceil (2 ^ (1 / ε)) + 2
+  let B : ℕ := Nat.ceil ((2 : ℝ) ^ (1 / ε)) + 2
   let small_ps := (Finset.range B).filter Nat.Prime
   -- D_ε: product of p^ε/(p^ε-1) over primes p < B
   let D := ∏ p in small_ps, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)
@@ -191,8 +194,8 @@ theorem BSD_TauBound_small_proved : BSD_TauBound_small_OPEN := by
   rw [htau]
   set S := n.factorization.support with hS_def
   -- Split S into large primes (p^ε ≥ 2) and small primes (p^ε < 2)
-  set S_l := S.filter (fun p => 2 ≤ (p : ℝ) ^ ε) with hSl_def
-  set S_s := S.filter (fun p => (p : ℝ) ^ ε < 2) with hSs_def
+  set S_l := S.filter (fun p : ℕ => 2 ≤ (p : ℝ) ^ ε) with hSl_def
+  set S_s := S.filter (fun p : ℕ => (p : ℝ) ^ ε < 2) with hSs_def
   have hS_disj : Disjoint S_l S_s := by
     apply Finset.disjoint_left.mpr
     intro p h1 h2
@@ -215,7 +218,6 @@ theorem BSD_TauBound_small_proved : BSD_TauBound_small_OPEN := by
       (p : ℝ) ^ (ε * n.factorization p) := fun p => by
     rw [← Real.rpow_natCast ((p : ℝ) ^ ε) (n.factorization p),
         ← Real.rpow_mul (Nat.cast_nonneg p)]
-    congr 1; ring
   -- Factorization product equals n^ε (§5)
   have hfact : ∏ p in S, (p : ℝ) ^ (ε * n.factorization p) = (n : ℝ) ^ ε :=
     factorization_rpow_eq n hn ε
@@ -238,8 +240,9 @@ theorem BSD_TauBound_small_proved : BSD_TauBound_small_OPEN := by
       intro p hp
       simp only [hSs_def, Finset.mem_filter] at hp
       obtain ⟨hmem, _⟩ := hp
+      have hmem' : p ∈ n.factorization.support := hmem
       have hp_prime : p.Prime :=
-        Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem)
+        Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem')
       have hpe_gt1 : 1 < (p : ℝ) ^ ε := by
         rw [← Real.rpow_zero (p : ℝ)]
         apply Real.rpow_lt_rpow_of_exponent_lt
@@ -261,34 +264,35 @@ theorem BSD_TauBound_small_proved : BSD_TauBound_small_OPEN := by
               (Finset.prod_nonneg fun p _ =>
                 Real.rpow_nonneg (Nat.cast_nonneg p) _)
             -- ∏ S_s coeff ≤ D = ∏ small_ps coeff (S_s ⊆ small_ps, all factors ≥ 1)
-            apply Finset.prod_le_prod_of_subset_of_one_le'
-            · -- S_s ⊆ small_ps
+            show ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) ≤
+              ∏ p in small_ps, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)
+            have hsub : S_s ⊆ small_ps := by
               intro p hp
               simp only [hSs_def, Finset.mem_filter] at hp
               obtain ⟨hmem, h_small⟩ := hp
+              have hmem' : p ∈ n.factorization.support := hmem
               have hp_prime : p.Prime :=
-                Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem)
+                Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem')
               -- p < B: from p^ε < 2 we get p < 2^{1/ε} ≤ ↑(ceil(2^{1/ε})) < ↑B
               have hp_lt_B : p < B := by
                 have h1ε : (0 : ℝ) < 1 / ε := div_pos one_pos hε
                 -- (p:ℝ) = ((p:ℝ)^ε)^{1/ε} < 2^{1/ε}
                 have hpe_eq : ((p : ℝ) ^ ε) ^ (1 / ε) = (p : ℝ) := by
-                  rw [← Real.rpow_natCast ((p : ℝ) ^ ε), ← Real.rpow_mul (Nat.cast_nonneg p)]
-                  -- Hmm, ε * (1/ε) = 1 and then rpow_one
-                  have hmul : ε * (1 / ε) = 1 := by field_simp
-                  rw [hmul, Real.rpow_one]
+                  have hmul : ε * (1 / ε) = 1 := mul_one_div_cancel hε.ne'
+                  rw [← Real.rpow_mul (Nat.cast_nonneg p), hmul, Real.rpow_one]
                 have hp_real : (p : ℝ) < 2 ^ (1 / ε) := by
                   rw [← hpe_eq]
                   exact Real.rpow_lt_rpow
                     (Real.rpow_nonneg (Nat.cast_nonneg p) ε) h_small h1ε
-                have h2 : 2 ^ (1 / ε) ≤ ↑(Nat.ceil (2 ^ (1 / ε))) := Nat.le_ceil _
-                have h3 : (p : ℝ) < ↑(Nat.ceil (2 ^ (1 / ε))) :=
+                have h2 : (2 : ℝ) ^ (1 / ε) ≤ ↑(Nat.ceil ((2 : ℝ) ^ (1 / ε))) := Nat.le_ceil _
+                have h3 : (p : ℝ) < ↑(Nat.ceil ((2 : ℝ) ^ (1 / ε))) :=
                   lt_of_lt_of_le hp_real h2
-                have h4 : p < Nat.ceil (2 ^ (1 / ε)) := by exact_mod_cast h3
+                have h4 : p < Nat.ceil ((2 : ℝ) ^ (1 / ε)) := by exact_mod_cast h3
                 simp only [B]; omega
               simp only [small_ps, Finset.mem_filter, Finset.mem_range]
               exact ⟨hp_lt_B, hp_prime⟩
-            · -- Each factor ≥ 1 for primes in small_ps
+            have hone : ∀ p ∈ small_ps, p ∉ S_s →
+                1 ≤ (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
               intro p hp _
               simp only [small_ps, Finset.mem_filter] at hp
               have hp_ge2 : 2 ≤ p := hp.2.two_le
@@ -299,6 +303,43 @@ theorem BSD_TauBound_small_proved : BSD_TauBound_small_OPEN := by
                 · exact hε
               rw [le_div_iff (by linarith)]
               linarith
+            have hpart : ∏ p in small_ps, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) =
+                (∏ p in small_ps \ S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) *
+                ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) :=
+              (Finset.prod_sdiff hsub).symm
+            have hge1 : (1 : ℝ) ≤ ∏ p in small_ps \ S_s,
+                (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
+              have hle := Finset.prod_le_prod (s := small_ps \ S_s)
+                (f := fun _ : ℕ => (1 : ℝ))
+                (g := fun p : ℕ => (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1))
+                (fun p _ => by norm_num)
+                (fun p hp => by
+                  rw [Finset.mem_sdiff] at hp
+                  exact hone p hp.1 hp.2)
+              simpa using hle
+            have hA_nonneg : 0 ≤ ∏ p in S_s,
+                (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) := by
+              apply Finset.prod_nonneg
+              intro p hp
+              simp only [hSs_def, Finset.mem_filter] at hp
+              have hmem' : p ∈ n.factorization.support := hp.1
+              have hp_prime : p.Prime :=
+                Nat.prime_of_mem_primeFactors (Nat.support_factorization n ▸ hmem')
+              have hpe_gt1 : 1 < (p : ℝ) ^ ε := by
+                rw [← Real.rpow_zero (p : ℝ)]
+                apply Real.rpow_lt_rpow_of_exponent_lt
+                · exact_mod_cast Nat.lt_of_lt_of_le (by norm_num) hp_prime.two_le
+                · exact hε
+              exact div_nonneg (Real.rpow_nonneg (Nat.cast_nonneg p) ε)
+                (by linarith)
+            calc ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)
+                = 1 * ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) :=
+                  (one_mul _).symm
+              _ ≤ (∏ p in small_ps \ S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1)) *
+                  ∏ p in S_s, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) :=
+                  mul_le_mul_of_nonneg_right hge1 hA_nonneg
+              _ = ∏ p in small_ps, (p : ℝ) ^ ε / ((p : ℝ) ^ ε - 1) :=
+                  hpart.symm
   -- Combine: τ(n) ≤ (∏ S_l p^{ε·e}) · D · (∏ S_s p^{ε·e}) = D · n^ε
   calc (∏ p in S_l, ((n.factorization p : ℝ) + 1)) *
         (∏ p in S_s, ((n.factorization p : ℝ) + 1))

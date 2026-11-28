@@ -42,6 +42,7 @@ namespace Towers.BSD
 /-- Int.cast commutes with Finset.prod: proved by Finset induction over s. -/
 private lemma finset_prod_int_cast {ι : Type*} (s : Finset ι) (f : ι → ℤ) :
     ((∏ i ∈ s, f i : ℤ) : ℝ) = ∏ i ∈ s, (f i : ℝ) := by
+  classical
   induction s using Finset.induction_on with
   | empty => simp
   | insert ha ih => rw [Finset.prod_insert ha, Finset.prod_insert ha, Int.cast_mul, ih]
@@ -98,6 +99,7 @@ theorem BSD_aNBound_Finsupp_bridge_close (n : ℕ) : BSD_aNBound_Finsupp_bridge_
 /-- Nat.cast commutes with Finset.prod: proved by Finset induction. -/
 private lemma finset_prod_nat_cast {ι : Type*} (s : Finset ι) (f : ι → ℕ) :
     ((∏ i ∈ s, f i : ℕ) : ℝ) = ∏ i ∈ s, (f i : ℝ) := by
+  classical
   induction s using Finset.induction_on with
   | empty => simp
   | insert ha ih => rw [Finset.prod_insert ha, Finset.prod_insert ha, Nat.cast_mul, ih]
@@ -112,6 +114,7 @@ private lemma sqrt_pow_nat (x : ℝ) (hx : 0 ≤ x) : ∀ n : ℕ, Real.sqrt (x 
 private lemma sqrt_finset_prod {ι : Type*} (s : Finset ι) (f : ι → ℝ)
     (hf : ∀ i ∈ s, 0 ≤ f i) :
     Real.sqrt (∏ i ∈ s, f i) = ∏ i ∈ s, Real.sqrt (f i) := by
+  classical
   induction s using Finset.induction_on with
   | empty => simp
   | insert ha ih =>
@@ -159,7 +162,6 @@ theorem BSD_card_divisors_close (n : ℕ) (hn : 0 < n) :
   have hcard' : n.divisors.card =
       ∏ p ∈ n.factorization.support, (n.factorization p + 1) := by
     convert hcard using 2
-    simp [Nat.primeFactors]
   rw [hcard', finset_prod_nat_cast]
   push_cast; rfl
 

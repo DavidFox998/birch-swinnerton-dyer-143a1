@@ -80,9 +80,7 @@ theorem BSD_Finsupp_prod_le_close (n : ℕ) : BSD_Finsupp_prod_le_OPEN n := by
     haveI hfact : Fact p.Prime := ⟨hprime⟩
     split_ifs with h
     · -- p.Prime branch: |a_{p^e}| ≤ (e+1)(√p)^e  by Gate 1
-      exact hGate1 p ⟨h⟩ (n.factorization p)
-    · -- ¬p.Prime branch: contradicts hprime
-      exact absurd hprime h
+      exact hGate1 p hfact (n.factorization p)
 
 /-! ## §2. BSD_isBigO_to_LSeries_close — Avenue 4 CLOSED -/
 

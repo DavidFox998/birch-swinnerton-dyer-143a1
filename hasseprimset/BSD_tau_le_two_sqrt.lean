@@ -80,18 +80,21 @@ theorem tau_le_two_sqrt (n : ℕ) (hn : 0 < n) :
   set hi := n.divisors.filter (fun d => sq < d)
   -- Partition: Disjoint + covering
   have hd : Disjoint lo hi := by
-    simp only [Finset.disjoint_left, Finset.mem_filter]
-    intro d ⟨_, hle⟩ ⟨_, hlt⟩
-    exact absurd hle (Nat.not_le.mpr hlt)
+    rw [Finset.disjoint_left]
+    intro d hdlo hdhi
+    exact absurd (Finset.mem_filter.mp hdlo).2
+      (Nat.not_le.mpr (Finset.mem_filter.mp hdhi).2)
   have hcov : lo ∪ hi = n.divisors := by
     ext d
-    simp only [Finset.mem_union, Finset.mem_filter]
+    rw [Finset.mem_union]
     constructor
-    · rintro (⟨h, _⟩ | ⟨h, _⟩) <;> exact h
+    · rintro (h | h)
+      · exact (Finset.mem_filter.mp h).1
+      · exact (Finset.mem_filter.mp h).1
     · intro h
       rcases le_or_lt d sq with hle | hlt
-      · exact Or.inl ⟨h, hle⟩
-      · exact Or.inr ⟨h, hlt⟩
+      · exact Or.inl (Finset.mem_filter.mpr ⟨h, hle⟩)
+      · exact Or.inr (Finset.mem_filter.mpr ⟨h, hlt⟩)
   have hpart : n.divisors.card = lo.card + hi.card := by
     calc n.divisors.card = (lo ∪ hi).card := by rw [hcov]
       _ = lo.card + hi.card := Finset.card_union_of_disjoint hd
@@ -100,7 +103,8 @@ theorem tau_le_two_sqrt (n : ℕ) (hn : 0 < n) :
     intro d hd_mem
     simp only [hi, Finset.mem_filter] at hd_mem
     obtain ⟨hdvd, hgt⟩ := hd_mem
-    have hd_pos : 0 < d := Nat.pos_of_dvd_of_pos hdvd hn
+    have hdvd' : d ∣ n := (Nat.mem_divisors.mp hdvd).1
+    have hd_pos : 0 < d := Nat.pos_of_dvd_of_pos hdvd' hn
     -- n < d * d (since sq < d -> d >= sq+1 -> d^2 > sq^2, and sq^2 + ... > n...)
     -- Proved by contradiction via Nat.le_sqrt
     have hn_lt_dsq : n < d * d := by
@@ -119,17 +123,20 @@ theorem tau_le_two_sqrt (n : ℕ) (hn : 0 < n) :
       calc n / d * (n / d) ≤ n / d * d := Nat.mul_le_mul_left _ (Nat.le_of_lt hlt_d)
         _ ≤ n := Nat.div_mul_le_self n d
     simp only [lo, Finset.mem_filter]
-    exact ⟨Nat.div_dvd_of_dvd hdvd, Nat.le_sqrt.mpr hnd_sq_le⟩
+    exact ⟨Nat.mem_divisors.mpr ⟨Nat.div_dvd_of_dvd hdvd', hn.ne'⟩, Nat.le_sqrt.mpr hnd_sq_le⟩
   -- Map d |-> n/d is injective on hi
   have hinj : Set.InjOn (fun d => n / d) (hi : Set ℕ) := by
     intro d1 hd1 d2 hd2 heq
     simp only [Finset.mem_coe, hi, Finset.mem_filter] at hd1 hd2
-    have hd2_pos : 0 < d2 := Nat.pos_of_dvd_of_pos hd2.1 hn
+    have hd1' : d1 ∣ n := (Nat.mem_divisors.mp hd1.1).1
+    have hd2' : d2 ∣ n := (Nat.mem_divisors.mp hd2.1).1
+    have hd2_pos : 0 < d2 := Nat.pos_of_dvd_of_pos hd2' hn
     have hnd2_pos : 0 < n / d2 :=
-      Nat.div_pos (Nat.le_of_dvd hn hd2.1) hd2_pos
-    have h1 : d1 * (n / d1) = n := Nat.mul_div_cancel' hd1.1
-    have h2 : d2 * (n / d2) = n := Nat.mul_div_cancel' hd2.1
-    rw [heq] at h1
+      Nat.div_pos (Nat.le_of_dvd hn hd2') hd2_pos
+    have h1 : d1 * (n / d1) = n := Nat.mul_div_cancel' hd1'
+    have h2 : d2 * (n / d2) = n := Nat.mul_div_cancel' hd2'
+    have heq' : n / d1 = n / d2 := heq
+    rw [heq'] at h1
     exact Nat.eq_of_mul_eq_mul_right hnd2_pos (h1.trans h2.symm)
   -- #hi <= #lo (via the injective map hi -> lo)
   have hhi_le : hi.card ≤ lo.card := by
@@ -146,19 +153,19 @@ theorem tau_le_two_sqrt (n : ℕ) (hn : 0 < n) :
     have hlo_sub : lo ⊆ Finset.Icc 1 sq := by
       intro d hd
       simp only [lo, Finset.mem_filter] at hd
-      exact Finset.mem_Icc.mpr ⟨Nat.pos_of_dvd_of_pos hd.1 hn, hd.2⟩
+      exact Finset.mem_Icc.mpr ⟨Nat.pos_of_dvd_of_pos (Nat.mem_divisors.mp hd.1).1 hn, hd.2⟩
     calc lo.card ≤ (Finset.Icc 1 sq).card := Finset.card_le_card hlo_sub
-      _ = sq := by rw [Finset.card_Icc]; omega
+      _ = sq := by rw [Nat.card_Icc]; omega
   -- Nat.sqrt n <= Real.sqrt n (as reals)
   have hsq_real : (sq : ℝ) ≤ Real.sqrt n := by
-    rw [← Real.sqrt_sq (by exact_mod_cast Nat.zero_le sq)]
-    apply Real.sqrt_le_sqrt
-    have : sq ^ 2 = sq * sq := by ring
-    exact_mod_cast this ▸ hsq_le
+    have h3 : (sq : ℝ) * (sq : ℝ) ≤ (n : ℝ) := by exact_mod_cast hsq_le
+    have h4 : (sq : ℝ) ^ 2 = (sq : ℝ) * (sq : ℝ) := by ring
+    exact Real.le_sqrt_of_sq_le (h4 ▸ h3)
   -- Conclude: tau(n) <= 2 * Real.sqrt n
   have hcard_real : (n.divisors.card : ℝ) = (lo.card : ℝ) + (hi.card : ℝ) := by
     exact_mod_cast hpart
-  linarith [Nat.cast_le.mpr hhi_le, Nat.cast_le.mpr hlo_le]
+  linarith [show (hi.card : ℝ) ≤ (lo.card : ℝ) from by exact_mod_cast hhi_le,
+    show (lo.card : ℝ) ≤ (sq : ℝ) from by exact_mod_cast hlo_le]
 
 /-! ## §2. BSD_TauBound_large_eps -- eps >= 1/2 case proved -/
 
@@ -247,7 +254,7 @@ theorem BSD_LSeriesSummable_v4
   -- §5b: LSeriesSummable with x = 2
   have hLS : LSeriesSummable (fun m : ℕ => (a_n m : ℂ)) s := by
     apply LSeriesSummable_of_le_const_mul_rpow hs
-    refine ⟨2, by norm_num, fun m hm => ?_⟩
+    refine ⟨2, fun m hm => ?_⟩
     have hm_pos : 0 < m := Nat.pos_of_ne_zero hm
     -- ||a_n m||_C = |a_n m|_R
     have hcast : ‖(a_n m : ℂ)‖ = |(a_n m : ℝ)| := by

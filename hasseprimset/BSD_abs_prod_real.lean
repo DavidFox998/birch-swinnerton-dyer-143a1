@@ -43,6 +43,7 @@ open Real Finset Nat
     Finsupp.prod decomposition of a_n(p^{e_1}·…·p^{e_k}). -/
 theorem BSD_abs_prod_real {α : Type*} (s : Finset α) (f : α → ℝ) :
     |∏ i in s, f i| = ∏ i in s, |f i| := by
+  classical
   induction s using Finset.induction_on with
   | empty => simp
   | insert ha ih => rw [Finset.prod_insert ha, Finset.prod_insert ha, abs_mul, ih]
@@ -162,7 +163,7 @@ theorem BSD_aNBound_times_tau_isBigO
   have hbound := haN n
   simp only [BSD_aNBound_OPEN] at hbound
   calc |(a_n n : ℝ)|
-      ≤ Real.sqrt (n : ℝ) * (n.divisors.card : ℝ) := hbound
+      ≤ Real.sqrt (n : ℝ) * ((n : ℕ).divisors.card : ℝ) := hbound
     _ ≤ Real.sqrt (n : ℝ) * (C * (n : ℝ) ^ ε) :=
           mul_le_mul_of_nonneg_left (hC n n.pos) (Real.sqrt_nonneg _)
     _ = C * ((n : ℝ) ^ ((1:ℝ)/2) * (n : ℝ) ^ ε) := by
